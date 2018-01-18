@@ -1,0 +1,44 @@
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="TelemetryManagement">
+            <Feature nameOfFeature="TelemetryManagement">
+                  <Description text="The application can generate telemetry packets"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type>
+                        <Composite/>
+                  </Type>
+                  <Group nameOfGroup="TelemetryManager">
+                        <Description text="A telemetry manager is responsible for controlling collection of the telemetry packets"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="TelemetryManager">
+                              <Description text="A telemetry manager is responsible for controlling collection of the telemetry packets"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="provided" type="Telemetry/CC_TelemetryManager"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="Attributes">
+                                    <Description text="The attributes of the telemetry manager"/>
+                                    <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                                    <Feature nameOfFeature="ImmediateQueueSize">
+                                          <Description text="The maximum number of telemetry packets that can be loaded for immediate dispatch"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property status="provided" type="int" name="ImmediateQueueSize"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                                    <CallMacro nameOfCalledMacro="TelemetryStream"/>
+                              </Group>
+                        </Feature>
+                  </Group>
+                  <Group nameOfGroup="PacketTypeOptions">
+                        <Description text="The telemetry generation options: PUS-based packet or standard packets"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="2"/>
+                        <CallMacro nameOfCalledMacro="StandardTelemetryPackets"/>
+                        <CallMacro nameOfCalledMacro="PUSTelemetryPackets"/>
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>

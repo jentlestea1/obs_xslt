@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ObsApplication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="D:/Projects/ObsFramework/models/xsd/ObsFrameworkAppModel.xsd">
+      <!--
+      Model for the sample tracer component to be used for the sample application of the OBS Framework.
+      -->
+     <Tracer kind="interface" type="System/Tracer" status="provided">
+           <DummyTracer kind="component" type="System/DC_DummyTracer" status="provided" name="tracer">
+                 <Description>The tracer component of the sample application.</Description>
+            </DummyTracer>
+     </Tracer>
+     
+</ObsApplication>

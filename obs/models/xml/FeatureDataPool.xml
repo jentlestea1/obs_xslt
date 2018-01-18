@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+    <Macro nameOfMacro="DataPool">
+        <Feature nameOfFeature="DataPool">
+            <Description text="The data pool "/>
+            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+            <Type>
+                <BuildingBlock>
+                    <Interface status="provided" type="Data/DataPool"/>
+                </BuildingBlock>
+            </Type>
+            <Group nameOfGroup="Options">
+                <Description text="The data pool options envisaged by the framework"/>
+                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                <Feature nameOfFeature="Custom">
+                    <Description text="An application-specific data pool not provided by the framework"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="missing"/>
+                        </BuildingBlock>
+                    </Type>
+                </Feature>
+                <Feature nameOfFeature="BasicDataPool">
+                    <Description text="A data pool with basic functionalities and minimal overheads"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="provided" type="Data/DC_BasicDataPool"/>
+                        </BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="BasicDataPoolAttributes">
+                        <Description text="The attributes of the basic data pool"/>
+                        <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                        <Feature nameOfFeature="DataPoolSize">
+                            <Description text="The size in bytes of the data pool"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="int" name="DataPoolSize">
+                                        <Range minValue="0" maxValue="+"/>
+                                    </Property>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="DataPoolItem">
+                            <Description text="An item in the data pool"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                            <Type>
+                                <Composite/>
+                            </Type>
+                            <Group nameOfGroup="DataPoolItemAttributes">
+                                <Description text="The attributes of the data pool item"/>
+                                <GroupCardinality GroupCardMin="3" GroupCardMax="3"/>
+                                <Feature nameOfFeature="Id">
+                                    <Description text="The numerical identifier of the data pool item"/>
+                                    <FeatureComment text="Constraint: the id must be less than the data pool size"/>
+                                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                    <Type>
+                                        <Attribute>
+                                            <Property status="provided" type="int">
+                                                <Range minValue="0" maxValue="+"/>
+                                            </Property>
+                                        </Attribute>
+                                    </Type>
+                                </Feature>
+                                <Feature nameOfFeature="Name">
+                                    <Description text="The name of the data pool item"/>
+                                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                    <Type>
+                                        <Attribute>
+                                            <Property status="provided" type="string">
+                                                <Range minValue="0" maxValue="+"/>
+                                            </Property>
+                                        </Attribute>
+                                    </Type>
+                                </Feature>
+                                <Feature nameOfFeature="Type">
+                                    <Description text="The syntactical type of the data pool item"/>
+                                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                    <Type>
+                                        <Attribute>
+                                            <Property status="provided" type="string">
+                                                <Enumeration>
+                                                    <Item value="TD_Float"/>
+                                                    <Item value="TD_Integer"/>
+                                                </Enumeration>
+                                            </Property>
+                                        </Attribute>
+                                    </Type>
+                                </Feature>
+                            </Group>
+                        </Feature>
+                    </Group>
+                </Feature>
+                <CallMacro nameOfCalledMacro="IndexedDataPool"/>
+            </Group>
+        </Feature>
+    </Macro>
+</FrameworkFeatureModel>

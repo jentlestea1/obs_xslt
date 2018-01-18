@@ -1,0 +1,93 @@
+<Chapter>
+    <Title> Design Process </Title>
+    <Author>
+        <Name> A. Pasetti </Name>
+        <Affiliation>
+            <a HREF="http://www.pnp-software.com">P&amp;P Software</a>
+        </Affiliation>
+        <EMail> pasetti@pnp-software.com </EMail>
+    </Author>
+    <LastModified> 2003-12-05 </LastModified>
+    <Introduction>
+        <p>In a framework context, it is necessary to distinguish between two processes</p>
+        <ul>
+            <li>The <i>framework creation</i> process is the process whereby the reusable assets (or
+                building bocks) of the framework are created together with the language and tools
+                required to instantiate applications from the framework. </li>
+            <li>The <i>framework instantiation</i> process is the process whereby the reusable
+                assets (or building bocks) of the framework are tailored to match the needs of
+                target application within the framework domainand are used to create the target
+                application. </li>
+        </ul>
+        <p>This web site contains all the information that was generated during the creation process
+            for the OBS Framework and it provides the means to support the instantiation proces for
+            target applications in the framework domain.</p>
+    </Introduction>
+    <Section Title="Framework Creation">
+        <p>The framework creation process can be divided into three phases:</p>
+        <ul>
+            <li>The <i>domain analysis</i> phase whereby the target domain of the framework is
+                identified and characterized. This phase should normally terminate with the
+                construction of a formal domain model.</li>
+            <li>The <i>domain design</i> phase whereby the reusable assets (or building blocks) from
+                which the framework instances are to be built are identified and formal models for
+                them are produced.</li>
+            <li>The <i>domain implementation</i> phase whereby the models of the reusable assets (or
+                building blocks) from which the framework instances are to be built are implemented
+                in code. In many cases, the modelling of the building blocks can be done within an
+                environment with autocoding facilities so that this phase will often be very fast.</li>
+        </ul>
+        <p>In the case of the OBS Framework, the output of the domain analysis phase is a <a
+                HREF="indexModellingApproach.html" target="_parent">framework feature model</a>. For
+            the domain design phase, there are two outputs:</p>
+        <ul>
+            <li>A <a HREF="indexDesignPatterns.html" target="_parent">catalogue of design
+                patterns</a> that propose design solutions for recurring design problems in the OBS
+                domain. The design patterns encapsulate reusable architectural solutions for
+                applications within the framework domain</li>
+            <li>A <a HREF="doxygen/html/index.html">software design document</a> that covers all the
+                concrete and abstract classes that are defined by the OBS Framework</li>
+        </ul>
+        <p>Note that no design-level model is provided for the framework meta-components since no
+            well-established modelling techniques exist for this type of building blocks. The
+            meta-components are therefore only provided as implementation-level building blocks.</p>
+        <p> At implementation level, the OBS Framework is implemented as a set of C++ classes and a
+            set of XSL programs. Some of the C++ classes are concrete and implement the framework <a
+                HREF="indexConcreteComponents.html" target="_parent">concrete components</a>, others
+            are abstract and implement the framework <a HREF="indexAbstractInterfaces.html"
+                target="_parent">abstract interfaces</a>. The XSL programs implement both the<a
+                HREF="indexGeneratorMetaComponents.html" target="_parent">Generator
+            Meta-Components</a> and the <a HREF="indexTransformerMetaComponents.html"
+                target="_parent">Transformer Meta-Components</a>.</p>
+    </Section>
+    <Section Title="Framework Instantiation">
+        <p>The next figure illustrates the mutual relationship between the framework creation and
+            the framework instantiation process. TBW<Figure>TBW</Figure> The OBS Framework supports
+            the following adaptation techniques for tailoring its building blocks to the needs of a
+            target application:</p>
+        <ul>
+            <li>
+                <i>Component Configuration</i>: the <a HREF="indexConcreteComponents.html"
+                target="_parent">components</a> provided by the OBS Framework or created by
+                extending its concrete and abstract classes, are intended to be configured during
+                the application configuration phase. Component configuration consists in setting the
+                values of the component attributes. Since some component attributes are of class
+                type, this includes the <i>component composition</i> adaptation mechanism.</li>
+            <li>
+                <i>Class Extension</i>: the OBS Framework provides a number of C++ classes that can
+                be adapted by extension. This includes both the override of existing methods, the
+                definition of virtual methods, and the addition of new methods.</li>
+            <li>
+                <i>Automatic Code Generation</i>: the OBS framework offers <a
+                    HREF="indexGeneratorMetaComponents.html" target="_parent">generator
+                meta-components</a> that can generate new application-specific classes from a
+                high-level specification provided by the designer. The classes thus generated are
+                guaranteed to be plug-compatible with other OBS Framework classes.</li>
+            <li>
+                <i>Aspect Weaving</i>: the OBS framework offers <a
+                    HREF="indexTransformerMetaComponents.html" target="_parent">transformer
+                meta-components</a> that implement aspect programs to perform application-specific
+                modifications upon the base classes provided by the framework.</li>
+        </ul>
+    </Section>
+</Chapter>

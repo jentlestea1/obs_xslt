@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?><html><head><link rel="stylesheet" type="text/css" href="css/main.css"/><link rel="stylesheet" type="text/css" href="css/3col_leftNav.css"/></head><body><div id="header"><h1 id="siteName">OBS Framework </h1><div id="globalNav"><a href="Home.html">Home</a> | <a href="General.html">General</a> | <a href="Implementation.html">Implementation</a> | <a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a> | <a href="http://www.pnp-software.com/ObsFramework/ObsFramework_0_8_3.zip">Download</a> | <a href="indexDisclaimer.html">Disclaimer</a></div><h2 id="pageName">Implementation - Design Patterns</h2></div><div id="navbar"><div id="sectionLinks"><ul><li><a href="indexDomainDictionary.html">Domain Dictionary</a></li><li><a href="indexDesignPatterns.html">Design Patterns</a></li><li><a href="indexAbstractInterfaces.html">Abstract Interfaces</a></li><li><a href="indexConcreteComponents.html">Concrete Components</a></li><li><a href="indexGeneratorMeta-Components.html">Generator Meta-Components</a></li><li><a href="indexTransformerMeta-Components.html">Transformer Meta-Components</a></li><li><a href="indexRealTimeIssues.html">Real Time Issues</a></li><li><a href="indexImplementationIssues.html">Implementation Issues</a></li><li><a href="indexInstallationIssues.html">Installation Issues</a></li><li><a href="indexSourceCode.html">Source Code</a></li><li><a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a></li></ul></div></div><div id="subnavbar"><li><a href="DesignPatternTable.html">- CATALOGUE -</a></li><li><a href="Connection.html">Connection</a></li><li><a href="ControlBlock.html">Control Block</a></li><li><a href="Event.html">Event</a></li><li><a href="FDIRCheck.html">FDIR Check</a></li><li><a href="FSM.html">FSM</a></li><li><a href="Manager.html">Manager</a></li><li><a href="ManoeuvreManagement.html">Manoeuvre Management</a></li><li><a href="ModeManagement.html">Mode Management</a></li><li><a href="OperatingSystemInterface.html">Operating System Interface</a></li><li><a href="ParameterDatabase.html">Parameter Database</a></li><li><a href="PunctualAction.html">Punctual Action</a></li><li><a href="RecoveryAction.html">Recovery Action</a></li><li><a href="ReconfigurationManagement.html">Reconfiguration Management</a></li><li><a href="SharedData.html">Shared Data</a></li><li><a href="TelecommandManagement.html">Telecommand Management</a></li><li><a href="Telemeterable.html">Telemeterable</a></li><li><a href="TelemetryManagement.html">Telemetry Management</a></li><li><a href="TelemetryStream.html">Telemetry Stream</a></li><li><a href="TelemetryItem.html">Telemetry Item</a></li><li><a href="Trace.html">Trace</a></li><li><a href="VariableMonitoring.html">Variable Monitoring</a></li></div><div id="content"><p><H4>Event
+        Design Pattern
+         </H4></p><p><H3><b>Intent</b></H3></p><p>
+Allow application components to create and share reports describing synchronous or asynchronous occurrences
+together with any data associated to them.
+</p><p><H3><b>Based On</b></H3></p><p>
+This pattern is derived from the <i>shared event design pattern</i> of the <A href="http://www.aut.ee.ethz.ch/~pasetti/AocsFramework/index.html">AOCS
+Framework</A> (see also: A. Pasetti, <I>Embedded Control Systems and Software
+Frameworks</I>, Springer-Verlag, 2002).
+</p><p><H3><b>Motivation</b></H3></p><p>
+<p>Most on-board applications have requirements that the occurrence of special "events" like the reception of a telecommand, the detection of a failure, the execution of a reconfiguration, a change in operational mode, etc, should be recorded in a dedicated memory area - variously called event buffer or history area - to be available for downloading to the ground. The recording of events can usually be dynamically enabled and disabled either in toto or only with respect to selected categories of events.
+</p><p>
+Implementation of these requirements is usually through a dedicated C module or Ada package that represents the history area or event buffer and that offers operations through which other modules can either create new events or can retrieve them for processing. This solution is not reusable because of the diversity in the format of the information that is associated to each event and because of the variation in the type of operations that must be performed upon them and upon the event history area.
+</p><p>
+The event pattern proposes a reusable solution to the problem of creating and sharing access to events in an on-board system.
+</p><p>
+The pattern can additionally be more generally applied wherever there is a need to record and buffer on-board data. In some applications, for instance, there is a need to periodically store the values of certain variables that are operated upon by the OBS. Usually, only the most recent updates of the variables are required. Such a service is conceptually similar to the history service and, like it, can be subsumed under the event storage service covered by the event design pattern with the only (non-important) difference that the generation events are periodic rather than sporadic (as in the case of the history service) and the events carry more data (in the case of the history service they only have a type identifier).
+</p>
+</p><H3><b>Dictionary Entries</b></H3><p>The following abstractions or domain-wide concepts are defined to support the
+        implementation of this design pattern:</p><ul><li><i><a HREF="domainDictionaryEvent.html">Event</a></i></li><li><i><a HREF="domainDictionaryEventRepository.html">Event Repository</a></i></li></ul><p><H3><b>Structure</b></H3></p><p>
+<p>
+The event design pattern represents the event abstraction as a class <CODE>Event</CODE> that defines the invariant properties of events. Adaptation of the format and content of an event report is achieved by subclassing the <CODE>Event</CODE> class. Event reports are encapsulated in instances of classes indirectly derived from class Event.
+</p><p>
+The event repository abstraction is instead represented as a class <CODE>EventRepository</CODE> that defines the basic operations that can be performed on generic events.
+</p><p>
+Components that need to create, inspect or process events do so exclusively through an event repository. To each concrete event class, a corresponding event repository class must be associated that is obtained by inheritance from <CODE>EventRepository</CODE>. Note that the client using the services offered by the event repository sees the specific event repository subclass rather than the base class <CODE>EventRepository</CODE>. In other design patterns presented in the OBS catalogue, inheritance is used to decouple a user of a service from its implementation. In such cases, the base class is typically abstract (sometimes, it is an abstract interface). In the present case instead, inheritance is used to provide a base implementation of some services that can be reused by more specific subclasses.
+</p>
+</p><p><center><img src="../figures/gif/EventDP.gif"/></center></p><H3><b>Participants</b></H3><ul><li><CODE>Client</CODE>:  <Role>The component that needs to create or retrieve an event report.</Role></li><li><CODE>EventRepository</CODE>:  <Role>The component that defines and implements the basic operations that can be performed on generic event repositories.</Role></li><li><CODE>SpecificEventRepository</CODE>:  <Role>Event repository that stores events of type <CODE>SpecificEvent</CODE>. It modifies the operations defined by its base class to suit the needs of <CODE>SpecificEvent</CODE>. </Role></li><li><CODE>Event</CODE>:  <Role>Component that defines the basic attributes of events that are applicable to all types of events (e.g. event type identifier, time stamp identifying the time when the event was created, etc)</Role></li><li><CODE>SpecificEvent</CODE>:  <Role>Component that adds application-specific attributes to the base event components</Role></li></ul><p><H3><b>Collaborations</b></H3></p><p>
+The typical operational scenarios for this design pattern are:<ul>
+<li>Components that may need to create event reports, hold a reference to the relevant event repository and create an event report by calling the <CODE>create</CODE> method on it.</li>
+<li>Components that may need to retrieve the event reports, hold a reference to the relevant event repository and use its iterator methods to retrieve all event reports in sequence.</li>
+<li>Components that may need to enable or disable the storage of event reports call the enable/disable methods on the corresponding event repository.</li>
+</ul>
+</p><H3><b>Consequences</b></H3><ul><li>
+Clients are decoupled from the logic for the management of the event reports that is confined to the event repository.
+</li><li>
+Handling of requests to disable/enable storage of event reports is centralized in the event repository. Clients always call the <CODE>create</CODE> operation when the conditions for the creation of an event report have occurred but the event report is actually created only if the event repository is enabled.
+</li><li>
+Applications that need to handle event reports, can reuse the base event repository and event classes. Application-specific features are added by subclassing these classes and adding the new features to them.
+</li><li>
+If an application needs to handle several categories of events, it will need to create several event repositories.
+</li></ul><p><H3><b>Applicability</b></H3></p><p>
+This design pattern is useful when:<ul>
+<li>components in an application need to be able to create and process reports describing event-like occurrences</li>
+<li>it is necessary to be able to vary the information attached to each event report</li>
+</ul>
+</p><H3><b>Implementation Issues</b></H3><p>
+In an on-board setting where dynamic memory allocation is not possible, the events objects inside the event repository would normally be stored in a FIFO queue of fixed size that is pre-defined when the event repository is created. When the capacity of the queue is exhausted the oldest event is overwritten.
+</p><p>
+What do clients that wish to retrieve an event report from an event repository get? Giving them a reference to an event is not safe because events are stored in a FIFO queue and can potentially be overwritten. It is safer to return copies of event objects or alternatively to return the values of the individual attributes associated to the event.
+</p><p>
+The signature of the <CODE>create</CODE> method in the event repositories depends on the attributes that are associated to each event. This is the primary reason why the creation of a new event subclass (which is defined by an expanded set of attributes) normally requires the creation of a corresponding event repository subclass with a <CODE>create</CODE> method that matches the attributes of the new event subclass.
+</p><p>
+Concrete event repositories will often differ only by the type of the concrete events that they store. Concrete event repositories are therefore often implemented using a mechanism like C++ templates.
+</p><p>
+In many cases, the basic attributes defined by the base class <CODE>Event</CODE> will be sufficient and an application will not need to develop new event and event repository components.
+</p><H3><b>OBS Framework Mapping</b></H3><p>The implementation of this design pattern in the OBS Framework is supported by
+        the following classes:</p><ul><li><i>Event</i>component --&gt; <CODE><a href="doxygen/html/classDC__Event.html">DC_Event</a></CODE></li><li><i>EventRepository</i>component --&gt; <CODE><a href="doxygen/html/classDC__EventRepository.html">DC_EventRepository</a></CODE></li></ul><a NAME="#SampleCode"><p><H3><b>Sample Code</b></H3></p></a><p>
+<p>
+Consider an application that has a requirement that event reports be generated when certain events occur. Usually, the only information that events must carry is an identifier that specifies the type of event that has occurred. This application can directly use the <CODE>EventRepository</CODE> and <CODE>Event</CODE> components.
+</p><p>
+The event repository interface could be defined as follows:
+<PRE>	
+    class EventRepository {
+
+        // add an event of type evtType to the repository
+        void create(int evtType);
+
+        // enable and disable storage of events
+        void enable();
+        void disable();
+
+        // reset event repository
+        void reset();
+
+        // iterate through events and return event types of stored events
+        int getOldestEvt();
+        int getNextEvt();
+        bool isLastEvt();
+    }
+</PRE>
+
+Note that the <CODE>create</CODE> method does not take the time stamp as an argument because this is directly added to the event report by the creation mechanism and therefore does not need to be supplied by the client.
+</p><p>
+With the above event repository interface, the implementation of a hypothetical requirement that states that the rejection of an invalid telecommand must be recorded in the history area becomes:</p>
+<PRE>
+    EventRepository* rep;
+        . . .
+        if (TC is invalid)
+            rep.create(INVALID_TC);
+        . . .     
+</PRE>
+<p>
+The module performing the check on the telecommand validity holds a reference to the event repository. If the telecommand check fails, the module records the failure by calling the <CODE>create</CODE> method on the event repository. It passes to it a constant that identifies the type of the event. Note that whether or not a new event is actually created inside the repository depends on whether the event creation is disabled or enabled in the event repository. The telecommand checking code however needs not be concerned about the enable status which is handled internally to the event repository.
+</p><p>
+As a second example, consider requirements that control the collection of history area data for inclusion in telemetry. These requirements could be implemented as follows: </p>
+<PRE>    EventRepository* rep;
+    . . .
+    // Retrieve all events from the repository
+    for (evtType=rep.getOldestEvt(); !isLastEvt();evtType=rep.getNextEvt())
+    . . .    // format and store event type in TM buffer; 
+</PRE>
+<p>
+As defined here, the iterator methods return the type of the event. In a different implementation, the iterators could return
+objects representing copies of the events stored in the repository. Collection of telemetry data from the event repository could
+also be done using the <a HREF="Telemeterable.html">telemeterable design pattern</a> in which case component
+<CODE>EventRepository</CODE> would have
+to implement interface
+<CODE>Telemeterable</CODE>.
+</p><p>
+As a third example, consider a requirement that states that a telecommand may lead to logging of history data being stopped. Execution of this telecommand could be implemented as follows:</p>
+<PRE>
+    EventRepository* rep;
+        . . .
+    // Execute telecommand to stop logging of history data
+    rep.disable();   
+</PRE>
+
+<p>Note that in all the above examples, the user code is written uniquely in terms of a reference to the event repository. Changes to the implementation of the event repository have no impact on the user code. It would also be possible for different parts of an application to use different event repositories without repercussions at user code level.
+</p><p>
+As a fourth and final example consider an controller application where there a requirement that the controller data generated in the last N cycles be stored for possible inspection by the ground. Usage of the event pattern in this case would require the definition of a new event class that can hold the controller data:   </p>
+<PRE>	
+    class ControllerEvent : Event {
+        float[N] controllerData;
+
+        ControllerEvent(int evtType, float[] rd) : Event (evtType) {
+            controllerData = rd;
+        }
+    }
+</PRE>
+<p>
+This class adds to the basic event class a field to hold the controller data. Its associated event repository class would look like this:</p>
+<PRE>
+    class ControllerEventRepository : EventRepository {
+
+        // add an event of type ControllerEvent to the repository
+        void create(int evtType, float[] rd);
+
+    }
+</PRE>
+<p>
+Thus, the new event repository class modifies its base class by adding a create method that takes as its parameters the parameters required to define a controller event. Its other methods are the same as those of the base class. They can  be inherited without changes and need not be re-implemented.
+</p>
+</p><p><H3><b>Remarks</b></H3></p><p>
+None
+</p><p><H3><b>Author</b></H3></p><p>
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+</p><p><H3><b>Last Modified</b></H3></p><p>
+2003-12-01
+</p></div><div id="siteInfo"><a href="mailto:pasetti@control.ee.ethz.ch, cechti@control.ee.ethz.ch">Contact Us</a> | The OBS Framework Project</div></body></html>

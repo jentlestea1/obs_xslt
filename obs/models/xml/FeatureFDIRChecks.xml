@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:/D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="FDIRChecks">
+            <Feature nameOfFeature="PunctualAction">
+                  <Description text="An FDIR Check"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                  <Type>
+                        <BuildingBlock><Component status="provided" type="FDIR/DC_FdirCheck"/>
+                        </BuildingBlock>
+                  </Type>
+                  <Group nameOfGroup="OptionalAttributes">
+                        <Description text="The optional attributes of the FDIR Check"/>
+                        <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                        <Feature nameOfFeature="FdirCheckInitialEnableStatus">
+                              <Description text="The FDIR Check has a non-default initial enable status"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="string" name="Enabled">
+                                                <Enumeration>
+                                                      <Item value="ENABLED"/>
+                                                      <Item value="DISABLED"/>
+                                                </Enumeration>
+                                          </Property>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                  </Group>
+                  <Group nameOfGroup="MandatoryAttributes">
+                        <Description text="The punctual action and the recovery actions associated to the FDIR Check"/>
+                        <GroupComment text="Constraint: There can only be one punctual action associated to an FDIR Check"/>
+                        <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                        <CallMacro nameOfCalledMacro="PunctualActions"/>
+                        <CallMacro nameOfCalledMacro="RecoveryActions"/>
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>

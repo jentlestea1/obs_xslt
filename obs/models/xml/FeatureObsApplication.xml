@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+    <Feature nameOfFeature="ObsApplication">
+        <Description text="The top-level feature representing an application instantiated from the OBS Framework"/>
+        <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+        <Type>
+            <Composite/>
+        </Type>
+        <Group nameOfGroup="FSM">
+            <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+            <CallMacro nameOfCalledMacro="FSM"/>
+        </Group>
+        <Group nameOfGroup="DataItems">
+            <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+            <CallMacro nameOfCalledMacro="DataItems"/>
+        </Group>
+        <Group nameOfGroup="DataPool">
+            <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+            <CallMacro nameOfCalledMacro="DataPool"/>
+        </Group>
+        <Group nameOfGroup="ControllerManagement">
+            <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+            <CallMacro nameOfCalledMacro="ControllerManagement"/>
+        </Group>
+        <Group nameOfGroup="ParameterDatabase">
+            <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+            <CallMacro nameOfCalledMacro="ParameterDatabase"/>
+        </Group>
+        <Group nameOfGroup="ManoeuvreManagement">
+            <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+            <CallMacro nameOfCalledMacro="ManoeuvreManagement"/>
+        </Group>
+        <Group nameOfGroup="TelecommandManagement">
+            <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+            <CallMacro nameOfCalledMacro="TelecommandManagement"/>
+        </Group>
+        <Group nameOfGroup="TelemetryManagement">
+            <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+            <CallMacro nameOfCalledMacro="TelemetryManagement"/>
+        </Group>
+        <Group nameOfGroup="FDIRManagement">
+            <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+            <CallMacro nameOfCalledMacro="FDIRManagement"/>
+        </Group>
+        <Group nameOfGroup="PunctualActions">
+            <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+            <CallMacro nameOfCalledMacro="PunctualActions"/>
+        </Group>
+        <Group nameOfGroup="ObsClock">
+            <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+            <CallMacro nameOfCalledMacro="ObsClock"/>
+        </Group>
+        <Group nameOfGroup="EventRepository">
+            <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+            <CallMacro nameOfCalledMacro="EventRepository"/>
+        </Group>
+        <Group nameOfGroup="Tracer">
+            <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+            <CallMacro nameOfCalledMacro="Tracer"/>
+        </Group>
+    </Feature>
+</FrameworkFeatureModel>

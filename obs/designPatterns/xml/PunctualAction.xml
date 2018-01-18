@@ -1,0 +1,157 @@
+<DesignPattern>
+
+<Name>
+Punctual Action
+</Name>
+
+<BasedOn>
+This pattern is based on the principle of abstract coupling.
+</BasedOn>
+
+<Intent>
+Offer a solution to the problem of encapsulating, performing, and managing generic
+punctual actions.
+</Intent>
+
+<Motivation>
+The term <i>punctual action</i> is used to described a one-shot action, namely an action that
+nominally should start and complete immediately. A punctual action is in contrast to
+an extended action that is started at a certain point in time and that is due to
+be executed over a period of time. The OBS Environment offers the <a href="ManoeuvreManagement.html">
+manoeuvre management design pattern</a> to handle extended action. The present pattern
+instead helps manage punctual actions.
+<p/>
+Punctual actions are very common in embedded control systems in general. Examples include:<ul>
+<li>The exection of a fault detection check</li>
+<li>The propagation of the state of digital filer</li>
+<li>The reconfiguration of internal resources</li>
+</ul>
+This design pattern offers a unified way of handling these types of actions.
+</Motivation>
+
+<DictionaryEntry>Punctual Action</DictionaryEntry>
+<DictionaryEntry>Conditional Punctual Action</DictionaryEntry>
+
+<Structure>
+The class diagram below shows the very basic type of punctual action. A punctual
+action is characterized by an abstract interface defining a generic <code>execute</code>
+methods. Concrete subclasses define the concrete action to be performed by encoding it
+in their version of the <code>execute</code> method.
+<p/>
+Such a basic implementation is useful to decouple a client who will normally be
+responsible for managing a set of punctual actions from the implementation of the
+punctual actions. More useful versions of punctual actions can be obtained by
+turning <code>PunctualAction</code> into an abstract class which, in addition to
+defining an abstract <code>execute</code> method, also defines some invariant
+functionalities that are useful to all concrete punctual actions. Some examples
+are discussed in the "implementation" section below.
+</Structure>
+
+<StructureFigure>PunctualActionDP</StructureFigure>
+
+<Participant>
+<Name>Client</Name>
+<Role>The component that is in charge of managing the punctual actions.</Role>
+</Participant>
+
+<Participant>
+<Name>PunctualAction</Name>
+<Role>Abstract interface characterizing a generic punctual action.</Role>
+</Participant>
+
+<Participant>
+<Name>ConcretePunctualAction</Name>
+<Role>The component encapsulating a specific punctual action.</Role>
+</Participant>
+
+<Collaborations>
+A typical operational scenario for this design pattern is:<ul>
+<li>During the initialization phase, client component is loaded with several
+punctual action components which it sees only through the generic <code>PunctualAction</code>
+interface.</li>
+<li>During the operational phase, the client component executes the punctual actions
+by calling their <code>execute</code> method. The client is shielded from the
+knowledge of how the punctual actions are implemented.</li>
+<li>During the operational phase, the client may be dynamically reconfigured with
+additional punctual actions or some of its punctual actions may be replaced.</li>
+</ul>
+</Collaborations>
+
+<Consequence>
+It is easier to design a reusable component that is responsible for managing
+a set of punctual actions.
+</Consequence>
+<Consequence>
+It is easier to change punctual actions at run-time with minimal disruptions to
+the normal flow of control.
+</Consequence>
+<Consequence>
+There is a risk of proliferations of small classes as every punctual action
+requires definition and implementation of a dedicated class.
+</Consequence>
+
+<Applicability>
+An application must manage a large number of punctual actions and there is a need
+to decouple their management from their implementation (for instance to allow
+flexibility in changing the implementation at run time or because their exact
+definition is only known late in the software development process).
+</Applicability>
+
+<ImplementationIssue>
+The usefulness of the punctual action concept can be increased by turning
+<code>PunctualAction</code> into a base abstract class that implements
+application-independent functionalities such as management of enable/disable
+status of management of conditional execution checks. An example is shown in
+the class diagram below. The base class <code>PunctualAction</code> implements
+a punctual action that can be disabled or enabled and whose execution is subject
+to passing an <i>exectuion check</i>. The <i>implementation</i> of the execution check
+is left to concrete subclasses. Its <i>management</i> is instead performed by
+the base class and is thus reusable.
+<p/>    
+<ClassDiagram>ConditionalPunctualAction</ClassDiagram>
+</ImplementationIssue>
+
+<ImplementationIssue>
+The punctual action concept can be useful to implement many of the concepts proposed
+by other patterns in the OBS Environment. Telecommands (see the
+<a href="TelecommandManagement.html">Telecommand Management Design Pattern</a>),
+recovery actions (see <a HREF="RecoveryAction.html">recovery action design pattern</a>)
+and FsmEvents (see <a HREF="FSM.html">finite state machine pattern</a>) are examples
+of actions that must be executed in one shot in
+response to the occurrence of some external circumstance. As such, all three could
+be implemented as instances of punctual actions resulting in the class diagram
+shown below.
+<p/>    
+<ClassDiagram>PunctualActionClassHierarchy</ClassDiagram>
+</ImplementationIssue>
+
+<FrameworkMapping>
+  <Name>PunctualAction</Name>
+  <Type>abstract interface</Type>
+  <FrameworkClass>PunctualAction</FrameworkClass>
+  <FrameworkClass>ConditionalPunctualAction</FrameworkClass>
+</FrameworkMapping>
+
+
+<SampleCode>
+As already noted, telecommands (see the
+<a href="TelecommandManagement.html">Telecommand Management Design Pattern</a>),
+recovery actions (see <a HREF="RecoveryAction.html">recovery action design pattern</a>)
+and FsmEvents (see <a HREF="FSM.html">finite state machine pattern</a>) are examples
+of punctual actions. The sample code sections of their design patterns give
+examples of how punctual actions can be implemented.
+</SampleCode>
+
+<Remarks>
+None
+</Remarks>
+
+<LastModified>
+2003-07-30
+</LastModified>
+
+<Author>
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+</Author>
+
+</DesignPattern>

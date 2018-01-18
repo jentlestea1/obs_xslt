@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:/D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="ObsClock">
+            <Feature nameOfFeature="ObsClock">
+                  <Description text="The OBS Clock"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type>
+                        <BuildingBlock>
+                              <Interface status="provided" type="System/ObsClock"/>
+                        </BuildingBlock>
+                  </Type>
+                  <Group nameOfGroup="Options">
+                        <Description text="The generic OBS Clock components foreseen by the framework"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="CustomObsClock">
+                              <Description text="An application-specific OBS Clock"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="missing"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="DefaultAttributes">
+                                    <Description text="The default attributes of a custom OBS Clock"/>
+                                    <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                    <CallMacro nameOfCalledMacro="DefaultAttributes"/>
+                              </Group>
+                        </Feature>
+                        <Feature nameOfFeature="DummyObsClock">
+                              <Description text="A dummy OBS Clock"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="provided" type="System/DC_DummyObsClock"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="Attributes">
+                                    <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                                    <Feature nameOfFeature="DummyTime">
+                                          <Description text="The time returned by the dummy clock"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type><Attribute><Property status="provided" type="int" name="Time"/></Attribute></Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="DummyCycle">
+                                          <Description text="The cycle returned by the dummy clock"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type><Attribute><Property status="provided" type="int" name="Cycle"/></Attribute></Type>
+                                    </Feature>
+                              </Group>
+                              
+                        </Feature>
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>

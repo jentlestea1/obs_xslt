@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Chapter>
+    <Title> Qualification Approach </Title>
+    <Author>
+        <Name> A. Pasetti </Name>
+        <Affiliation>
+            <a HREF="http://www.pnp-software.com">P&amp;P Software</a>
+        </Affiliation>
+        <EMail> pasetti@pnp-software.com </EMail>
+    </Author>
+    <LastModified> 2003-12-05 </LastModified>
+    <Introduction>
+        <p>Applications instantiated from the OBS Framework will often have to undergo a
+            qualification process. The direct qualification of the OBS Framework is not possile for
+            two reasons. Firstly, different applications will need different levels of
+            qualifications or will need qualifications to be performed with respect to different
+            standards. Secondly, some of the building blocks offered by the framework, notably its
+            meta-components and its design patterns, would be very difficult to qualify because of
+            the lack of experience in the qualification of this type of software constructs. Hence,
+            the OBS Framework puts the emphasis less on <i>qualitification</i> than on
+            <i>qualifiability</i> in the sense that it tries to implement mechanisms and to provide
+            evidence that will facilitate the qualification of applications that use its assets.
+            This page describes these mechanisms and this evidence.</p>
+    </Introduction>
+    <Section Title="Cpp Code Quality">
+        <p>One important step taken to ensure the ease of qualification of applications that are
+            instantiated from the OBS Framework concerns the precautions that were taken to enhance
+            the quality of the code in the <a HREF="indexConcreteComponents.html"
+                target="_parent">concrete components</a> and <a HREF="indexAbstractInterfaces.html"
+                target="_parent">abstract interfaces</a> provided by the framework. These
+            precautions fall under three headings:</p>
+        <ul>
+            <li>The syntactical constructs used in the coding are restricted to a small subset of
+                the full C++ language</li>
+            <li>Coding rules are used that are designed to increase the robustness of the code</li>
+            <li>Naming convention are used that are designed to increase the readability of the code</li>
+        </ul>
+        <p>The <a href="LanguageSubset.html">language subset</a> was selected to exclude any
+            constructs that are not safe, or that might lead to ambiguous code, or that might
+            introduce high memory and execution overheads. The language subset used for the
+            frameworks is intended to be within the <a href="http://www.caravan.net">EC++
+            subset</a>. However, formal compliance could not be confirmed because the framework code
+            was not compiled with an EC++ compiler.</p>
+        <p>Coding rules were defined for the OBS framework with the intention of:</p>
+        <ul>
+            <li>reducing the likelihood that coding errors are introduced</li>
+            <li>improving the likelihood that coding errors are caught during review or debugging</li>
+            <li>improving the readability of the code</li>
+            <li>reducing the size of the generated code</li>
+            <li>improving the efficiency of the code</li>
+        </ul>
+        <p>The coding rules adopted in the OBS Frameworks are divided into two categories. Firstly,
+            some rules were taken from the coding rules defined in issue 1 of the "C and C++ Coding
+            Standard" prepared by the ESA Board for Software Standardisation and Control (BSSC). A
+                <a href="ComplianceWithEsaCodingStandard.html">compliance matrix</a> has been
+            constructed to define which of the rules in the ESA standard have been adopted and to
+            justify the rejection or modification of some of the others. Secondly, other rules were
+            defined specifically for the OBS frameworks. They represent the <a
+                href="ProjectSpecificCodingRules.html">project-specific coding rules</a>.</p>
+        <p>The <a href="ProjectSpecificNamingConventions.html">naming conventions</a> adopted in the
+            OBS framework are introduced to improve the readability of the code.</p>
+    </Section>
+    <Section Title="Cpp Code Documentation">
+        <p>The code in the <a HREF="indexConcreteComponents.html" target="_parent">concrete
+            components</a> and <a HREF="indexAbstractInterfaces.html" target="_parent">abstract
+            interfaces</a> provided by the OBS Framework is documented to a very high standard and
+            to a very high level of detail. All classes and all public and protected fields are
+            documented according to the standard that is usual in Java applications and using a
+            JavaDoc-style. The documentation is directly embedded in the code which helps minimizes
+            the danger of the code and its documentation going of synch (see the description of the
+                <a href="indexSourceCode.html#CppCodeDocumentation">code documentation approach</a>).</p>
+    </Section>
+    <Section Title="Test Suite">
+        <p>The framework code is delivered with a set of test cases. Each test case is aimed at one
+            single framework component and is designed to exercise a subset of the component
+            functionalities. There is at least one test case for each framework component and some
+            components have more than one test case associated to it.</p>
+        <p>Each test case is encapsulated in a C++ class that directly or indirectly inherits from
+            class <a href="doxygen/html/classTestCase.html">
+                <code>TestCase</code>
+            </a>. The specific tests performed by a test cases are listed in the class comment
+            (click <a href="doxygen/html/classTestCaseFSM__1.html">here</a> for an example). This
+            information can be used to build test coverage matrices.</p>
+        <p>A program is provided to run all the test cases in sequence. This program is
+            called<i>RegressionTest</i>. The regression test program generates as an output a test
+            report that describes the outcome of each test case. The test report is organized as an
+            HTML file with hyperlinks to the test cases (click <a
+            href="doxygen/html/RegressionTestReport.html">here</a> for an example). The test cases
+            aim at full statement coverage of the OBS Framework code. The current level of test
+            coverage is over 90%. Test coverage is measured with the <a
+            href="http://gcc.gnu.org/onlinedocs/gcc-3.0/gcc_8.html#SEC132">gcov</a> tool from the
+            gcc tool set.</p>
+    </Section>
+    <Section Title="Formal Application Model">
+        <p>The <a href="indexModellingApproach.html">modelling approach</a> adopted by the OBS
+            Framework allows a formal model of an application to be instantiated from the OBS
+            Framework to be built as an XML file and to be validated against an XSD schema. This
+            model can be used as a formal specification of the application. Its formal character
+            helps avoid ambiguities and paves the way to the execution of automatic checks on the
+            correctness of the specifications.</p>
+        <p>The XML-based application model can be used to drive the generation of
+            application-specific code by the meta-components. This gives application designers the
+            option to have an automatic generation of the final code - and possibly of an entire
+            application - from its specifications.</p>
+        <p>Future releases of the OBS Framework will provide tools to support the construction of
+            the application model from the framework model thus further enhancing confidence in the
+            correctness of the framework instantiation process.</p>
+    </Section>
+    <Section Title="Meta Components">
+        <p>The qualification process must normally be applied to the end-code of the user
+            application. The OBS Framework offers five kinds of building blocks. Of these, only two
+            - the abstract interfaces and the concrete components - are intended to be directly
+            included in the end-code of an application instantiated from the framework. Of the
+            remaining types of building blocks, the design patterns do not directly contribute to
+            the final application and are therefore not relevant to the qualification problem
+            whereas the meta-components are used to either modify framework components to adapt them
+            to the needs of a target application or to generate new application-specific components.
+            In respect of the meta-components, two basic approaches are possible:</p>
+        <ul>
+            <li>The meta-components are qualified and this qualification process is regarded as
+                sufficient to guarantee that the modified/generated components are of suitable
+                quality and therefore not in need of a dedicated qualification process</li>
+            <li>Only the modified/generated components are qualified and the meta-components are not
+                subjected to any qualification process.</li>
+        </ul>
+        <p>The OBS Framework takes the second of these two options since qualification of the
+            meta-components is regarded as too difficult to perform in practice. This choice has two
+            consequences. The first and obvious one is that there is no need to qualify the
+            meta-components. The second one is that the quality of the code generated by the
+            meta-components - either as code for a newly generated component or as new code inserted
+            into a modified component - must be such as to make its qualification easy. The
+            meta-components provided by the OBS Framework are intended to satisfy this constraint in
+            the sense that the code they generate:</p>
+        <ul>
+            <li>complies with the same <a href="#CppCodeQuality">coding rules</a> laid down for
+                manually written code</li>
+            <li>adheres to the same <a href="#CppCodeQuality">language subset</a> specified for
+                manually written code</li>
+            <li>is commented to the same level as manually written code</li>
+        </ul>
+        <p>The last point in particular implies that the detailed documentation for the
+            generated/modified components can be automatically generated by using the doxygen
+            facility as is done for all OBS Framework components (see the discussion of the <a
+                href="indexSourceCode.html#CppCodeDocumentation">C++ code documentation</a>).</p>
+    </Section>
+    <Section Title="Software Documentation">
+        <p>The OBS Framework supports the software documentation process for applications
+            instantiated from it by structuring the information it offers in such a way as to allow
+            its use within application software documents. More specifically, it is expected that
+            application developers can either directly include documentation items provided by the
+            OBS Frameworks in their documents or can make these items applicable by referring to
+            them through hyperlinks. It should also be noted that all of the raw information offered
+            by the OBS Environment is encoded in XML files. The OBS Frameworks provides XSLT
+            programs that render them as HTML documents but users with special documentation
+            requirements can modify the XSLT programs to generate documents in other formats (e.g.
+            PDF) or with other layouts.</p>
+        <p>The type of documentation items that can be used by application developers and their mode
+            of usage depend on the software development process. However some guidelines are as follows:</p>
+        <ul>
+            <li>
+                <i>User Requirements</i>: the terms in the <a href="indexDomainDictionary.html"
+                    target="_parent">domain dictionary</a> can be used to help formulate the user
+                requirements in a manner that is more precise and more concise.</li>
+            <li>
+                <i>Software Logical Model</i>: if an application is based on the use of the OBS
+                Design Patterns to implement certain functionalities, then the design patterns
+                define the logical model for these functionalities. The <a
+                    HREF="indexDesignPatterns.html" target="_parent">design pattern description</a>
+                can be directly included or referred to by the document that specifies the software
+                logical model for the target application.</li>
+            <li>
+                <i>Software Requirements</i>: the application model (see the OBS Framework <a
+                    HREF="indexModellingApproach.html" target="_parent"> modelling approach</a>) can
+                be used as a specification of the target application at software requirement level. </li>
+            <li>
+                <i>Software Detailed Design</i>: applications that are built by using components
+                provided by the OBS Framework can use their component-level documentation (see the
+                OBS Framework <a HREF="indexSourceCode.html#CppCodeDocumenation" target="_parent">
+                    code documentation approach</a>. </li>
+            <li>
+                <i>Unit Level Testing</i>: if an application uses the components provided by the OBS
+                Framework, then it can reuse the <a href="#TestSuite">test cases</a> associated to
+                these components and it can use their documentation as a target for test coverage
+                matrices. This documentation is structured so as to allow precise pin-pointing of
+                specific functionalities under test (see <a
+                href="doxygen/html/classTestCaseDummyManoeuvre__1.html">here</a> for an example).
+                The test report generated by running the regression test can also be included in an
+                application documentation</li>
+        </ul>
+    </Section>
+</Chapter>

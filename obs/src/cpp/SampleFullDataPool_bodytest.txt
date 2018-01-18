@@ -1,0 +1,6 @@
+     
+            
+  Generating code for class DC_SampleFullDataPool in files /Projects/ObsFramework/src/cpp/RegressionTest/TestCaseSampleFullDataPool_1.cpp
+
+  
+  

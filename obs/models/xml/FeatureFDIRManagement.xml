@@ -1,0 +1,23 @@
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="FDIRManagement">
+            <Feature nameOfFeature="FDIRManagement">
+                  <Description text="The application manages one or more FDIR Checks"/>
+                  <FeatureComment text="Mode dependency for FDIR Checks can be realized either using the ModeManager feature, or by attaching the individual 
+                  FDIR Checks (which are punctual actions) to the states of an FSM"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type><Composite/>
+                  </Type>
+                  <Group nameOfGroup="ModeBasedController">
+                        <Description text="FDIR management is mode-based"/>
+                        <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                        <CallMacro nameOfCalledMacro="ModeManager"/>
+                  </Group>
+                  <Group nameOfGroup="FDIRChecks">
+                        <Description text="The FDIR Checks managed by the application"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <CallMacro nameOfCalledMacro="FDIRChecks"/>
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+    <Macro nameOfMacro="RecoveryActions">
+        <Feature nameOfFeature="RecoveryAction">
+            <Description text="A recovery action"/>
+            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+            <Type>
+                <BuildingBlock><Interface status="provided" type="FDIR/RecoveryAction"/></BuildingBlock>
+            </Type>
+            <Group nameOfGroup="OptionalAttributes">
+                <Description text="The optional attributes of the recovery action"/>
+                <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                <Feature nameOfFeature="InitialEnableStatus">
+                    <Description text="The recovery action has a non-default initial enable status"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <Attribute>
+                            <Property status="provided" type="string" name="Enabled">
+                                <Enumeration>
+                                    <Item value="ENABLED"/>
+                                    <Item value="DISABLED"/>
+                                </Enumeration>
+                            </Property>
+                        </Attribute>
+                    </Type>
+                </Feature>
+            </Group>
+            <Group nameOfGroup="Options">
+                <Description text="The recovery actions foreseen by the framework"/>
+                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                <Feature nameOfFeature="Null">
+                    <Description text="A null recovery action that does not do anything"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock><Component status="provided" type="FDIR/DC_NullRecoveryAction"/></BuildingBlock>
+                    </Type>
+                </Feature>
+                <Feature nameOfFeature="Custom">
+                    <Description text="An application-specific recovery action"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock><Component status="missing"/></BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="DefaultAttributes">
+                        <Description text="The default attributes of a custom recovery actions"/>
+                        <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                        <CallMacro nameOfCalledMacro="DefaultAttributes"/>
+                    </Group>
+                </Feature>
+            </Group>
+        </Feature>
+    </Macro>
+</FrameworkFeatureModel>

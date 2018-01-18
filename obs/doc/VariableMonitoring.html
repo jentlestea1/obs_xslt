@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?><html><head><link rel="stylesheet" type="text/css" href="css/main.css"/><link rel="stylesheet" type="text/css" href="css/3col_leftNav.css"/></head><body><div id="header"><h1 id="siteName">OBS Framework </h1><div id="globalNav"><a href="Home.html">Home</a> | <a href="General.html">General</a> | <a href="Implementation.html">Implementation</a> | <a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a> | <a href="http://www.pnp-software.com/ObsFramework/ObsFramework_0_8_3.zip">Download</a> | <a href="indexDisclaimer.html">Disclaimer</a></div><h2 id="pageName">Implementation - Design Patterns</h2></div><div id="navbar"><div id="sectionLinks"><ul><li><a href="indexDomainDictionary.html">Domain Dictionary</a></li><li><a href="indexDesignPatterns.html">Design Patterns</a></li><li><a href="indexAbstractInterfaces.html">Abstract Interfaces</a></li><li><a href="indexConcreteComponents.html">Concrete Components</a></li><li><a href="indexGeneratorMeta-Components.html">Generator Meta-Components</a></li><li><a href="indexTransformerMeta-Components.html">Transformer Meta-Components</a></li><li><a href="indexRealTimeIssues.html">Real Time Issues</a></li><li><a href="indexImplementationIssues.html">Implementation Issues</a></li><li><a href="indexInstallationIssues.html">Installation Issues</a></li><li><a href="indexSourceCode.html">Source Code</a></li><li><a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a></li></ul></div></div><div id="subnavbar"><li><a href="DesignPatternTable.html">- CATALOGUE -</a></li><li><a href="Connection.html">Connection</a></li><li><a href="ControlBlock.html">Control Block</a></li><li><a href="Event.html">Event</a></li><li><a href="FDIRCheck.html">FDIR Check</a></li><li><a href="FSM.html">FSM</a></li><li><a href="Manager.html">Manager</a></li><li><a href="ManoeuvreManagement.html">Manoeuvre Management</a></li><li><a href="ModeManagement.html">Mode Management</a></li><li><a href="OperatingSystemInterface.html">Operating System Interface</a></li><li><a href="ParameterDatabase.html">Parameter Database</a></li><li><a href="PunctualAction.html">Punctual Action</a></li><li><a href="RecoveryAction.html">Recovery Action</a></li><li><a href="ReconfigurationManagement.html">Reconfiguration Management</a></li><li><a href="SharedData.html">Shared Data</a></li><li><a href="TelecommandManagement.html">Telecommand Management</a></li><li><a href="Telemeterable.html">Telemeterable</a></li><li><a href="TelemetryManagement.html">Telemetry Management</a></li><li><a href="TelemetryStream.html">Telemetry Stream</a></li><li><a href="TelemetryItem.html">Telemetry Item</a></li><li><a href="Trace.html">Trace</a></li><li><a href="VariableMonitoring.html">Variable Monitoring</a></li></div><div id="content"><p><H4>Variable Monitoring
+        Design Pattern
+         </H4></p><p><H3><b>Intent</b></H3></p><p>
+Decouple the monitoring of the value of a variable from the time profile against which the monitoring is performed.
+</p><p><H3><b>Based On</b></H3></p><p>
+This pattern is based on the <i>object monitoring design pattern</i> of the <a HREF="http://www.pnp-software.com/AocsFramework/index.html">AOCS Framework</a>.
+</p><p><H3><b>Motivation</b></H3></p><p>
+<p>
+Many OBS applications must be capable of performing a certain amount of failure detection checks. One important
+category of failure detection checks consists in monitoring the value of a variable to ensure that it follows
+a specified <i>time profile</i>. Deviation from this profile may indicate that a failure has occurred. Thus,
+for instance, a typical failure detection test checks that the value of a variable remains within a pre-defined
+range. In this case the time profile is simply given by the range of admissible values. In other case, it may
+be more complex. An example is a check that the output of a sensor should not "jump" by more than a pre-defined
+threshold. The admissible profile is then one where the variations across sampling points are less than the threshold.
+</p><p>
+Most on-board systems have similar requirements: they identify certain variables as in need of monitoring and
+specify for each the type of time profile that they should follow.
+</p><p>
+In most cases, this type of failure detection is performed by hard-coding the profile against which the monitoring
+is to be performed. The code that performs the monitoring thus becomes dependent on the monitoring profile. This
+design pattern allows the two to be separated. A natural extension of the design pattern also allows to decouple the
+monitoring action from the variable to be monitored.
+</p>
+</p><H3><b>Dictionary Entries</b></H3><p>The following abstractions or domain-wide concepts are defined to support the
+        implementation of this design pattern:</p><ul><li><i><a HREF="domainDictionaryMonitoringProfile.html">Monitoring Profile</a></i></li></ul><p><H3><b>Structure</b></H3></p><p>
+<p>
+The variable monitoring design pattern proposes a representation for the monitoring profile abstraction. This
+is represented by the <CODE>MonitoringProfile</CODE> abstract interface. Concrete monitoring profiles are
+implemented as instances of classes that implement <CODE>MonitoringProfile</CODE>.
+</p><p>
+Interface <CODE>MonitoringProfile</CODE> defines a basic operation <CODE>deviatesFromProfile</CODE> that
+takes as an argument the value of the monitored variable and returns true if this value is found to deviate
+from the profile encapsulated in the concrete monitoring profile component. The monitoring of the variable value is
+therefore performed by passing the value of the monitored variable through the monitoring profile filter.
+</p><p>
+There is usually a need to be able to selectively enable and disable a particular deviation check.
+For this purpose, the <CODE>MonitoringProfile</CODE> interface could be endowed with a
+second basic operation to enable and disable the execution of the deviation check.
+</p>
+</p><p><center><img src="../figures/gif/VariableMonitoringDP.gif"/></center></p><H3><b>Participants</b></H3><ul><li><CODE>Client</CODE>:  <Role>The monitor that performs the variable monitoring action.</Role></li><li><CODE>MonitoringProfile</CODE>:  <Role>The abstract interface or base abstract class that defines a generic monitoring profile as
+an entity that is capable of checking whether the value of a variable follows a predefined time profile.
+</Role></li><li><CODE>ConcreteMonitoringProfile</CODE>:  <Role>Component implementing (or derived from) <CODE>MonitoringProfile</CODE> that represents a specific
+and concrete monitoring profile.</Role></li></ul><p><H3><b>Collaborations</b></H3></p><p>
+The typical operational scenario for this design pattern is:
+<ul>
+<li>A monitor that needs to perform a variable monitoring action upon a variable v passes the value of v
+through the check value filter of the monitoring profile component that encapsulates the profile against
+which the monitoring is to be performed. The monitor sees the monitoring profile component as an instance
+of type <CODE>MonitoringProfile</CODE>.</li>
+</ul>
+</p><H3><b>Consequences</b></H3><ul><li>
+Clients are decoupled from the implementation of the monitoring profile: they only see abstract monitoring
+profiles. Changing the concrete monitoring profile has no impact on the client.
+</li><li>
+It is possible to build a library of commonly recurring monitoring profiles and to use them within an
+application as ready-made components.
+</li><li>
+It is necessary to have a dedicated class for each concrete monitoring profile that is required by an application.
+</li></ul><p><H3><b>Applicability</b></H3></p><p>
+This design pattern is useful when:
+<ul>
+<li>components in an application need to monitor the values of certain variables</li>
+<li>it is necessary to be able to vary the time profile against which monitoring is to be performed without
+affecting the components that are responsible for controlling the monitoring action</li>
+</ul>
+</p><H3><b>Implementation Issues</b></H3><p>
+Sometimes, the same variable has to be monitored against several profiles (e.g. it should not exceed certain
+limits and it should not jump by more than a certain threshold). In order to perform sequential checks in a
+systematic manner, it would be useful to have the option of linking monitoring profile components and to have
+an automatic mechanism to let the monitoring be propagated along the chain with <CODE>deviatesFromProfile</CODE>
+returning true if any of the linked monitoring profiles returns true. The structure of the design pattern then
+becomes as shown in the figure. Note that <CODE>MonitoringProfile</CODE> is best implemented as a concrete base
+class because method <CODE>deviatesFromProfile</CODE> can implement the forwarding of the monitoring checks
+along the chain of linked monitoring profile components.
+<p/>
+<H1 ALIGN="center"><img src="../figures/gif/MonitoringProfileExpandedDP.gif"/></H1>
+<p/>
+</p><p>
+Often, detection of a monitoring profile violation should be recorded as an
+<a HREF="domainDictionaryEvent.html">event</a>. In such cases,
+<CODE>MonitoringProfile</CODE> could be implemented as a class and the logic to create the
+event report could be implemented at the level of this base class thus avoiding duplication
+of code in concrete monitoring profile components.
+</p><p>
+Since they are encapsulated in components, monitoring profiles can have memory. Thus, the
+check on the value of a variable can take account not only of its current value but also of
+its previous values.
+</p><p>
+It is useful to have an operation to enable and disable monitoring profiles (a disabled monitoring
+profile will always report: no deviation detected). However, since monitoring profiles can have
+memory, care must be taken when making the transition from disabled to enabled status.
+</p><p>
+This design pattern decouples the monitoring action from the time profile against which monitoring is
+being performed. A higher degree of generality can be achieved by additionally decoupling the monitoring
+action from the variable to be monitored. This can be done by encapsulating variables to be monitored in
+dedicated <code>MonitoredVariable</code> components instantiated from a class defined as follows:
+<PRE>	class MonitoredVariable {
+	  float* p;
+
+	  MonitoredVariable(float* variableToBeMonitored) {
+		p = variableToBeMonitored;
+	  }
+
+	  float getValue() {
+		return *p;
+	  }
+	}</PRE>
+
+This class is a simple wrapper for a pointer to a float variable (it is functionally very similar to
+the <CODE>DataItem</CODE> class of the <a HREF="Connection.html">connection design pattern</a>). Monitoring
+can now be performed in a systematic way on a collection of variables by code that looks as follows:
+<PRE>	MonitoredVariable* varList[N];
+	MonitoringProfile* mpList[N];
+	float value;
+	. . .
+
+	for (int k=1; k&lt;N; k++)
+	{	value = varList[k]-&gt;getValue();
+		if ( mpList[k]-&gt;deviatesFromProfile(value) )
+		    . . . // a monitoring violation has been detected!
+	}</PRE>
+
+Code like that above would typically be found in a failure detection module where several variables have
+to be subjected to systematic surveillance checks. It could form the basis of an application-independent
+failure detection manager component (similar to the one proposed by the
+<a HREF="http://www.pnp-software.com/AocsFramework/index.html">AOCS Framework</a>). The important point
+to stress is that the monitoring code is independent of both the variables that are to be monitored
+(encapsulated in <CODE>Property</CODE> objects) and the profiles against which they have to be monitored
+(encapsulated in <CODE>MonitoringProfile</CODE> objects).
+</p><p>
+The variable monitoring design pattern together with the recovery action design pattern can be used to set
+up a complete FDIR mechanism (FDIR stands for: "failure detection, isolation and recovery"). The monitoring
+profile objects are responsible for detecting potential faults.
+A positive value reported by <CODE>deviatesFromProfile</CODE> would then be used to activate a
+<CODE>RecoveryAction</CODE> component that encapsulate the recovery part of the FDIR logic.
+</p><H3><b>OBS Framework Mapping</b></H3><p>The implementation of this design pattern in the OBS Framework is supported by
+        the following classes:</p><ul><li><i>MonitoringProfile</i>abstract interface --&gt; <CODE><a href="doxygen/html/classMonitoringProfile.html">MonitoringProfile</a></CODE></li></ul><a NAME="#SampleCode"><p><H3><b>Sample Code</b></H3></p></a><p>
+<p>
+Consider an application where failure detection checks are performed by checking that the value of the
+monitored variable is within a pre-specified range. This type of monitoring check could be performed in
+the spirit of the variable monitoring design pattern by a component defined as follows:
+<PRE>	class RangeProfile : MonitoringProfile {
+	  float lowerBound;
+	  float upperBound;
+	  . . .
+	  bool deviatesFromProfile(float v) {
+	    if (v&gt;upperBound) || (v&lt;lowerBound)
+		return true;
+	    else
+		return false;
+	  }
+
+	  void setMonitoringParameters(float l, float u) {
+	    lowerBound = l;
+	    upperBound = u;
+	  }
+	}</PRE>
+
+The code that implements the monitoring check would then look like this:
+<PRE>	MonitoringProfile* mp;
+	. . .
+            // v is the variable to be monitored
+	if (mp-&gt;deviatesFromProfile(v))
+	. . .    // violation of surveillance criterion detected!  </PRE>
+
+Note that this code is independent of the profile against which monitoring is being performed. The
+monitoring profile component is a plug-in component that is loaded during the initialization phase
+and is seen only through its abstract <CODE>MonitoringProfile</CODE> interface.
+</p><p>
+If the monitoring check is part of an FDIR logic, then a recovery action component should be associated
+to the monitoring profile component and the check would be performed as follows:
+<PRE>	MonitoringProfile* mp;
+	RecoveryAction* ra;
+	. . .
+            // v is the variable to be monitored
+	if (mp-&gt;deviatesFromProfile(v))
+		ra-&gt;doRecovery();</PRE>
+
+Thus, the monitoring profile component encapsulates the failure detection part of the FDIR logic.
+Its job is to catch deviation from nominal behaviour. Such deviations are, by definition, considered
+as a fault. The response to the fault is encapsulated in the recovery action component. This response
+may range in complexity from doing nothing (for instance, if the fault is judged to be sporadic) to
+launching complex manoeuvres. The important point to stress is that the complexity of both the fault
+detection and fault recovery procedure is hidden behind the abstract interfaces <CODE>MonitoringProfile</CODE>
+and <CODE>RecoveryAction</CODE>. Thus, the above code remains the same regardless of which particular fault
+detection and fault recovery logic is being applied.
+</p>
+</p><p><H3><b>Remarks</b></H3></p><p>
+None
+</p><p><H3><b>Author</b></H3></p><p>
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+</p><p><H3><b>Last Modified</b></H3></p><p>
+2003-06-01
+</p></div><div id="siteInfo"><a href="mailto:pasetti@control.ee.ethz.ch, cechti@control.ee.ethz.ch">Contact Us</a> | The OBS Framework Project</div></body></html>

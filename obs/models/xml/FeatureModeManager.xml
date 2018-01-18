@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="ModeManager">
+            <Feature nameOfFeature="ModeManager">
+                  <Description text="There is a dependency on operational mode controlled by a mode manager"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type>
+                        <BuildingBlock>
+                              <Interface status="provided" type="Base/ModeManager"/>
+                        </BuildingBlock>
+                  </Type>
+                  <Group nameOfGroup="MandatoryAttributes">
+                        <Description text="The mandatory mode-related attributes"/>
+                        <GroupCardinality GroupCardMin="3" GroupCardMax="3"/>
+                        <Feature nameOfFeature="Mode">
+                              <Description text="The name of an operational mode"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="string"/>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="DefaultMode">
+                              <Description text="The name of the default mode"/>
+                              <FeatureComment text="Constraint: this name must match one of the mode names"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="string" name="DefaultMode"/>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="ModeUpdatePolicy">
+                              <Description text="The policy used to switch across modes"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Operation status="generable" name="update"/>
+                                    </Attribute>
+                              </Type>
+                              <Group nameOfGroup="ModeUpdateOptions">
+                                    <Description text="The possible mode update options foreseen by the framework"/>
+                                    <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                    <Feature nameOfFeature="Cyclical">
+                                          <Description text="Modes are cycled through"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute><Functionality status="generable"/></Attribute>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="FSMDriven">
+                                          <Description text="The modes are slaved to the states of an FSM"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute><Functionality status="generable"/></Attribute>
+                                          </Type>
+                                          <Group nameOfGroup="ModeDrivingFSM">
+                                                <Description text="The FSM driving the mode switches"/>
+                                                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                                <Feature nameOfFeature="FSM">
+                                                      <Description text="The name of the mode-driving FSM"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string"/>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                          <Group nameOfGroup="ModeStatePairs">
+                                                <Description text="The mode-FsmState pairs"/>
+                                                <GroupComment text="Constraint: all mode and FsmState names are subject to constraints"/>
+                                                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                                <Feature nameOfFeature="ModeStatePair">
+                                                      <Description text="A mode-FsmState pair"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                                                      <Type>
+                                                            <Composite/>
+                                                      </Type>
+                                                      <Group nameOfGroup="ModeStatePair">
+                                                            <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                                                            <Feature nameOfFeature="ModeName">
+                                                                  <Description text="The name of the FSM mode"></Description>
+                                                                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                                  <Type>
+                                                                        <Attribute>
+                                                                              <Property status="generable" type="string"/>
+                                                                        </Attribute>
+                                                                  </Type>
+                                                            </Feature>
+                                                            <Feature nameOfFeature="FsmStateName">
+                                                                  <Description text="The name of the FsmState"></Description>
+                                                                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                                  <Type>
+                                                                        <Attribute>
+                                                                              <Property status="generable" type="string"/>
+                                                                        </Attribute>
+                                                                  </Type>
+                                                            </Feature>
+                                                      </Group>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                                    <Feature nameOfFeature="Custom">
+                                          <Description text="Application-specific mode update logic"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                               <BuildingBlock><Component status="missing"/></BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="DefaultAttributes">
+                                                <Description text="The default attributes of the application-specific mode manager"/>
+                                                <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                                <CallMacro nameOfCalledMacro="DefaultAttributes"/>
+                                          </Group>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                  </Group>
+                  <Group nameOfGroup="OptionalAttributes">
+                        <Description text="The optional mode-dependent attributes"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="ModeTransitionInhibitions">
+                              <Description text="The mode transitions that are inhibited by default"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Composite/>
+                              </Type>
+                              <Group nameOfGroup="InhibitedModes">
+                                    <Description text="The mode into which transitions are disabled"/>
+                                    <GroupComment text="Constraint: all mode names are subject to constraints"/>
+                                    <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                    <Feature nameOfFeature="InhibitedMode">
+                                          <Description text="A mode into which transition is disabled"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property status="generable" type="string"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>

@@ -1,0 +1,174 @@
+<DesignPattern>
+
+<Name>
+Manager
+</Name>
+
+<BasedOn>
+This pattern is essentially equivalent to the manager
+meta-pattern of the <A
+href="http://www.aut.ee.ethz.ch/~pasetti/AocsFramework/index.html">AOCS
+Framework</A> (see also: A. Pasetti, <I>Embedded Control Systems and Software
+Frameworks</I>, Springer-Verlag, 2002). .
+</BasedOn>
+
+<Intent>
+Provide a solution to the problem of managing
+a functionality that requires the same actions to be
+repeatedly performed on a class of components providing different
+implementations of the functionality itself.
+</Intent>
+
+<Motivation>
+This design pattern is best seen as a meta-pattern that captures the commonalities
+design patterns like the <a href="TelecommandManagement.html">telecommand management
+design pattern</a>, the <a href="ManoeuvreManagement.html">manoeuvre management
+design pattern</a>, and the <a href="TelemetryManagement.html">telemetry management
+design pattern</a>. These design patterns are similar in that they all address
+the problem of organizing the repetive execution of certain actions. In all cases,
+these actions are encapsulated by components that are characterized by a certain
+abstract interface and there is a need to decouple the <i>management</i> of the actions from
+their <i>implementation</i>.
+<p/>
+The purpose of capturing the commonality of the solutions offered by the management
+design patterns mentioned above is that this makes it easier to apply the same type of
+solution to other problems.
+</Motivation>
+
+<DictionaryEntry>Functionality Manager</DictionaryEntry>
+<DictionaryEntry>Functionality Implementer</DictionaryEntry>
+
+<Structure>
+The design pattern assumes that the actions to be repetitively performed
+are defined by an abstract interface <code>FunctionalityImplementer</code>. Components
+that implement this interface are the <i>functionality implementers</i> that encapsulate
+the execution of the actions. The
+introduction of <code>FunctionalityImplementer</code> makes it possible to define an
+application-independent component, the <code>FunctionalityManager</code>, that is responsible
+for managing the execution of the actions. The functionality manager component
+will normally hold a list components of type <code>FunctionalityImplementer</code>
+and will expose an activation operation. When it is activated, the functionality
+manager processes the list of functionality implementers and decide whether or
+not to execute the actions they encapsulate. The decision is taken exclusively in
+terms of the information that is accessible through the <code>FunctionalityImplementer</code>
+abstract interface.
+The logic for processing the functionality implementers is functionality- and
+domain-specific. The functionality manager is therefore reusable for all
+applications within a certain domain.
+<p/>
+In the case of the <a href="ManoeuvreManagement.html">manoeuvre management
+design pattern</a>, for instance, the functionality manager is the
+<code>ManoeuvreManager</code> and the functionality interface is the <code>Manoevre</code>
+interface.
+</Structure>
+
+<StructureFigure>ManagerDP</StructureFigure>
+
+<Participant>
+<Name>FunctionalityManager</Name>
+<Role>The application-independent component that is in charge of managing the
+functionality implementers. The functionality implementers are seen and manipulated
+exclusively through the <code>FunctionalityImplementer</code> abstract interface.</Role>
+</Participant>
+
+<Participant>
+<Name>FunctionalityImplementer</Name>
+<Role>The abstract interface that characterize all functionality implementers.</Role>
+</Participant>
+
+<Participant>
+<Name>FunctImplementer</Name>
+<Role>A concrete functionality implementer.</Role>
+</Participant>
+
+<Collaborations>
+A typical operational scenario for this design pattern is:<ul>
+<li>During the initialization phase, the functionality manager is configured
+with a list of functionality implementers that are loaded as instances of
+abstract interface <code>FunctionalityImplementer</code>.</li>
+<li>During the operational phase, the functionality manager is activated whenever
+the actions encapsulated by the functionality implementers need to be executed.</li>
+<li>The functionality manager may be dynamically reconfigured with new functionality
+implementers or with the removal of currently loaded implementers.</li>
+</ul>
+</Collaborations>
+
+<Consequence>
+It is possible to define an application-independent and reusable component that encapsulates the
+processing logic for the functionality implementers.
+</Consequence>
+<Consequence>
+It is necessary to construct a dedicated class for each type of action that must be
+controlled by the functionality manager.
+</Consequence>
+<Consequence>
+It must be possible to capture all the essential information about the actions to be
+controlled by the functionality manager in a single abstract interface (the
+<code>FunctionalityImplementer</code>). This will
+sometimes cause this abstract interface to be overcomplex.
+</Consequence>
+
+<Applicability>
+There is a need to control the repetitive execution of actions that are sufficiently similar
+to allow their characteristics to be captured by an abstract interface.
+</Applicability>
+
+<ImplementationIssue>
+Implementations will often combine the manager pattern with the <a href="ModeManagement.html">mode
+management pattern</a>. This will be necessary when the list of functionality
+implementers must be changed on a periodic basis or in response to changes in
+operational conditions. The implementation section of the
+<a href="TelemetryManagement.html">telemetry management design pattern</a> gives
+a concrete example of how the two design patterns can be combined.
+</ImplementationIssue>
+
+<ImplementationIssue>
+The logic implemented in the functionality manager can be very complex. The functionality
+manager can query the implementers for information about their internal state and
+can process this information in order to decide whih actions to perform upon the
+functionality implementers. The important point of the design pattern is that
+everything the functionality manager does must be done exclusively through the
+<code>FunctionalityImplementer</code> abstract interface.
+</ImplementationIssue>
+
+<FrameworkMapping>
+  <Name>FunctionalityManager</Name>
+  <Type>component</Type>
+  <FrameworkClass>CC_TelemetryManager</FrameworkClass>
+  <FrameworkClass>CC_TelecommandManager</FrameworkClass>
+  <FrameworkClass>CC_PunctualActionManager</FrameworkClass>
+  <FrameworkClass>CC_ManoeuvreManager</FrameworkClass>
+</FrameworkMapping>
+
+<FrameworkMapping>
+  <Name>FunctionalityImplementer</Name>
+  <Type>abstract interface</Type>
+  <FrameworkClass>TelemetryPacket</FrameworkClass>
+  <FrameworkClass>Telecommand</FrameworkClass>
+  <FrameworkClass>PunctualAction</FrameworkClass>
+  <FrameworkClass>Manoeuvre</FrameworkClass>
+</FrameworkMapping>
+
+
+<SampleCode>
+As already noted, this design pattern is a generalization of design patterns like
+the <a href="TelecommandManagement.html">telecommand management
+design pattern</a>, the <a href="ManoeuvreManagement.html">manoeuvre management
+design pattern</a>, and the <a href="TelemetryManagement.html">telemetry management
+design pattern</a>. Readers should refer to the descriptions of these design patterns
+for examples of how the manager design pattern can be implemented.
+</SampleCode>
+
+<Remarks>
+None
+</Remarks>
+
+<LastModified>
+2003-07-29
+</LastModified>
+
+<Author>
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+</Author>
+
+</DesignPattern>

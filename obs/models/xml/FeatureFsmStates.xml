@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="file:/D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+    <Macro nameOfMacro="FsmStates">
+        <Feature nameOfFeature="FsmState">
+            <Description text="The state of a finite state machine (FSM)"/>
+            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+            <Type>
+                <BuildingBlock>
+                    <Interface status="provided" type="FSM/FsmState"/>
+                </BuildingBlock>
+            </Type>
+            <Group nameOfGroup="MandatoryAttributes">
+                <Description text="The mandatory attributes of the FsmState"/>
+                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                <Feature nameOfFeature="Index">
+                    <Description text="The index of the FsmState in its FSM (recall: the FsmState with index 0 is the default state"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <Attribute>
+                            <Property status="provided" type="int"/>
+                        </Attribute>
+                    </Type>
+                </Feature>
+            </Group>
+            <Group nameOfGroup="OptionalAttributes">
+                <Description text="The optional attributes of the FsmState"/>
+                <GroupCardinality GroupCardMin="0" GroupCardMax="3"/>
+                <Feature nameOfFeature="NextState">
+                    <Description text="The name of the next state to which an autonomous transition may be made after this state is exited"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <Attribute>
+                            <Property status="provided" type="component" name="NextState"/>
+                        </Attribute>
+                    </Type>
+                </Feature>
+                <Feature nameOfFeature="InitialEnableStatus">
+                    <Description text="The enable status of transitions into this state has a non-default initial value"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <Attribute>
+                            <Property type="string" name="Enabled" status="provided">
+                                <Enumeration>
+                                    <Item value="ENABLED"/>
+                                    <Item value="DISABLED"/>
+                                </Enumeration>
+                            </Property>
+                        </Attribute>
+                    </Type>
+                </Feature>
+                <Feature nameOfFeature="FsmStatePunctualAction">
+                      <Description text="The name of a punctual action that must be executed in this FsmState"/>
+                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                      <Type>
+                            <Attribute><Property status="generable" type="string"></Property></Attribute>
+                      </Type>
+                </Feature>
+                
+            </Group>
+            <Group nameOfGroup="FsmStateOptions">
+                <Description text="The FsmState options foreseen by the framework"/>
+                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                <Feature nameOfFeature="UnstableFsmState">
+                    <Description text="Unstable FsmState that exits immediately after being entered"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="provided" type="FSM/DC_UnstableFsmState"/>
+                        </BuildingBlock>
+                    </Type>
+                </Feature>
+                <Feature nameOfFeature="DummyFsmState">
+                    <Description text="FmsState that takes no action and performs no check"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="provided" type="FSM/DC_DummyFsmState"/>
+                        </BuildingBlock>
+                    </Type>
+                </Feature>
+                <Feature nameOfFeature="NestedFsmActivatorWithEndState">
+                    <Description text="Activate a nested FSM until it has reached a certain target state"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="provided" type="FSM/DC_NestedFsmActivatorWithEndState"/>
+                        </BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="NestedFsmActivatorWithEndStateAttributes">
+                        <Description text="The attributes of the FsmState"/>
+                        <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                        <Feature nameOfFeature="NestedFSM">
+                            <Description text="The name of the nested FSM"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="component" name="TargetFsm"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="TargetFsmState">
+                            <Description text="The name of the target FsmState in the nested FSM"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="component" name="TargetState"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                    </Group>
+                </Feature>
+                <Feature nameOfFeature="NestedFsmActivatorWithExitCheck">
+                    <Description text="Activate a nested FSM and allow exit from the FsmState only if the target FSM has reached a certain target state"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="provided" type="FSM/DC_NestedFsmActivatorWithExitCheck"/>
+                        </BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="NestedFsmActivatorWithExitCheckAttributes">
+                        <Description text="The attributes of the FsmState"/>
+                        <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                        <Feature nameOfFeature="NestedFSM">
+                            <Description text="The name of the nested FSM"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="component" name="TargetFsm"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="TargetFsmState">
+                            <Description text="The name of the target FsmState in the nested FSM"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="component" name="TargetState"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                    </Group>
+                </Feature>
+                <Feature nameOfFeature="Custom">
+                    <Description text="An application-specific FsmState"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="missing"/>
+                        </BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="ActionsAndChecks">
+                        <Description text="Custom actions and checks associated to the application-specific FsmState"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="7"/>
+                        <Feature nameOfFeature="InitAction">
+                            <Description text="The FsmState performs an initialization action"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute><Operation status="generable"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="ContinuationAction">
+                            <Description text="The FsmState performs a continuation action"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Operation status="generable"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="ExitAction">
+                            <Description text="The FsmState performs an exit action"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Operation status="generable"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="EntryCheck">
+                            <Description text="The FsmState performs an entry check"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Operation status="generable"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="ExitCheck">
+                            <Description text="The FsmState performs an exit check"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Operation status="generable"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="TerminationCheck">
+                            <Description text="The FsmState performs a termination check "/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Operation status="generable"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                    </Group>
+                    <Group nameOfGroup="CustomFsmStateDefaultAttributes">
+                        <Description text="The default attributes of the application-specific FsmState"/>
+                        <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                        <CallMacro nameOfCalledMacro="DefaultAttributes"/>
+                    </Group>
+                </Feature>
+            </Group>
+        </Feature>
+    </Macro>
+</FrameworkFeatureModel>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Chapter>
+    <Title> Design Patterns </Title>
+    <Author>
+        <Name> A. Pasetti </Name>
+        <Affiliation>
+            <a HREF="http://www.pnp-software.com">P&amp;P Software</a>
+        </Affiliation>
+        <EMail> pasetti@pnp-software.com </EMail>
+    </Author>
+    <LastModified> 2003-12-08 </LastModified>
+    <Introduction>
+        <p>Design patterns are one of the building blocks that are provided by the OBS Framework. A
+            design pattern proposes a solution to a recurring design problem (see: Gamma <i>et
+            al</i>, "Design Patterns", Addison-Wesley). The OBS Framework uses design patterns to
+            express the framework design at the abstract design level. It offers a catalogue of
+            design patterns that address typical design problems that are encountered in on-board
+            software development. In many cases, the OBS Design Patterns represent specializations
+            to the OBS domain of more general design patterns proposed elsewhere. Typical sources
+            for these higher level design patterns are the catalogue of Gamma <i>et al</i> and the
+            design patterns of the AOCS Framework (see: A. Pasetti, <i>Embedded Control Systems and
+                Software Frameworks</i>, Springer-Verlag).</p>
+        <p> The OBS Design Patterns are intended to serve four purposes. Firstly, they must aid
+            developers of software frameworks or software applications for on-board systems to
+            quickly identify design problems and to define high-quality solutions for them. In order
+            to optimally fulfill this function, the OBS design patterns are defined at a lower level
+            of abstraction than is the case for other catalogues of design patterns (typically,
+            those of Gamma <i>et al</i>).<p/> Secondly, design patterns indirectly define a
+            vocabulary of domain-specific terms that can be used to describe applications within the
+            framework domain. In the case of the OBS Design Patterns, and in order to better assist
+            OBS software developers, definition of this vocabulary is made explicit and is contained
+            in a <a HREF="indexDomainDictionary.html" target="_parent">domain dictionary</a>.</p>
+        <p>Thirdly, definition of design patterns leads to the identification of a number of <a
+                HREF="indexAbstractInterfaces.html" target="_parent">abstract interfaces</a> and <a
+                HREF="indexConcreteComponents.html" target="_parent">concrete components</a> that
+            are necessary to support their implemenation at architectural level.</p>
+        <p>Finally, systematic use of design patterns helps achieve consistency of design as it
+            ensures that similar problems in different parts of the same application or set of
+            applications have the same solution. This makes the design easier to understand, modify
+            and document.</p>
+        <p>The OBS Design Patterns are described following a fixed format that is loosely based on
+            that introduced by Gamma <i>et al</i> and which is now widely accepted as a <i>de
+            facto</i> standard. Modifications are however introduced in order to allow traceability
+            to the framework classes and to the domain dictionary entries. More specifically, the
+            description of a design pattern is organized under the following headings:</p>
+        <ul>
+            <li>
+                <i>Intent:</i> A brief statement of the purpose served by the design pattern.</li>
+            <li>
+                <i>Based On:</i> The higher-level patterns upon which the design pattern is based.</li>
+            <li>
+                <i>Dictionary Entries:</i> The entries in the <a HREF="indexDomainDictionary.html"
+                    target="_parent">domain dictionary</a> that are introduced to support the design pattern.</li>
+            <li>
+                <i>Motivation:</i> Typical example situations where application of the design
+                pattern is beneficial.</li>
+            <li>
+                <i>Structure:</i> A description of the pattern structure supported by a graphical
+                representation using UML class diagrams.</li>
+            <li>
+                <i>Participants:</i> The classes and objects that enter in the design pattern and
+                their responsibilities.</li>
+            <li>
+                <i>Collaborations:</i> Typical interaction scenarios for the design pattern participants.</li>
+            <li>
+                <i>Consequences:</i> Discussion of the design and implementation implications of
+                using the design pattern.</li>
+            <li>
+                <i>Applicability:</i> Typical situations to which the design pattern can be
+                benefically applied.</li>
+            <li>
+                <i>Implementation:</i> Typical implementation scenarios for the design pattern.</li>
+            <li>
+                <i>Framework Mapping:</i> The OBS Framework classes that model the <a
+                    HREF="indexAbstractInterfaces.html" target="_parent">abstract interfaces</a> or
+                    <a HREF="indexConcreteComponents.html" target="_parent">concrete components</a>
+                required to support implementation of the design pattern.</li>
+            <li>
+                <i>Sample Code:</i> Code fragments (using a C++ syntax) illustrating how the design
+                pattern can be implemented.</li>
+            <li>
+                <i>Remarks:</i> Comments that do not fall under any of the other design pattern
+                description categories.</li>
+            <li>
+                <i>Author:</i> The person who introduced the design pattern and wrote the pattern description.</li>
+            <li>
+                <i>Last Modified:</i> The date when the design pattern description was last modified.</li>
+        </ul>
+        <p>The design pattern in the catalogue are listed in the side bar. Their descriptions can be
+            accessed by clicking on the items in the side bar. An overview of all the design
+            patterns can be accessed from <a HREF="DesignPatternTable.html">here</a>.</p>
+    </Introduction>
+</Chapter>

@@ -1,0 +1,14 @@
+Telemetry Item Type (hex):         9 
+Telemetry Item Subtype (hex):         0 
+Telemetry Item Destination (hex):         0 
+Telemetry Item Time Tag (hex):         0 
+Byte        0 (hex):         1 
+Byte        1 (hex):         2 
+---------------------------------------------------------------------
+Telemetry Item Type (hex):         9 
+Telemetry Item Subtype (hex):         0 
+Telemetry Item Destination (hex):         0 
+Telemetry Item Time Tag (hex):         0 
+Byte        0 (hex):         2 
+Byte        1 (hex):         3 
+---------------------------------------------------------------------

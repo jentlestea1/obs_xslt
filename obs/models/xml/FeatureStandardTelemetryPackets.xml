@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:/D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <!--                                                                                                                           -->
+      <Macro nameOfMacro="StandardTelemetryPackets">
+            <Feature nameOfFeature="StandardTelemetryPackets">
+                  <Description text="The standard (non-PUS) telemetry packets and the telemetry model manager"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type><Composite/></Type>
+                  <Group nameOfGroup="Attributes">
+                        <Description text="This groups holds the mode manager and the telemetry packets"/>
+                        <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                        <CallMacro nameOfCalledMacro="ModeManager"/>
+                        <CallMacro nameOfCalledMacro="TelemetryPacket"/>
+                   </Group>
+            </Feature>
+      </Macro>
+      <!--                                                                                                                           -->
+      <Macro nameOfMacro="TelemetryPacket">
+            <Feature nameOfFeature="TelemetryPacket">
+                  <Description text="A standard telemetry packet"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                  <Type><BuildingBlock><Interface status="provided" type="Telemetry/TelemetryPacket"/></BuildingBlock></Type>
+                  <Group nameOfGroup="StandardTelemetryPacketOptions">
+                        <Description text="The standard telemetry packets offered by the framework"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <CallMacro nameOfCalledMacro="DummyTelemetryPacket"/>
+                        <CallMacro nameOfCalledMacro="DataItem16TmWord"/>
+                  </Group>
+            </Feature>
+      </Macro>
+      <!--                                                                                                                           -->
+      <Macro nameOfMacro="DummyTelemetryPacket">
+            <Feature nameOfFeature="DummyTelemetryPacket">
+                  <Description text="A dummy telemetry packet that encapsulates settable N bytes"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type><BuildingBlock><Component status="provided" type="Telemetry/DC_DummyTelemetryPacket"/></BuildingBlock></Type>
+                  <Group nameOfGroup="MandatoryAttributes">
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="Value">
+                              <Description text="The value of one of the settable telemetry bytes"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                              <Type><Attribute><Property status="provided" type="int"><Range minValue="0" maxValue="+"/></Property></Attribute></Type>
+                        </Feature>
+                  </Group>
+                  <Group nameOfGroup="OptionalAttributes">
+                        <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                        <Feature nameOfFeature="InitialValidityStatus">
+                              <Description text="The dummy telemetry packet control has a non-default initial validity status"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="string">
+                                                <Enumeration>
+                                                      <Item value="VALID"/>
+                                                      <Item value="NOT_VALID"/>
+                                                </Enumeration>
+                                          </Property>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                  </Group>
+            </Feature>
+      </Macro>                  
+      <!--                                                                                                                           -->
+      <Macro nameOfMacro="DataItem16TmWord">
+            <Feature nameOfFeature="DataItem16TmWord">
+                  <Description text="A telemetry packet that encapsulates one data item"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type><BuildingBlock><Component status="provided" type="Telemetry/DC_DataItem16TmWord"/></BuildingBlock></Type>
+                  <Group nameOfGroup="Attributes">
+                        <GroupComment text="Constraint: only one data item can be associated to this feature"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/><CallMacro nameOfCalledMacro="DataItems"/>
+                  </Group>
+            </Feature>
+      </Macro>                  
+                  
+                  
+</FrameworkFeatureModel>

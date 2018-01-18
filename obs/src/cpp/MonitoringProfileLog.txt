@@ -1,0 +1,9 @@
+
+      
+       WARNING: this XSL program hardcodes the directory where output files are written in variable $TargetFile
+            
+           
+            Generating code for class DC_SampleMonitoringProfile in files /Projects/ObsFramework/src/cpp/FDIR/DC_SampleMonitoringProfile.h/.cpp
+
+            
+            

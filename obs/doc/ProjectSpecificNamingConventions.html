@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?><html><head><link rel="stylesheet" type="text/css" href="css/main.css"/><link rel="stylesheet" type="text/css" href="css/2col_leftNav.css"/></head><body><div id="header"><h1 id="siteName">OBS Framework</h1><div id="globalNav"><a href="Home.html">Home</a> | <a href="General.html">General</a> | <a href="Implementation.html">Implementation</a> | <a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a> | <a href="http://www.pnp-software.com/ObsFramework/ObsFramework_0_8_3.zip">Download</a> | <a href="indexDisclaimer.html">Disclaimer</a></div><h2 id="pageName">Implementation - Project Specific Naming Conventions</h2></div><div id="navbar"><div id="sectionLinks"><ul><li><a href="indexDomainDictionary.html">Domain Dictionary</a></li><li><a href="indexDesignPatterns.html">Design Patterns</a></li><li><a href="indexAbstractInterfaces.html">Abstract Interfaces</a></li><li><a href="indexConcreteComponents.html">Concrete Components</a></li><li><a href="indexGeneratorMeta-Components.html">Generator Meta-Components</a></li><li><a href="indexTransformerMeta-Components.html">Transformer Meta-Components</a></li><li><a href="indexRealTimeIssues.html">Real Time Issues</a></li><li><a href="indexImplementationIssues.html">Implementation Issues</a></li><li><a href="indexInstallationIssues.html">Installation Issues</a></li><li><a href="indexSourceCode.html">Source Code</a></li><li><a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a></li></ul></div></div><div id="content">
+    
+    
+    
+    <Introduction>
+        <p class="links">This page defines the project-specific naming conventions that were applied to the
+            implementation of the OBS Framework. These naming conventions complement those <a href="ComplianceWithEsaCodingStandard.html">taken over</a> from the "C and C++
+            Coding Standard" prepared by the ESA Board for Software Standardisation and Control (BSSC).</p>
+    </Introduction>
+    <h3><a name=""/></h3>
+        <table WIDTH="90%" BORDER="1" ALIGN="center" CELLPADDING="5%">
+            <tr>
+                <th>N.</th>
+                <th>Naming Convention</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>The name of classes encapsulating core components shall begin with the prefix
+                    "CC_". </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>The name of classes encapsulating default components shall begin with the prefix
+                    "DC_". </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>The name of classes representing abstract interfaces shall being with "I_". Note
+                    that, in a C++ context, this rule only comes into play if multiple inheritance
+                    is allowed. It is therefore not used in the OBS Framework.</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>The name of pointer variables shall being with the prefix "p". </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>The name of <code>typedef</code> types shall being with "TD_". </td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>The name of constant variables (variables that in a C program would be defined
+                    as <code>#define</code> constants) shall be written in capital letters. </td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>The name of setter and getter methods for component properties shall follow the
+                    JavaBeans naming conventions. </td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>Classes that provide trivial implementations of abstract classes and which are
+                    intended to be used for testing purposes only shall have names that begin with:
+                    "DC_Dummy". </td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>Classes that provide non-trivial implementations of abstract classes and which
+                    are intended to be used for testing purposes only shall have names that begin
+                    with: "DC_Test". </td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>Classes that act as wrappers for code generated from Matlab shall have names
+                    that begin with the string: "DC_Matlab" </td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>Classes that are automatically generated and serve as examples of the classes
+                    that can be automatically generated in the OBS Framework by XSLT code generators
+                    shall have names that begin with the string: "DC_Sample" </td>
+            </tr>
+        </table>
+    
+</div><div id="siteInfo"><a href="mailto:pasetti@control.ee.ethz.ch, cechti@control.ee.ethz.ch">Contact Us</a> | The OBS Framework Project</div></body></html>

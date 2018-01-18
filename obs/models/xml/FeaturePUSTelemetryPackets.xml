@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:/D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="PUSTelemetryPackets">
+            <Feature nameOfFeature="PUSTelemetryPackets">
+                  <Description text="The PUS Telemetry Packets"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type>
+                        <Composite/>
+                  </Type>
+                  <Group nameOfGroup="PUSTelemetrypacketsGlobalAttributes">
+                        <GroupCardinality GroupCardMin="6" GroupCardMax="6"/>
+                        <CallMacro nameOfCalledMacro="PUSTelemetryModeManager"/>
+                        <Feature nameOfFeature="TmApplicationId">
+                              <Description text="The APID of the application generating the telemetry packets"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="int" name="ApplicationId">
+                                                <Range minValue="0" maxValue="+"/>
+                                          </Property>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="DefaultDestination">
+                              <Description text="The default destination of the telemetry packets"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="int" name="DefaultDestination">
+                                                <Range minValue="0" maxValue="+"/>
+                                          </Property>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="ObsClock">
+                              <Description text="The OBS Clock"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="component" name="ObsClock"/>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="MemoryDumpChecksumFlag">
+                              <Description text="The flag that determines whether checksums are computed for memory dump data"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="string"><Enumeration>
+                                          <Item value="CHECKSUM"/>
+                                          <Item value="NO_CHECKSUM"/>
+                                          </Enumeration>
+                                          </Property>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="PUSTelemetryPacket">
+                              <Description text="The PUS telemetry packets provided by this application"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                              <Type> <BuildingBlock>
+                                          <Interface status="provided" type="Telemetry/PUSTelemetryPacket"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="PUSTelemetryPacketOptions">
+                                    <Description text="The PUS telemetry packets offered by the framework"/>
+                                    <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                    <CallMacro nameOfCalledMacro="DummyPUSTelemetryPacket"/>
+                                    <CallMacro nameOfCalledMacro="PUSDataReportingPacket"/>
+                                    <CallMacro nameOfCalledMacro="PUSTcVerificationPacket"/>
+                                    <CallMacro nameOfCalledMacro="PUSMemoryDump"/>
+                              </Group>
+                        </Feature>
+                  </Group>                        
+            </Feature>
+      </Macro>
+      <!--                                                                                                                                  -->
+      <Macro nameOfMacro="PUSTelemetryModeManager">
+            <Feature nameOfFeature="PUSTelemetryModeManager">
+                  <Description text="The PUS telemetry mode manager"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type><BuildingBlock><Component status="provided" type="Telemetry/DC_PUSTelemetryModeManager"/></BuildingBlock></Type>
+                  <Group nameOfGroup="Attributes">
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="MaxNumberOfPackets">
+                              <Description text="The maximum number of packets that can be managed by the PUS telemetry mode manager"/>
+                              <FeatureComment text="This is an attribute of the telemetry mode manager"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="int" name="MaxNumberOfPackets"/>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                  </Group>
+            </Feature>
+      </Macro>
+      <!--                                                                                                                                  -->
+      <Macro nameOfMacro="DummyPUSTelemetryPacket">
+            <Feature nameOfFeature="DummyPUSTelemetryPacket">
+                  <Description text="A dummy PUS telemetry packet"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type><BuildingBlock><Component status="provided" type="Telemetry/DC_DummyPUSTelemetryPacket"/></BuildingBlock></Type>
+            </Feature>
+      </Macro>                        
+      <!--                                                                                                                                  -->
+      <Macro nameOfMacro="PUSDataReportingPacket">
+            <Feature nameOfFeature="PUSDataReportingPacket">
+                  <Description text="A PUS data reporting telemetry packet"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type><BuildingBlock><Component status="provided" type="Telemetry/DC_PUSDataReportingPacket"/></BuildingBlock></Type>
+                  <Group nameOfGroup="Attributes">
+                        <GroupCardinality GroupCardMin="3" GroupCardMax="3"/>
+                        <Feature nameOfFeature="DefinitionBufferSize">
+                              <Description text="The maximum size of the definition buffer"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type><Attribute><Property status="provided" type="int" name="DefinitionBufferSize"/></Attribute></Type>
+                        </Feature>
+                        <Feature nameOfFeature="ValueBufferSize">
+                              <Description text="The maximum size of the value buffer"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type><Attribute><Property status="provided" type="int" name="ValueBufferSize"/></Attribute></Type>
+                        </Feature>
+                        <Feature nameOfFeature="MaxNumberFA">
+                              <Description text="The maximum number of fixed length arrays in the packet"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type><Attribute><Property status="provided" type="int" name="MaxNumberFA"/></Attribute></Type>
+                        </Feature>
+                  </Group>
+            </Feature>
+      </Macro>                        
+      <!--                                                                                                                                  -->
+      <Macro nameOfMacro="PUSTcVerificationPacket">
+            <Feature nameOfFeature="PUSTcVerificationPacket">
+                  <Description text="A PUS telecommand verification telemetry packet"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type><BuildingBlock><Component status="provided" type="Telemetry/DC_PUSTcVerificationPacket"/></BuildingBlock></Type>
+            </Feature>
+      </Macro>                        
+      <!--                                                                                                                                  -->
+      <Macro nameOfMacro="PUSMemoryDump">
+            <Feature nameOfFeature="PUSMemoryDump">
+                  <Description text="A PUS memory dump telemetry packet"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type><BuildingBlock><Interface status="provided" type="Telemetry/PUSMemoryDump"/></BuildingBlock></Type>
+                  <Group nameOfGroup="Attributes">
+                        <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                        <Feature nameOfFeature="MaxNumberBlocks">
+                              <Description text="The maximum number of memory blocks that can be handled by this telemetry packet"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type><Attribute><Property status="provided" type="int" name="MaxNumberBlocks"/></Attribute></Type>
+                        </Feature>
+                        <Feature nameOfFeature="DumpBufferSize">
+                              <Description text="The maximum size (in number of bytes) of the buffer where the collected memory dump data are stored"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type><Attribute><Property status="provided" type="int" name="DumpBufferSize"/></Attribute></Type>
+                        </Feature>
+                  </Group>
+                  <Group nameOfGroup="Options">
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="MemoryDumpAbsolute">
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type><BuildingBlock><Component status="provided" type="Telemetry/DC_PUSMemoryDumpAbsolute"/></BuildingBlock></Type>
+                        </Feature>
+                        <Feature nameOfFeature="MemoryDumpOffset">
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type><BuildingBlock><Component status="provided" type="Telemetry/DC_PUSMemoryDumpOffset"/></BuildingBlock></Type>
+                        </Feature>
+                  </Group>
+            </Feature>
+      </Macro>                        
+                              
+                        
+</FrameworkFeatureModel>

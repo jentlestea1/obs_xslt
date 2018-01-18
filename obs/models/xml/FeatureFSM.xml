@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+    <Macro nameOfMacro="FSM">
+        <Feature nameOfFeature="FSM">
+            <Description text="A finite state machine"/>
+            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="*"/>
+            <Type>
+                <BuildingBlock>
+                    <Component status="provided" type="FSM/CC_FSM"/>
+                </BuildingBlock>
+            </Type>
+            <Group nameOfGroup="FSMOptionalAttributes">
+                <Description text="The optional attributes of the FSM"/>
+                <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                <Feature nameOfFeature="InitialEnableStatus">
+                    <Description text="The transition enable status has a non-default initial value"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <Attribute>
+                            <Property type="string" name="enabled" status="provided">
+                                <Enumeration>
+                                    <Item value="ENABLED"/>
+                                    <Item value="DISABLED"/>
+                                </Enumeration>
+                            </Property>
+                        </Attribute>
+                    </Type>
+                </Feature>
+            </Group>
+            <Group nameOfGroup="FsmStates">
+                <Description text="The FsmStates associated to this FSM"/>
+                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                <CallMacro nameOfCalledMacro="FsmStates"/>
+            </Group>
+            <Group nameOfGroup="FsmEvents">
+                <Description text="The FsmEvents associated to this FSM"/>
+                <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                <CallMacro nameOfCalledMacro="FsmEvents"/>
+            </Group>
+        </Feature>
+    </Macro>
+</FrameworkFeatureModel>

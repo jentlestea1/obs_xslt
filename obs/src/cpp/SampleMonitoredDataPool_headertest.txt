@@ -1,0 +1,6 @@
+     
+            
+  Generating code for class DC_SampleMonitoredDataPool in files /Projects/ObsFramework/src/cpp/RegressionTest/TestCaseSampleMonitoredDataPool_1.h
+
+  
+  

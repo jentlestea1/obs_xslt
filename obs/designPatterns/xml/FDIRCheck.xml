@@ -1,0 +1,208 @@
+<DesignPattern>
+
+<Name>
+FDIR Check
+</Name>
+
+<BasedOn>
+This pattern is based on the principle of object composition and encapsulation.
+</BasedOn>
+
+<Intent>
+Offer a solution to the unified management of fault detection, isolation and
+recovery (FDIR) check that is independent of the specific FDIR check.
+</Intent>
+
+<Motivation>
+On-board systems perform FDIR checks. An FDIR check usually consists of at least two
+separate actions: the fault detection and isolation check (FDI check) and the recovery action.
+The FDI check must ascertain whether a fault has occurred and it must identify the
+cause of the fault. The recovery action must remove or at least counteract the fault.
+The recovery action is performed only if the fault detection and isolation check has
+revealed the existence of a fault and has given an indication of where its origin lies.
+Both the FDI check and the recovery action may of course be subdivided into sub-checks
+and sub-actions that are executed in sequence.
+<p/>
+The OBS Environment offers design patterns that cover the performance of FDI checks
+(the <a href="VariableMonitoring.html">variable monitoring design pattern</a>) and
+of recovery actions (the <a href="RecoveryAction.html">recovery action design pattern</a>).
+The present design pattern offers a solution to the problem of performing a complete
+FDIR check in a unified manner that is independent of both the particular FDI check
+and the particular recovery action.
+</Motivation>
+
+<DictionaryEntry>FDIR Check</DictionaryEntry>
+
+<Structure>
+The design pattern assumes that the FDI check and the recovery action are encapsulated in
+components that are characterized by, respectively, an "FDI check" interface and a
+"recovery action" interface. The presence of these interfaces makes it possible to define
+an FDIR Check component as shown in the class diagram that encapsulates both the FDI check
+and recovery action components and that manages their execution.
+<p/>
+The FDIR check component exposes an <code>execute</code> operation. Its execution
+causes the FDI check to be executed first, its outcome to be evaluated and, if this
+outcome indicates that a fault has occurred, the recovery action to be executed.
+<p/>
+Obviously, the FDIR check must be configurable and it would normally expose operations
+to load the FDI check and the recovery action components.
+<p/>
+Normally, several FDIR checks must be executed. For this reason, the client component
+in the class diagram is shown as holding references to multiple <code>FdirCheck</code>
+components.
+</Structure>
+
+<StructureFigure>FdirCheckDP</StructureFigure>
+
+<Participant>
+<Name>Client</Name>
+<Role>The component that is in charge of implementing the FDIR policy.</Role>
+</Participant>
+
+<Participant>
+<Name>FDICheck</Name>
+<Role>Abstract interface characterizing a generic FDI check.</Role>
+</Participant>
+
+<Participant>
+<Name>ConcreteFDICheck</Name>
+<Role>The component encapsulating a specific FDI check.</Role>
+</Participant>
+
+<Participant>
+<Name>RecoveryAction</Name>
+<Role>Abstract interface characterizing a generic recovery action.</Role>
+</Participant>
+
+<Participant>
+<Name>ConcreteRecoveryAction</Name>
+<Role>The component encapsulating a specific recovery action.</Role>
+</Participant>
+
+<Collaborations>
+A typical operational scenario for this design pattern is:<ul>
+<li>During the initialization phase, an <code>FdirCheck</code> component is created for each
+FDIR check foreseen by the application.</li>
+<li>The <code>FdirCheck</code> components are configured with the FDI check and
+associated recovery actions.</li>
+<li>The <code>FdirCheck</code> components are loaded into the client component which is
+in charge of the FDIR policy.</li>
+<li>The client component periodically executes all the <code>FdirCheck</code> components
+in sequence.</li>
+<li>The configuration of the <code>FdirCheck</code> components may be changed
+dynamically while the application is running (for instance, in order to associate a new
+recovery action to an certain fault.</li>
+</ul>
+</Collaborations>
+
+<Consequence>
+It is easier to design a reusable component that is responsible for implementing the
+FDIR policy. This component can be made reusable if it only handles <code>FdirCheck</code>
+components which are independent of the (application-dependent) FDI checks and
+recovery actions.
+</Consequence>
+<Consequence>
+It is easier to tune the FDIR policy at run time. This can be done by reconfiguring the
+<code>FdirCheck</code> components.
+</Consequence>
+<Consequence>
+The definition of FDI check, recovery action and FDIR check components provides a conceptual
+framework for formulating the FDIR policy of an application. Users are forced to think
+about individual FDIR checks, about the recovery actions to be associated to them, and about
+their joint execution. In particular, users are forced to think of FDI checks and
+recovery actions as indivisible and closely linked: in an embedded system, it does not
+make sense to define an FDI check for which no recovery action can be specified and,
+conversely, it does not make sense to define recovery actions for faults that cannot
+be detected.
+</Consequence>
+
+<Applicability>
+There is a need to implement an FDIR policy that is independent of the particular FDI checks
+and recovery actions that are used by the application.
+</Applicability>
+
+<ImplementationIssue>
+The discussion above assumes that there is a single FDI check component. The pattern could
+easily be adapted to the case where fault detection and fault isolation are split and encapsulated
+in two different components. The only requirement for the use of the pattern is that these
+components be characterized by an abstract interface.
+</ImplementationIssue>
+
+<ImplementationIssue>
+There is normally a requirement that it must be possible to enable and disable FDIR checks.
+Enabling and disabling must be possible both at the level of the individual FDIR check and
+at the global level (<i>all</i> checks are simultaneously enabled/disabled). With the concept
+proposed by this design patterns, such requirements can be easily implemented by endowing
+the <code>FdirCheck</code> component with an <code>enable</code> status that can be set both
+at the level of the individual component and at the class level (implementation as a
+<code>static</code> variable). The implementation of the <code>execute</code> operations
+would then have to be modified to check the enabled status before executing the FDI check
+and its attendant recovery action.
+</ImplementationIssue>
+
+<ImplementationIssue>
+There is often a requirement that FDIR checks be conditional: they must be executed only
+if certain conditions hold (e.g. if the satellite is in a certain operational mode).
+With the concept proposed here, this type of requirement can be implemented by treating
+the <code>FdirCheck</code> component as a form of <i>conditional punctual action</i> in the
+sense of the <a href="PunctualAction.html">punctual action design pattern</a>. The
+<i>execution check</i> can then be used to implement the conditions for the execution
+of the FDIR Check.
+</ImplementationIssue>
+
+
+<FrameworkMapping>
+  <Name>FdirCheck</Name>
+  <Type>component</Type>
+  <FrameworkClass>DC_FdirCheck</FrameworkClass>
+</FrameworkMapping>
+
+
+<SampleCode>
+Consider an application that implements two FDI checks that are encapsulated in concrete
+classes: <code>ConcreteFdiCheck_A</code> and <code>ConcreteFdiCheck_B</code>. These
+two classes implement the abstrat interface <code>FDICheck</code> that characterizes all
+FDI checks.
+Assume that the recovery actions associated to these FDI checks are:
+<code>ConcreteRecovery_A</code> and <code>ConcreteRecovery_B</code>.
+<p/>
+If the approach proposed by this design pattern is followed, then the initialization
+phase of the application will contain code like this:<PRE>
+    ConcreteFdiCheck_A* pFdiCheck_1;
+    ConcreteFdiCheck_B* pFdiCheck_2;
+    ConcreteRecovery_A* pRecovery_1;
+    ConcreteRecovery_B* pRecovery_2;
+    . . .
+    // create and configure first FDIR Check component
+    FdirCheck fdirCheck_1;
+    fdirCheck_1.setFDICheck(pFdiCheck_1);
+    fdirCheck_1.setRecoveryAction(pRecovery_1);
+    // create and configure second FDIR Check component
+    FdirCheck fdirCheck_2;
+    fdirCheck_2.setFDICheck(pFdiCheck_2);
+    fdirCheck_2.setRecoveryAction(pRecovery_2);     </PRE>
+
+The operational phase of the application that is responsible for implementing the FDIR
+policy will instead contain code like this: <PRE>
+    fdirCheck_1.execute();
+    fdirCheck_2.execute();   </PRE>
+
+Clearly, the configuration of the two FDIR check components can be dynamically changed
+at run time (for instance, by loading new recovery actions) without this having any impact
+on the above code. The implementation of the FDIR policy has thus been decoupled from the
+implementation of the individual FDI checks and recovery actions.
+</SampleCode>
+
+<Remarks>
+None
+</Remarks>
+
+<LastModified>
+2003-07-29
+</LastModified>
+
+<Author>
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+</Author>
+
+</DesignPattern>

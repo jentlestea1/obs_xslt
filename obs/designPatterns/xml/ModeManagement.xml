@@ -1,0 +1,148 @@
+<DesignPattern>
+
+<Name>
+Mode Management
+</Name>
+
+<BasedOn>
+This is pattern is essentially identical to the mode management pattern of the
+<a HREF="http://www.aut.ee.ethz.ch/~pasetti/AocsFramework/index.html">AOCS Framework</a> (see also:
+A. Pasetti, <i>Embedded Control Systems and Software Frameworks</i>, Springer-Verlag, 2002).
+</BasedOn>
+
+<Intent>
+This design pattern addresses the problem of endowing components with mode-dependent behaviour. It separates the implementation of the mode-dependent behaviour from the implementation of the logic required to decide mode switches.
+</Intent>
+
+<Motivation>
+<p>Current on-board applications are based on the concept of <i>operational mode</i>. The operational mode changes in response to changes in the operational environment of the application. The operational mode however is typically seen as an attribute of the on-board application as a whole. This typically requires a single "mode manager" component which is responsible for maintaining the system mode. The mode manager might also be responsible for ensuring that each component behaves in a manner that is consistent with the current mode. This component acts as a centralized coordinator of component behaviour. As such, it normally requires a rather detailed understanding of how each component is constructed and of what its internal state is. This approach therefore weakens behaviour encapsulation.
+<p></p>
+In an alternative variant of this centralized mode management architecture, the mode manager acts as a client for other components that periodically sample it to ask what the current mode is and use this information to tune their behaviour. Or, equivalently, a registration mechanism could be used based on the classical <i>observer pattern</i> where the application component register with the centralized mode manager and are notified whenever there is a mode change. The drawback of these architectures is that different components may need different sets of modes and a centralized mode manager needs to keep track of all of them which again weakens data encapsulation and component decoupling.
+<p></p>
+Once one decides to move towards a component-based approach, a more appropriate architecture is to make operational mode an attribute of individual components. A <i>mode-dependent component</i> then becomes a component that, depending on operational conditions, needs to select a particular <i>implementation</i> of one or more <i>strategies</i>. As an example consider an attitude controller component in a satellite control system. This component is responsible for implementing the attitude control algorithm and might have two modes: low accuracy control, and high accuracy control. In low accuracy mode, attitude information is provided by a low-accuracy sensor, for instance a coarse sun sensor (CSS), and is processed by a low-accuracy algorithm, for instance a proportional-integral (PI) controller. In high-accuracy mode instead, a high accuracy sensor, for instance a fine sun sensor (FSS), and a high accuracy control algorithm, for instance a PI controller with Kalman filtering (KF), are used. In this case, the controller component (the mode-dependent component) has two strategies (the sensor and the control algorithm) and each strategy has two implementations (the CSS and the FSS for the sensor strategy, and the PI and PI+KF for the control algorithm strategy). During normal operation, the satellite decides which strategy to use based on the size of the control error.
+</p><p>
+The advantage of this approach is that it allows the selection of the operational modes and of their associated strategies to be tailored to the needs of each component. Its potential disadvantage is that it complicates the problem of separating the problem of designing and implementing the strategies separate from the problem of designing and implementing the logic that controls the operational mode transitions. There is a risk that each mode-dependent component becomes responsible for both tasks with a consequent weakening of the principle of separation of concerns. This design pattern is useful in precisely this situation because it offers a way of separating the implementation of the mode-dependent behaviour from the implementation of the logic required to decide mode switches.
+</p>
+</Motivation>
+
+<DictionaryEntry>Mode Manager</DictionaryEntry>
+
+<Structure>
+<p>The pattern class diagram in the figure illustrates the case of a mode-dependent component with two strategies. The mode dependent component uses a <i>mode manager</i> to supply to it the implementations of the strategies that are appropriate for a given operational situation. The two strategies are seen as instances of classes <code>Strategy_1</code> and <code>Strategy_2</code>. These could be concrete classes, or base abstract classes, or abstract interfaces. The mode manager is characterized by the ability to provide instances of these two classes to the mode-dependent component. It must therefore implement an abstract interface like <code>ModeManager</code> in the figure that defines two getter methods for the two strategy implementations and two loader methods to associate the strategy implementations to the various modes managed by the mode manager. Concrete implementations of the <code>ModeManager</code> interface provide the logic to switch between modes. This logic is implemented in a method like <code>updateMode</code> that sets the current mode and therefore indirectly determines which implementers of the strategies are returned by calls to the getter methods.
+<p></p>
+The mode manager encapsulates the logic to decide which implementation of each strategy is appropriate at any given time. When the mode-dependent component needs a strategy implementation, it uses the strategy getter methods offered by the mode manager to obtain one. From the point of view of the mode-dependent component, the strategy implementations are always seen as instances of type <code>Strategy_1</code> and <code>Strategy_2</code>.
+</p>
+</Structure>
+
+<StructureFigure>ModeManagementDP</StructureFigure>
+
+
+<Participant>
+<Name>ModeDependentComponent</Name>
+<Role>The component whose behaviour needs to be made mode-dependent.</Role>
+</Participant>
+
+<Participant>
+<Name>ModeManager</Name>
+<Role>The abstract interface characterizing the component that is responsible for determining the operational mode and for providing the implementations of the strategies that are appropriate to the current operational conditions (namely, the implementations that are associated to the current operational mode).</Role>
+</Participant>
+
+<Participant>
+<Name>ConcreteModeManager</Name>
+<Role>A component implementing the <code>ModeManager</code> interface and providing a particular implementation of mode-switching logic and a particular set of associations between operational modes and strategy implementations.</Role>
+</Participant>
+
+<Participant>
+<Name>Strategy_n</Name>
+<Role>An abstract interface, a base abstract class, or a concrete component representing an implementation of the n-th strategy managed by the mode-dependent component.</Role>
+</Participant>
+
+
+<Collaborations>
+The typical operational scenario for this design pattern is:
+<ul>
+<li>
+During the configuration phase, the concrete implementations of the all the strategies managed by the mode-dependent component are loaded in the mode manager using its <CODE>loadStrategy</CODE> methods.
+</li>
+<li>
+During the configuration phase, the mode manager is associated to the mode-dependent component (typically by loading it as a plug-in component).
+</li>
+<li>
+During the normal operation phase, the mode manager is periodically activated to force it to update its operational model (its <code>update</code> method is called).
+</li>
+<li>
+During the normal operation phase, whenever the mode-dependent component needs to implement one of its strategies, it interrogates its associated mode manager to obtain the correct implementation to use in current operational conditions (it calls its strategy getter methods).
+</li>
+</ul>
+</Collaborations>
+
+<Consequence>
+It is easy to change the implementation of the strategies or the implementation of the mode switching logic independently from each other because they are encapsulated in distinct components.
+</Consequence>
+<Consequence>
+There may be a proliferation of classes as mode switching logic and strategies - or event implementations of individual strategies - come to need their own dedicated classes.
+</Consequence>
+
+<Applicability>
+Consider an application that is component-based and that has a need to tune its behaviour to changes in its operational environment. If it is not practical to define a single operational mode for the entire application and if operational mode is better seen as an attribute of individual components, then this design pattern helps defines an architecture that separates the implementation of the mode-dependent behaviours (the <i>strategies</i>) from the implementation of the mode management logic.
+</Applicability>
+
+<ImplementationIssue>
+It would be useful to be able to define a generic <code>ModeManager</code> abstract interface. This could probably be done using meta-language facilities (such as, for instance, Java reflection) or template meta-programming. In most cases, these techniques will not be acceptable for on-board applications and hence differences in the number and type of strategies and in the mode update mechanisms will usually mean that a dedicated mode manager interface must be defined for each mode-dependent component.
+</ImplementationIssue>
+
+<ImplementationIssue>
+The mode manager maintains the operational mode of the mode-dependent component. Which mechanism should it use to update this operational mode in response to changes in the component's operational environment? The class diagram above shows the mode manager exposing an <code>update</code> method that should be periodically called to give the mode manager a chance to check whether its operational mode needs to be updated. There are at least two alternative mechansisms. The mode manager might check for updates whenever one of the getter methods is called. This is a form of <i>lazy update</i> that is performed only when and if the mode-dependent component requires a new strategy implementation. Or, alternatively, the mode manager might use the classical <i>observer</i> pattern to ask to be notified whenever certain environmental parameters change and might use these notifications as opportunities to update its internal operational mode.
+</ImplementationIssue>
+
+<ImplementationIssue>
+With the approach proposed here, the operational mode becomes a property of (some) application components. In order to ensure consistency of behaviour at the system level, it is necessary to ensure that changes in the operational mode of individual components are coordinated. Coordination will normally imply that a mode manager expose its operational mode as a monitorable property to give other components (possibly other mode managers) the chance to observe changes in its value and therefore to coordinate their behaviour with it.
+</ImplementationIssue>
+
+<FrameworkMapping>
+  <Name>ModeManager</Name>
+  <Type>abstract interface</Type>
+  <FrameworkClass>TelemetryModeManager</FrameworkClass>
+  <FrameworkClass>PunctualActionModeManager</FrameworkClass>
+</FrameworkMapping>
+
+<SampleCode>
+Consider the example of the mode-dependent attitude controller component considered in the <i>motivation</i> section above. A skeleton code for this component could be as follows:
+<PRE><![CDATA[
+	class AttitudeController {
+
+		AttitudeSensor* sensor;
+		AttitudeControlAlgorithm* controlAlgorithm;
+		AttitudeControllerModeManager* modeManager;
+		. . .
+		void computeControlAction() {
+
+		  // Retrieve strategy implementers
+		  sensor = modeManager->getAttitudeSensor();
+		  controlAlgorithm = modeManager->getControlAlgorithm ();
+
+		  // Use first strategy to acquire sensor data
+		  sensor->acquireData();
+
+	 	  // Use second strategy to process the sensor data
+	  	  controlAlgorithm->processSensorData();
+		}
+	}	]]></PRE>
+<p>
+The mode manager of this example will maintain two versions of the attitude control algorithms and two versions of the attitude sensor and will supply the appropriate one to the attitude controller algorithm based on operational conditions. The controller component can thus concentrate on computing the processing of the sensor data without having to keep track of changes in operational conditions.
+</p>
+</SampleCode>
+
+<Remarks>
+None
+</Remarks>
+
+<LastModified>
+2002-12-12
+</LastModified>
+
+<Author>
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+</Author>
+
+</DesignPattern>

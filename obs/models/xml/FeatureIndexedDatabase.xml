@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:/D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="IndexedDatabase">
+            <Feature nameOfFeature="IndexedDatabase">
+                  <Description text="An indexed parameter database"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type>
+                        <BuildingBlock>
+                              <Component status="generable"/>
+                        </BuildingBlock>
+                  </Type>
+                  <Group nameOfGroup="IndexedDatabaseParameters">
+                        <Description text="The indexed database parameters"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="Parameter">
+                              <Description text="A database parameter"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                              <Type>
+                                    <Composite/>
+                              </Type>
+                              <Group nameOfGroup="IndexedDatabaseParameterAttributes">
+                                    <Description text="The attributes of the database parameter"/>
+                                    <GroupCardinality GroupCardMin="4" GroupCardMax="4"/>
+                                    <Feature nameOfFeature="Name">
+                                          <Description text="The name of the database parameter"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property status="provided" type="string"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="Id">
+                                          <Description text="The numerical identifier of the database parameter"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property status="provided" type="int">
+                                                            <Range minValue="0" maxValue="+"/>
+                                                      </Property>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="Offset">
+                                          <Description text="The offset in bytes of the parameter in the dabase"/>
+                                          <FeatureComment text="Constraint: the offset must be smaller than the size attribute of the parameter database"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property status="provided" type="int">
+                                                            <Range minValue="0" maxValue="+"/>
+                                                      </Property>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="Type">
+                                          <Description text="The syntactical type of the database parameter"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property status="provided" type="string">
+                                                            <Enumeration>
+                                                                  <Item value="float"/>
+                                                                  <Item value="double"/>
+                                                                  <Item value="int"/>
+                                                                  <Item value="unsigned int"/>
+                                                                  <Item value="short"/>
+                                                                  <Item value="unsigned short"/>
+                                                                  <Item value="char"/>
+                                                                  <Item value="unsigned char"/>
+                                                                  <Item value="bool"/>
+                                                            </Enumeration>
+                                                      </Property>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                  </Group>
+                  <Group nameOfGroup="ParameterDatabaseAttributes">
+                        <Description text="The global attributes of the parameter database"/>
+                        <GroupCardinality GroupCardMin="4" GroupCardMax="4"/>
+                        <Feature nameOfFeature="RobustnessLevel">
+                              <Description text="The level of robustness to illegal accesses to database parameters"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="int">
+                                                <Enumeration>
+                                                      <Item value="1"/>
+                                                      <Item value="2"/>
+                                                      <Item value="3"/>
+                                                </Enumeration>
+                                          </Property>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="Size">
+                              <Description text="The size of the parameter database in bytes"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="int">
+                                                <Range minValue="1" maxValue="+"/>
+                                          </Property>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="OperationalTable">
+                              <Description text="The starting address of the operational table"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="string" name="OperationalTable"/>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="DefaultTable">
+                              <Description text="The starting address of the default table"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="string" name="DefaultTable"/>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>

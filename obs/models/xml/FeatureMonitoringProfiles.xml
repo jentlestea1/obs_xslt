@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+    <Macro nameOfMacro="MonitoringProfiles">
+        <Feature nameOfFeature="MonitoringProfile">
+            <Description text="A monitoring profile"/>
+            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+            <Type>
+                <BuildingBlock>
+                    <Interface status="provided" type="FDIR/MonitoringProfile"/>
+                </BuildingBlock>
+            </Type>
+            <Group nameOfGroup="OptionalAttributes">
+                <Description text="The optional attributes of the monitoring profile"/>
+                <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                <Feature nameOfFeature="InitialEnableStatus">
+                    <Description text="The monitoring profile has a non-default initial enable status"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <Attribute>
+                            <Property status="provided" type="string" name="Enabled">
+                                <Enumeration>
+                                    <Item value="ENABLED"/>
+                                    <Item value="DISABLED"/>
+                                </Enumeration>
+                            </Property>
+                        </Attribute>
+                    </Type>
+                </Feature>
+            </Group>
+            <Group nameOfGroup="Options">
+                <Description text="The monitoring profiles foreseen by the framework"/>
+                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                <Feature nameOfFeature="Delta">
+                    <Description text="A delta profile (triggers if monitored value jumps by more than a threshold)"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="provided" type="FDIR/DC_DeltaProfile"/>
+                        </BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="DeltaProfileParameters">
+                        <Description text="The parameters of the profile"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="Threshold">
+                            <Description text="The triggering threshold"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="real" name="Threshold"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                    </Group>
+                </Feature>
+                <Feature nameOfFeature="OutOfRange">
+                    <Description text="An out-of-range profile (triggers if monitored value goes outside range [lowerBound,upperBound])"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="provided" type="FDIR/DC_OutOfRangeProfile"/>
+                        </BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="OutOfRangeProfileParameters">
+                        <Description text="The parameters of the profile"/>
+                        <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                        <Feature nameOfFeature="LowerBound">
+                            <Description text="The lower bound"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="real" name="LowerBound"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="UpperBound">
+                            <Description text="The upper bound"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="real" name="UpperBound"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                    </Group>
+                </Feature>
+                <Feature nameOfFeature="InRange">
+                    <Description text="An in-range profile (triggers if monitored value goes inside range [lowerBound,upperBound])"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="provided" type="FDIR/DC_InRangeProfile"/>
+                        </BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="InRangeProfileParameters">
+                        <Description text="The parameters of the profile"/>
+                        <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                        <Feature nameOfFeature="LowerBound">
+                            <Description text="The lower bound"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="real" name="LowerBound"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="UpperBound">
+                            <Description text="The upper bound"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="real" name="UpperBound"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                    </Group>
+                </Feature>
+                <Feature nameOfFeature="StuckData">
+                    <Description text="A stuck data profile (triggers if monitored value remains stuck at constant value for longer than a threshold number of cycles)"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="provided" type="FDIR/DC_StuckDataProfile"/>
+                        </BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="StuckDataProfileParameters">
+                        <Description text="The parameters of the profile"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="StuckThreshold">
+                            <Description text="The triggering threshold"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="int" name="StuckThreshold">
+                                        <Range minValue="2" maxValue="+"/>
+                                    </Property>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                    </Group>
+                </Feature>
+                <Feature nameOfFeature="ForbiddenValue">
+                    <Description text="A forbidden value profile (triggers if monitored value has a certain &#34;forbidden&#34; value)"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="provided" type="FDIR/DC_ForbiddenValueProfile"/>
+                        </BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="ForbiddenValueProfileParameters">
+                        <Description text="The parameters of the profile"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="ForbiddenValue">
+                            <Description text="The forbidden value"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="int" name="ForbiddenValue"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                    </Group>
+                </Feature>
+                <Feature nameOfFeature="Custom">
+                    <Description text="An application-specific profile"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="missing"/>
+                        </BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="MonProfileDefaultAttributes">
+                        <Description text="The default attributes of the profile"/>
+                        <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                        <CallMacro nameOfCalledMacro="DefaultAttributes"/>
+                    </Group>
+                </Feature>
+            </Group>
+        </Feature>
+    </Macro>
+</FrameworkFeatureModel>

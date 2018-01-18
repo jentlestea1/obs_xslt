@@ -1,0 +1,6 @@
+     
+            
+  Generating code for class DC_SampleR3Database in files /Projects/ObsFramework/src/cpp/RegressionTest/TestCaseSampleR3Database_1.h
+
+  
+  

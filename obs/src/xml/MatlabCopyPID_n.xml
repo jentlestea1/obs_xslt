@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ObsApplication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="D:/Projects/ObsFramework/models/xsd/ObsFrameworkAppModel.xsd">
+      <ControllerManagement>
+            <ControlAction kind="component" type="Data/DC_ControlAction" status="provided">
+                  <ControlBlock kind="interface" type="Data/ControlBlock" status="provided">
+                        <CopyLink kind="functionality" status="provided"/>
+                        <Input>
+                              <Name_6 kind="property" type="string" value="SamplePIDInput" status="provided"/>
+                              <Number_3 kind="property" type="int" value="0" minValue="0" maxValue="+" status="provided"/>
+                              <DatapoolName_0 kind="property" type="string" value="DP_DUMMY" status="provided"/>
+                        </Input>
+                        <Output>
+                              <Name_7 kind="property" type="string" value="SamplePIDInput" status="provided"/>
+                              <Number_4 kind="property" type="int" value="0" minValue="0" maxValue="+" status="provided"/>
+                              <DatapoolName_1 kind="property" type="string" value="DP_DUMMY" status="provided"/>
+                        </Output>
+                        <Parameter_1>
+                              <Description>The proportional gain</Description>
+                              <ParameterName kind="property" type="string" value="KP" status="provided"/>
+                              <Number_5 kind="property" type="int" value="0" minValue="0" maxValue="+" status="provided"/>
+                              <DatabaseName kind="property" type="string" value="PD_DUMMY" status="provided"/>
+                        </Parameter_1>
+                        <Parameter_1>
+                              <Description>The integral gain</Description>
+                              <ParameterName kind="property" type="string" value="KI" status="provided"/>
+                              <Number_5 kind="property" type="int" value="1" minValue="0" maxValue="+" status="provided"/>
+                              <DatabaseName kind="property" type="string" value="PD_DUMMY" status="provided"/>
+                        </Parameter_1>
+                        <Parameter_1>
+                              <Description>The derivative gain</Description>
+                              <ParameterName kind="property" type="string" value="KD" status="provided"/>
+                              <Number_5 kind="property" type="int" value="2" minValue="0" maxValue="+" status="provided"/>
+                              <DatabaseName kind="property" type="string" value="PD_DUMMY" status="provided"/>
+                        </Parameter_1>
+                        <MatlabWrapper kind="component" type="Data/DC_MatlabCopyPID" status="generable">
+                              <Description>Matlab Wrapper for a PID Control Block</Description>
+                              <StepFunction kind="property" type="string" value="PID_step" status="provided"/>
+                              <InitFunction kind="property" type="string" value="PID_init" status="provided"/>
+                              <MatlabCodeHeaderFile kind="property" type="string" value="MatlabAutocode/pid.h" status="provided"/>
+                        </MatlabWrapper>
+                  </ControlBlock>
+            </ControlAction>
+      </ControllerManagement>
+</ObsApplication>

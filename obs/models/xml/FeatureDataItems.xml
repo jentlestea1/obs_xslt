@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+    <Macro nameOfMacro="DataItems">
+        <Feature nameOfFeature="DataItem">
+            <Description text="A data item"/>
+            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+            <Type>
+                <BuildingBlock>
+                    <Interface status="provided" type="Data/DC_DataItem"/>
+                </BuildingBlock>
+            </Type>
+            <Group nameOfGroup="Options">
+                <Description text="The data item options foreseen by the framework"/>
+                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                <Feature nameOfFeature="DefaultDataItem">
+                    <Description text="Default data item"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="provided" type="Data/DC_DataItem"/>
+                        </BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="Attributes">
+                        <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                        <Feature nameOfFeature="Variable">
+                            <Description text="The variable that is encapsulated by the data item"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="string"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="Type">
+                            <Description text="The type of the variable that is encapsulated by the data item"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="string">
+                                        <Enumeration>
+                                            <Item value="TD_Float"/>
+                                            <Item value="TD_Integer"/>
+                                        </Enumeration>
+                                    </Property>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                    </Group>
+                </Feature>
+                <Feature nameOfFeature="RawDataItem">
+                    <Description text="Raw data item"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="provided" type="Data/DC_RawDataItem"/>
+                        </BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="RawDataItemAttributes">
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="Variable">
+                            <Description text="The variable or the address that is encapsulated by the data item"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="string"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                    </Group>
+                </Feature>
+                <Feature nameOfFeature="SettableDataItem">
+                    <Description text="Settable data item"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="provided" type="Data/DC_SettableDataItem"/>
+                        </BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="SettableDataItemAttributes">
+                        <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                        <Feature nameOfFeature="Variable">
+                            <Description text="The variable that is encapsulated by the data item"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="string"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="Type">
+                            <Description text="The type of the variable that is encapsulated by the data item"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="string">
+                                        <Enumeration>
+                                            <Item value="TD_Float"/>
+                                            <Item value="TD_Integer"/>
+                                        </Enumeration>
+                                    </Property>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                    </Group>
+                </Feature>
+            </Group>
+        </Feature>
+    </Macro>
+</FrameworkFeatureModel>

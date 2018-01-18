@@ -1,0 +1,742 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?> 
+
+<CodingRules>
+
+  <Author>A. Pasetti &#160;(<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)</Author>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Class Structure</Category>
+
+  <Id>1.1</Id>
+
+  <Description>All classes shall be derived from one common ancestor class (the <i>root class</i>).
+  </Description>
+
+  <Justification>
+The presence of a single root class has two advantages. It allows uniforms treatment of all objects in an
+application and it allows all objects in an application to be endowed with certain common properties.
+An example of the first advantage is the creation of a generic container class. An example of the second
+advantage is the provision of all objects with an <i>object identifier</i> that can be conveniently
+coded in the root class. The disadvantage of a single root class is that classes may be heavy-weight
+because they must all carry (at least) the baggage defined by the root class. Hence, deviations
+from this rule are allowed only when very light weight classes must be created. 
+  </Justification>
+
+  <LastModified>2002-08-31</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Object Management</Category>
+
+  <Id>2.1</Id>
+
+  <Description>Objects shall be handled only through their pointers.
+  </Description>
+
+  <Justification>
+This and the next rules try to impose a java-like programming style upon C++ code.
+Direct handling of object instances is onerous in terms of both memory and processing time and
+should therefore be avoided. The next rules make the manipulation of object pointers safe
+by, essentially, dictating that all objects are created statically and that they can never
+be destroyed. Note that this rule also implies that objects should not be passed by value
+to functions and methods. Thus, no destruction of objects on the stack can occur.
+  </Justification>
+
+  <LastModified>2002-08-31</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Object Management</Category>
+
+  <Id>2.2</Id>
+
+  <Description>All the objects required by an application shall be created during 
+  application initialization and shall never be destroyed afterwards.
+  </Description>
+
+  <Justification>
+This policy prevents occurence of out-of-memory and double-delete errors during application normal operation and
+increases timing predictability. Where dynamic objects creation might be useful, pools of
+pre-allocated objects can be set up at initialization.  
+  </Justification>
+
+  <LastModified>2002-08-31</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Object Management</Category>
+
+  <Id>2.3</Id>
+
+  <Description>There shall be no creation of objects on the stack. 
+  </Description>
+
+  <Justification>
+This rule complements the previous one. Taken together, the two rules ensure that objects are never
+destroyed. This makes handling of objects through their pointers safer and essentially removes the
+danger of dangling pointers. 
+<p></p>  
+Note that this rule implies that objects cannot be passed by value in function and method calls and
+that they cannot be used as local variables in methods or function bodies. 
+  </Justification>
+
+  <LastModified>2002-08-31</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Object Management</Category>
+
+  <Id>2.4</Id>
+
+  <Description>The class destructor shall be declared to have "protected" visibility for all 
+  non-final classes. 
+  </Description>
+
+  <Justification>
+This ensures that some violations of the previous two rules will be caught by the compiler that will flag
+any attempts, direct or indirect, to dynamically destroy objects outside the class tree. This rule is best implemented at the level of the <i>root class</i>.
+  </Justification>
+
+  <LastModified>2002-08-31</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Object Management</Category>
+
+  <Id>2.5</Id>
+
+  <Description>There shall be no assignment of objects. 
+  </Description>
+
+  <Justification>
+This rule particularizes previous rules on object management. Object assignment normally requires 
+re-definition of the assignment operator which is often difficult to do without errors. Object
+assignments can moreover be an expensive operation to perform requiring extensive data copying and
+substantial amounts of code.
+  </Justification>
+
+  <LastModified>2002-08-31</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Object Management</Category>
+
+  <Id>2.6</Id>
+
+  <Description>For all classes, the assignment operator shall be re-defined to report an assert error. 
+  </Description>
+
+  <Justification>
+This helps detects violation of the previous rule.  This rule is best implemented
+at the level of the <i>root class</i> (see PR1.1).
+  </Justification>
+
+  <LastModified>2002-08-31</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Object Management</Category>
+
+  <Id>2.7</Id>
+
+  <Description>For all classes, the copy constructor shall never be invoked. 
+  </Description>
+
+  <Justification>
+Use of the copy constructor has the same drawbacks as the use of object assignment and should 
+be avoided for the same reasons. 
+  </Justification>
+
+  <LastModified>2002-08-31</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Object Management</Category>
+
+  <Id>2.8</Id>
+
+  <Description>For all classes, the copy constructor shall be re-defined to report an assert error. 
+  </Description>
+
+  <Justification>
+This helps detects violation of the previous rule.  This rule is best implemented
+at the level of the <i>root class</i>.
+  </Justification>
+
+  <LastModified>2002-08-31</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Object Management</Category>
+
+  <Id>2.9</Id>
+
+  <Description>The class destructor shall be declared to have "private" visibility for all 
+  classes that are intended to be final (i.e. classes that are not meant to be further extended
+  through class inheritance). 
+  </Description>
+
+  <Justification>
+This helps enforce the rule on the non-destruction of objects. It also ensures that final classes
+are not extended (extending a class with a private destructor causes a compiler error). 
+  </Justification>
+
+  <LastModified>2002-08-31</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Pointer Management</Category>
+
+  <Id>3.1</Id>
+
+  <Description>Pointers to variables of primitive type shall be avoided as far as possible. 
+  </Description>
+
+  <Justification>
+An earlier rule dictates that class instances should only be manipulated
+through pointers. That rule was complemented by other rules that ensured that objects are
+created at initialization time and never destroyed afterwards (not even on the stack). This 
+makes their manipulation through pointers safe. It is not possible to adopt similar
+restrictions to the creation and destruction of variables of primitive types and hence, in 
+their case, the safest policy is to avoid, as far as practical, the use of pointers.
+  </Justification>
+
+  <LastModified>2002-08-31</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Pointer Management</Category>
+
+  <Id>3.2</Id>
+
+  <Description>Pointers to variables of primitive type shall not be passed as public or
+protected method parameters. 
+  </Description>
+
+  <Justification>
+This rule is a looser version of the previous one. Deviations will sometimes be necessary
+from the previous rule for reasons of run-time efficiency or when manipulating low-level
+data structures (e.g. memory mapped hardware registers). The present rule dictates that
+such deviations should be confined to using pointers internally to a class. Localized use
+of pointers is less dangerous than use across classes.
+  </Justification>
+
+  <LastModified>2002-10-02</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Pointer Management</Category>
+
+  <Id>3.3</Id>
+
+  <Description>Arrays shall not be passed as method or function parameters. 
+  </Description>
+
+  <Justification>
+This rule particularizes the previouos one. It is introduced because in C/C++ there is
+no run-time check on access to array elements. Use of out-of-bounds array indices
+is especially likely when an array is used far from the point where it is declared.
+Use of an array parameter within a method or function is such a case and should
+therefore be avoided.
+  </Justification>
+
+  <LastModified>2002-10-02</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>File Management</Category>
+
+  <Id>4.1</Id>
+
+  <Description>All type re-definition through <code>typedef</code> shall be gathered together 
+  in a small number of dedicated <code>include</code> files. 
+  </Description>
+
+  <Justification>
+This rule makes it easy for code reviewers to quickly access the definitions of user-defined 
+types.
+  </Justification>
+
+  <LastModified>2002-09-12</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>File Management</Category>
+
+  <Id>4.2</Id>
+
+  <Description>All application constants shall be gathered together 
+  in a small number of dedicated <code>include</code> files. 
+  </Description>
+
+  <Justification>
+This rule makes it easy for code reviewers to quickly access the definitions of user-defined 
+constants.
+  </Justification>
+
+  <LastModified>2002-09-12</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>File Management</Category>
+
+  <Id>4.3</Id>
+
+  <Description>All compiler switches (<code>#define</code> variables) shall be gathered together 
+  in a small number of dedicated <code>include</code> files. 
+  </Description>
+
+  <Justification>
+This rule makes it easy for code reviewers to quickly access the definitions of user-defined 
+constants.
+  </Justification>
+
+  <LastModified>2002-09-12</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Declarations</Category>
+
+  <Id>5.1</Id>
+
+  <Description>Forward declarations shall be used instead of including class header 
+  for classes referred to by pointers or reference.   
+  </Description>
+
+  <Justification>
+This helps to keep the interface for an object "lightweight" so that clients of the interface are not subject to unnecessary dependencies. Forward declarations also reduce build dependencies that would normally be incurred when header files are included.   
+
+  </Justification>
+
+  <LastModified>2003-01-12</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Declarations</Category>
+
+  <Id>5.2</Id>
+
+  <Description>Declarations of methods in a subclass that override 
+  a virtual method in
+  a superclass shall include the keyword <code>virtual</code>
+  </Description>
+
+  <Justification>
+This makes the definition of the interface of a derived class more self-contained and alerts its users to possible interferences with the super class and to the presence of a performance degradation due to the indirection introduced by the virtual function table.
+  </Justification>
+
+  <LastModified>2002-10-12</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Definitions</Category>
+
+  <Id>6.1</Id>
+
+  <Description>The definition of inline methods declared in header file <code>XXX.h</code> shall be placed in a
+dedicated header file called <code>XXX_inl.h</code>.
+  </Description>
+
+  <Justification>
+Inline method definitions should not be placed in the same header file where the class interface is declared in order to avoid build dependencies. On the other hand, placing them in the body file (.cpp) would force their users to include the entire body file and might give rise to linker errors if the same body file is included twice. The proposed solution is a compromise that avoids cluttering the class declaration with implementation details while at the same time separating the definition of the inline methods from the definition of other methods.
+  </Justification>
+
+  <LastModified>2002-10-12</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Error Management</Category>
+
+  <Id>7.1</Id>
+
+  <Description>Methods shall report errors they encounter by creating 
+event reports that are stored in some globally accessible data structure.
+They shall normally not use return codes to report errors.
+  </Description>
+
+  <Justification>
+Use of return code implies the need for the caller to always check the value of
+the return code on every activation. It also implies that the caller must
+know what to do in case an error is detected. This introduces overheads that
+are normally not acceptable in an embedded environment. The proposed approach
+instead allows to limit the error checking overheads to components that are
+truly interested in it and that know how to handle the error. 
+  </Justification>
+
+  <LastModified>2002-10-12</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Error Management</Category>
+
+  <Id>7.2</Id>
+
+  <Description>No checks shall be implemented to detect errors due
+to erroneous configuration operations.
+  </Description>
+
+  <Justification>
+Configuration operations are performed in the application initialization phase.
+These operations are under the full control of the application developer and
+are easy to test because they tend to be sequential and do not rely on complex
+logic. It is therefore reasonable to assume that no errors will be performed
+in this phase. Error checking would also be problematic because it is unclear
+how the error information about the detected errors should be used. 
+  </Justification>
+
+  <LastModified>2002-12-12</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Error Management</Category>
+
+  <Id>7.3</Id>
+
+  <Description>Checks shall be performed on the valitidy of method and function
+parameters only if illegal values might cause corruption of internal data
+structures. In other cases, responsibility for ensuring their correctness
+rests with the caller.
+  </Description>
+
+  <Justification>
+Performing a systematic check of the legality of all method and function parameters is judged
+to be too onerous. Additionally, it is difficult to give general rules for what
+should be done when an illegal
+parameter value is detected (reporting the fact but executing the method/function
+anyway? Reporting the fact and executing some dummy default action? Commanding
+an application reset? Throwing an exception?). On the other hand, performing no checks
+is dangereous because illegal parameter values might corrupt the internal state
+of a component and thus make the component unusable for all successive callers.
+The policy prescribed by this rule is a minimalist one that keeps an external
+caller from corrupting the internal data structures of the callee but otherwise
+leaves overall responsibility for ensuring the legality of the parameters with the caller.
+<p/>
+The basic principle is that a callee need not trust its callers but well-behaved callers
+should always be able to trust their callees.
+<p/>
+This rule is only applied to public methods. It is assumed that protected and private
+methods are only used by "trusted" callers and can therefore dispense with the error check.
+  </Justification>
+
+  <LastModified>2003-17-05</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Error Management</Category>
+
+  <Id>7.4</Id>
+
+  <Description>Memory that is dynamically allocated shall be initialized immediately after
+allocation.
+  </Description>
+
+  <Justification>
+This rule is useful both because it ensures that freshly allocated memory is initialized with some
+sensible values and because it catches "out-of-memory" errors. In the OBS Framework, memory is allocated with the
+"new" operator and this normally throws an exception if the heap is full. However, the OBS Framework
+is intended to be usable with an EC++ compiler and the EC++ subset of the C++ language does not
+include exception handling. One alternave way to catch "out-of-memory" errors is to check that the value
+of the pointer returned by "new" is different from null. In an on-board context, this represents a fatal error. Hence, 
+initializing the memory and allowing the program to fail through an "illegal memory access" error
+is an equivalent and slightly more efficient solution.
+<p/>
+It should also be noted that, in the OBS Framework, dynamic memory allocation is only used during the
+application configuration phase (see PR2.2). The number of calls to "new" and the amount of memory that they
+require is therefore statically (and easily) predicatable. Out-of-memory errors therefore should only
+arise during the program development phase.
+  </Justification>
+
+  <LastModified>2003-17-05</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Application Configuration</Category>
+
+  <Id>8.1</Id>
+
+  <Description>Objects shall be endowed with the capability of performing
+a <i>configuration check</i> upon themselves.
+  </Description>
+
+  <Justification>
+Objects are configured as part of the application instantiation process.
+A configuration check verifies that an individual object is configured. 
+It might check that all plug-in objects have been loaded and that all
+user-defined parameters have legal values.
+<p/>
+A configuration check is best implemented as an overridable method at
+the level of the <i>root class</i>. This allows an application to 
+construct a list of all framework objects it uses and to perform the
+configuration check systematically upon all of them.
+  </Justification>
+
+  <LastModified>2003-01-19</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Application Configuration</Category>
+
+  <Id>8.2</Id>
+
+  <Description>Configuration operations shall be as far as possible 
+implemented as setter methods with a single argument following the 
+JavaBeans conventions for property setter methods.
+  </Description>
+
+  <Justification>
+Adherence to this rule makes it easy to identify and recognize
+configuration methods. The presence of individual setter methods for
+each configuration parameter, additionally, leaves the possibility
+open of selectively changing their values at run time. Finally,
+the use of naming conventions for configuration methods might 
+one day facilitate the construction of an automatic instantiation
+environment upon the framework.
+<p/>
+It is of course inevitable that some objects might require 
+configuration operations that cannot be implemented as property setter
+methods. These number of such operations should however be minimized
+and their presence shall be mentioned in the class documentation.
+  </Justification>
+
+  <LastModified>2003-01-19</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Application Configuration</Category>
+
+  <Id>8.3</Id>
+
+  <Description>Configuration operations shall be as far as possible 
+independent of the order in which they are executed.
+  </Description>
+
+  <Justification>
+The intention behind this rule is to implement the application 
+configuration process as a sequence of atomic operations (ideally,
+as stated by the previous rule, as a sequence of <i>property setting
+operations</i>) that are as far as possible independent of each 
+other. The simplicity of the configuration operations and their
+mutual independent are valuable as means to simplify the application
+instantiation process and to reduce the chances of configuration 
+errors. Additionally, they might one day facilitate the construction 
+of an automatic instantiation environment upon the framework.
+<p/>
+Where the configuration operations to be performed on a certain
+object are order-dependent, the fact shall be documented in the
+class documentation.
+  </Justification>
+
+  <LastModified>2003-01-19</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Application Configuration</Category>
+
+  <Id>8.4</Id>
+
+  <Description>All framework classes shall implement a parameterless
+constructor.
+  </Description>
+
+  <Justification>
+The intention behind this and the previous two rules is that the
+application instantiation process should be representable as a 
+sequence of object instantiation and object configuration operations
+and that the two types of operations should be distinct.
+The advantage of separating object instantiation from object
+configuration is that this leaves the option open of dynamically
+re-configuring selected object during application operation.
+The disadvantage of doing so is that there is a greater risk 
+that an object may be incompletely configured. If configuration
+is performed as part of the object instantiation process (by passing
+the configuration parameters as constructor parameters), it is
+less likely that users will omit some configuration actions.
+Rule 8.1, however, mandates the implementation of a configuration
+check service which is designed to catch such omissions.
+<p/>
+In view of the above, application of this rule shall be waived for
+all classes that, for whatever reason, do not implement a configuration
+check as foreseen by rule 8.1.
+<p/>
+Adoption of this rule has an additional advantage
+in case the framework must be ported to C for use on targets where
+no C++ compiler is available (e.g. DSPs). In this case, the 
+restriction to parameterless constructors would facilitate the
+development of an automatic translator from C++ to C.
+  </Justification>
+
+  <LastModified>2003-01-19</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Control Flow</Category>
+
+  <Id>9.1</Id>
+
+  <Description>Nested "if" clauses shall be as far as possible avoided.
+  </Description>
+
+  <Justification>
+Nested "if" clauses are difficult to read and easy to code incorrectly.
+It is usually possible to replace a nested "if" clause with two
+or more consecutive non-bnested "if" clauses. The drawback of doing
+so is a price of small loss of efficiency and (sometimes)
+greater complexity in the checks of the "if" clauses. For instance,
+consider the followiing code segment with a nested "if" if:
+<PRE>    if (cond_a) then {
+       if (cond_b) then
+          stmt_1;
+       else
+          stmt_2;
+    } </PRE>
+This can be replaced by the following code:
+<PRE>    if ( (cond_a) and (cond_b) ) then
+       stmt_1;
+    if ( (cond_a) and (not cond_b) ) then
+       stmt_2;
+    } </PRE>
+The second form is regarded as more legible and less prone to error
+and is therefore preferred.
+  </Justification>
+
+  <LastModified>2003-05-03</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+ <Rule>
+
+  <Category>Control Flow</Category>
+
+  <Id>9.2</Id>
+
+  <Description>Except for the case of the "assert" macro, preprocessor 
+macros shall not be used to change the control flow.
+  </Description>
+
+  <Justification>
+Use of preprocessor macros is notoriously dangerous and difficult to 
+keep under control. It is inevitable in language like C which offer
+only poor adaptability mechanisms but in C++ it can usually be replaced
+by safer mechanisms like inheritance, object composition, or templates. 
+  </Justification>
+
+  <LastModified>2003-05-03</LastModified>
+
+ </Rule>
+
+<!-- =========================================================== --> 
+
+</CodingRules>

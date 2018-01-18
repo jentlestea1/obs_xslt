@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <meta>
+        <lastOpenedFiles>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateParameterDatabaseTestCaseBody.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateParameterDatabaseTestCaseHeader.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/scripts/buildModel.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/scripts/build.xml"/>
+            <file focused="true" name="file:/D:/Projects/ObsFramework/scripts/runGeneratorMetaComponent.xml"/>
+        </lastOpenedFiles>
+    </meta>
+    <projectTree name="FrameworkModel.xpr">
+        <folder name="Ant">
+            <file name="file:/D:/Projects/ObsFramework/scripts/build.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/scripts/buildModel.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/scripts/buildSampleApplication.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/scripts/runGeneratorMetaComponent.xml"/>
+        </folder>
+        <folder name="MetaModel">
+            <file name="file:/D:/Projects/fbfm/fwmetamodel/xsl/AddUniqueNames.xsl"/>
+            <file name="file:/D:/Projects/fbfm/fwmetamodel/xsd/DisplayMetamodel.xsd"/>
+            <file name="file:/D:/Projects/fbfm/fwmetamodel/xsl/MacroProcessing.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xsd/ObsFrameworkAppModel.xsd"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xsl/ObsFrameworkFeatureMerger.xsl"/>
+            <file name="file:/D:/Projects/fbfm/fwmetamodel/xsl/RemoveUniqueNames.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/SampleApplicationFeatureMerger.xsl"/>
+            <file name="file:/D:/Projects/fbfm/fwmetamodel/xsl/TransformationToAppXsd.xsl"/>
+            <file name="file:/D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd"/>
+        </folder>
+        <folder name="ObsFrameworkModel">
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureControlActions.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureControllerManagement.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureDataItems.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureDataPool.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureDefaultAttributes.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureEventRepository.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureFDIRChecks.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureFDIRManagement.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureFSM.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureFsmEvents.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureFsmStates.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureIndexedDataPool.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureIndexedDatabase.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureManoeuvreManagement.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureModeManager.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureMonitoringProfiles.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureObsApplication.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureObsClock.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeaturePUSTelecommands.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeaturePUSTelemetryPackets.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureParameterDatabase.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeaturePunctualActions.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureRecoveryActions.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureStandardTelecommands.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureStandardTelemetryPackets.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureTelecommandManagement.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureTelemetryManagement.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureTelemetryStream.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/FeatureTracer.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/ObsFrameworkModel.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/ObsFrameworkModelExpUnique.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/models/xml/ObsFrameworkModelExpanded.xml"/>
+        </folder>
+        <folder name="ObsMetaComponents">
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/ConfigureControlAction.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/ConfigureControlBlock.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/ConfigureDataPool.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/ConfigureEventRepository.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/ConfigureFSM.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/ConfigureFunctionalityManagers.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/ConfigureObsClock.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/ConfigureParameterDatabase.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/ConfigureRootObject.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/CountComponents.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateComponentFactoryBody.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateComponentFactoryHeader.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateComponentFactoryInclude.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateControlBlock.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateDataPoolBody.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateDataPoolHeader.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateDataPoolInclude.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateDataPoolTestCaseBody.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateDataPoolTestCaseHeader.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateDynamicFactoryBody.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateDynamicFactoryHeader.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateFsmState.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateMatlabWrapperBody.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateMatlabWrapperHeader.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateMemoryTest.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateMonitoringProfile.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateParameterDatabaseBody.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateParameterDatabaseHeader.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateParameterDatabaseInclude.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateParameterDatabaseTestCaseBody.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateParameterDatabaseTestCaseHeader.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateRecoveryAction.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateStackContainerBody.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateStackContainerHeader.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateStackContainerTestCaseBody.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/GenerateStackContainerTestCaseHeader.xsl"/>
+        </folder>
+        <folder name="SampleApplication">
+            <file name="file:/D:/Projects/ObsFramework/src/xml/IntStack.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/MatlabCopyPID.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/MatlabDataItemPID.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/MatlabDataPoolPID.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/MatlabPointerPID.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/RootObjectStack.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleApplicationModel.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleFSM.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleFullDataPool.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleManoeuvres.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleMonitoredDataPool.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleR1Database.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleR2Database.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleR3Database.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleTelecommands.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleTelemetryPackets.xml"/>
+        </folder>
+        <folder name="SampleApplication_n">
+            <file name="file:/D:/Projects/ObsFramework/src/xml/MatlabCopyPID_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/MatlabDataItemPID_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/MatlabDataPoolPID_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/MatlabPointerPID_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleControlActions_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleEventRepository_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleFSM_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleFullDataPool_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleManoeuvres_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleMonitoredDataPool_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleObsClock_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleR1Database_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleR2Database_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleR3Database_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleTelecommands_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleTelemetryPackets_n.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xml/SampleTracer_n.xml"/>
+        </folder>
+        <folder name="UtilityRules">
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/ClassIdFromClassName.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/ClassNameFromPath.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/DirNameFromPath.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/MakeFirstLetterCap.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/TruncatedClassNameFromPath.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/TypeNameFromPath.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/src/xsl/WriteCommentBody.xsl"/>
+        </folder>
+    </projectTree>
+</project>

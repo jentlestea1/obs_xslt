@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+    <Macro nameOfMacro="FsmEvents">
+        <Feature nameOfFeature="FsmEvent">
+            <Description text="The state-changing event of a Finite State Machine (FSM)"/>
+            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+            <Type>
+                <BuildingBlock>
+                    <Interface status="provided" type="FSM/DC_FsmEvent"/>
+                </BuildingBlock>
+            </Type>
+            <Group nameOfGroup="MandatoryAttributes">
+                <Description text="The mandatory attributes of the FsmEvent"/>
+                <GroupComment text="The target FSM is implicitly defined (it is the FSM of which this feature is a child)"/>
+                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                <Feature nameOfFeature="TargetState">
+                    <Description text="The name of the target state"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type><Attribute><Property status="provided" type="component" name="TargetState"></Property></Attribute>
+                    </Type>
+                </Feature>
+            </Group>
+            <Group nameOfGroup="OptionalAttributes">
+                <Description text="The optional attributes of the FsmEvent"/>
+                <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                <Feature nameOfFeature="InitialEnableState">
+                    <Description text="The initial enable state of the FsmEvent"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <Attribute>
+                            <Property type="string" name="Enabled" status="provided">
+                                <Enumeration>
+                                    <Item value="ENABLED"/>
+                                    <Item value="DISABLED"/>
+                                </Enumeration>
+                            </Property>
+                        </Attribute>
+                    </Type>
+                </Feature>
+            </Group>
+            <Group nameOfGroup="FsmEventOptions">
+                <Description text="The FsmEvent options foreseen by the framework"/>
+                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                <Feature nameOfFeature="DefaultFsmEvent">
+                    <Description text="Default FsmEvent that unconditionally triggers the transition to the target state"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="provided" type="FSM/DC_FsmEvent"/>
+                        </BuildingBlock>
+                    </Type>
+                </Feature>
+                <Feature nameOfFeature="FromFsmEvent">
+                    <Description text="State transition is only performed if the FSM is in a certain state (the fromState)"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="provided" type="FSM/DC_FromFsmEvent"/>
+                        </BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="FromFsmState">
+                        <Description text="The name of the fromState"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="FromFsmState">
+                            <Description text="The name of the fromFsmState"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type><Attribute><Property status="provided" type="component" name="StartingState"></Property></Attribute>
+                            </Type>
+                        </Feature>
+                    </Group>
+                </Feature>
+                <Feature nameOfFeature="Custom">
+                    <Description text="An application-specific FsmEvent"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <BuildingBlock>
+                            <Component status="missing"/>
+                        </BuildingBlock>
+                    </Type>
+                    <Group nameOfGroup="DefaultAttributes">
+                        <Description text="The default attributes of the custom FsmEvent"/>
+                        <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                        <CallMacro nameOfCalledMacro="DefaultAttributes"/>
+                    </Group>
+                </Feature>
+            </Group>
+        </Feature>
+    </Macro>
+</FrameworkFeatureModel>

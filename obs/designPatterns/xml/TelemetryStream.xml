@@ -1,0 +1,202 @@
+<DesignPattern>
+
+<Name>Telemetry Stream</Name>
+
+<BasedOn>
+This is pattern is derived from the <i>telemetry management</i> design pattern of the <a HREF="http://www.aut.ee.ethz.ch/~pasetti/AocsFramework/index.html">AOCS Framework</a>.
+</BasedOn>
+
+<Intent>
+Decouple the process of forwarding telemetry data to the ground from the characteristics of the physical channel over which the data are sent.
+</Intent>
+
+<Motivation>
+<p>
+The telemetry data are collected from the modules that make up the on-board applications and are then formatted in packets that are forwarded to the ground. The characteristics of the physical channel to which telemetry data are written by the OBS are obviously application-specific. Common mechanisms are:
+<ul>
+<li>direct writing of the telemetry data to I/O ports that drive the interface to the telemetry data link, and</li>
+<li>writing to a DMA buffer from which dedicated hardware collects the telemetry data and puts them on the telemetry data link.</li>
+</ul>
+Variations in the characteristics of the telemetry channel are one of the causes of the non-reusability of telemetry handling components. This design pattern proposes to decouple the component responsible for telemetry handling from the component responsible for modeling the telemetry channel through an abstract interface.
+</p>
+</Motivation>
+
+<DictionaryEntry>Telemetry Stream</DictionaryEntry>
+
+
+<Structure>
+<p>
+This design pattern is built around an abstract interface to represent the telemetry stream abstraction: components modeling a concrete telemetry stream must implement abstract interface <CODE>TelemetryStream</CODE>. This interface defines the operations that a telemetry manager component may need to perform to control the forwarding of telemetry data to the telemetry channel. The basic operation is a write operation through which one item of data (one byte, one float, one integer, etc) is pushed down the telemetry channel. Additionally, housekeeping operations are required to reset the channel, to flush it, etc.
+</p><p>
+The structure of the design pattern is shown in the figure below. The telemetry manager component holds a reference to a concrete telemetry stream component that it sees only through the abstract interface <CODE>TelemetryStream</CODE>. The concrete telemetry stream component is therefore a plug-in component for the telemetry manager and can be changed without impact on the code of the telemetry manager. The design pattern assumes that the telemetry manager has collected the telemetry data corresponding to a given telemetry frame and has packetized them as a collection of uniform data items (e.g. as an array of bytes). It then writes them to the telemetry stream one by one by calling its write operation and finally perform whatever stream management operations are required.
+</p>
+</Structure>
+
+<StructureFigure>TelemeterableStreamDP</StructureFigure>
+
+<Participant>
+<Name>TmManager</Name>
+<Role>The component that is responsible for collecting the telemetry date.</Role>
+</Participant>
+
+<Participant>
+<Name>TelemetryStream</Name>
+<Role>The abstract interface that characterizes all components that model telemetry streams.
+</Role>
+</Participant>
+
+<Participant>
+<Name>ConcreteTmStream</Name>
+<Role> Component implementing interface <CODE>TelemetryStream</CODE> that represents a specific and concrete telemetry stream component. </Role>
+</Participant>
+
+<Collaborations>
+The typical operational scenario for this design pattern is:
+<ul>
+<li>A telemetry manager has collected a set of data that it must send down the telemetry channel. It holds a reference to a telemetry stream and it sends the data, one by one, by writing them to the telemetry stream.
+</li>
+</ul>
+</Collaborations>
+
+<Consequence>
+Clients are decoupled from the characteristics of the telemetry channel: they only see telemetry channels through the abstract interface <CODE>TelemetryStream</CODE>. Changing the concrete component that models the telemetry channel therefore has no impact on the component that processes the telemetry data.
+</Consequence>
+
+
+<Applicability>
+This design pattern is useful when:
+<ul>
+<li>there is a need to send telemetry data to a telemetry channel and the physical characteristics of this telemetry channel can vary.
+</li>
+</ul>
+</Applicability>
+
+<ImplementationIssue>
+What operations should be defined by the <CODE>TelemetryStream</CODE> interface? Since behind this interface there may be any concrete telemetry channel, the interface should define a sufficiently large set of operations to model them all. On the other hand, too large a set of operations makes the management of the telemetry stream on the part of the telemetry handling component too complex. One possible set is:
+<PRE>	
+    interface TelemetryStream {
+	write(int d);
+                    // write a bit field
+	write(int d, int firstBit, int lastBit);
+	write(short d);
+                    // write a bit field
+	write(short d, int firstBit, int lastBit);
+	write(byte d);
+                    // write a bit field
+	write(byte d, int firstBit, int lastBit);	
+	write(float d);
+	write(doube d);
+
+	// housekeeping operations
+	void reset();
+	void flush();
+	int getCapacity();
+    }</PRE>
+
+This version of the <CODE>TelemetryStream</CODE> abstract interface provides several write methods, one for each type of elementary data that might have to be sent to the telemetry channel. It also provides methods to send only some bits extracted from an integer, short or byte variable. A more economical version might assume that telemetry data are always packetized as collection of bytes and would then offer only one single write method that takes a byte as an argument. Additionally, the interface declares methods to flush and to reset the telemetry stream. Their semantics might dictate that a telemetry stream should be reset before its user begins writing a new frame to it and that it should be flushed after the writing of a frame has been completed. Finally, the telemetry stream interface foresees a method to retrieve the stream capacity (expressed, for instance, as the maximum size of a telemetry frame that can be forwarded to the ground in one single flush operation).
+</ImplementationIssue>
+
+<ImplementationIssue>
+This pattern and the <a HREF="Telemeterable.html">telemeterable pattern</a> are closely related since both cover the management of telemetry data. It is possible, and in some cases advantageous, to combine them. The basic idea behind the telemeterable pattern is that responsibility for constructing the telemetry image associated to a given component should reside with the component itself. In the standard implementation, the component implements the <CODE>telemeterable</CODE> interface that defines methods through which the component can return its telemetry image as, for instance, a stream of bytes. Responsibility for writing this image to the telemetry stream, however, rests with the telemetry manager component. In an alternative implementation, the telemeterable component is passed a reference to the telemetry stream and becomes responsible for constructing the telemetry image <i>and</i> for writing it to the telemetry stream. The telemetry manager is now responsible solely for performing the management of the telemetry collection and forwarding process. In this spirit, the <CODE>telemeterable</CODE> interface is defined as follows:
+<PRE>
+    interface Telemeterable {
+        void writeToTelemetry(TelemetryStream* concreteTmStream);
+        void setTelemetryFormat(int tmFmt);
+        int getTelemetryImageSize();
+    }</PRE>
+
+The telemetry management process in the telemetry manager is then implemented as follows:
+<PRE>	
+    TelemetryList* tmList;     // list of objects to send to TM
+    TelemetryStream* tmStream;
+	. . .
+    void activate() {	// activation method for TM handler
+        tmStream->reset();
+        tmStreamCapacity = tmStream->getCapacity();
+            for (all telemeterable items t in tmList) do
+            {	  
+                size += t->getTelemetryImageLength();
+                if (TM image size is compatible with TM stream capacity)
+                    t->writeToTelemetry(tmStream);
+	    else
+		. . .    // handle error
+   	  }
+   	  tmStream->flush();
+    }</PRE>
+
+The telemetry handling code is now much cleaner than would be the case with the separate instantiation of the telemeterable and telemetry stream patterns. The code above is clearly entirely application-independent and can form the basis for the construction of a reusable telemetry manager component.
+</ImplementationIssue>
+
+
+<FrameworkMapping>
+  <Name>TelemetryStream</Name>
+  <Type>abstract interface</Type>
+  <FrameworkClass>TelemetryStream</FrameworkClass>
+</FrameworkMapping>
+
+
+
+<SampleCode>
+<p>
+Consider a telemetry manager component that collects the telemetry data in an array of bytes. The telemetry data can be forwarded to the telemetry channel using a telemetry stream component. The relevant code looks like this:
+<PRE><![CDATA[	TelemetryStream* tmStream;
+	byte tmData[N];
+	. . .
+	tmStream->reset();
+	if (tmStream->getCapacity()<N)
+	. . . // too many telemetry data, error!
+	for (int j:=0; j++, j<N)
+		tmStream->write(tmData[j]);
+	tmStream->flush();]]></PRE>
+
+This code assumes a specific set of housekeeping operations for the telemetry stream and a very simple protocol for using them. This protocol dictates that the telemetry stream should be reset before the data writing operations for a new frame begins and should be flushed at the end of the data writing operation. The specific operations to be declared by the <CODE>TelemetryStream</CODE> interface and their semantics are defined when the design pattern is instantiated and, clearly, other solutions than that implied by the above pseudo-code are possible. The important point to note is that the code handling the writing operations is independent of the telemetry stream because it sees the concrete stream as an instance of abstract type <CODE>TelemetryStream</CODE>.
+</p><p>
+If the telemetry manager is encapsulated in a component, then the telemetry stream becomes a plug-in component for it:
+<PRE><![CDATA[	
+    class TelemetryManager {
+
+        TelemetryStream* tmStream;
+        byte tmData[N];
+	. . .
+
+        void acquireTmData() {
+	. . .
+        }
+
+        void forwardTmData() {
+            tmStream->reset();
+            if (tmStream->getCapacity()<N)
+                . . .  // too many telemetry data, error!
+            for (int j:=0; j++, j<N)
+                tmStream->write(tmData[j]);
+            tmStream->flush();
+        }
+
+        void loadTmStream(TelemetryStream* ts) {
+        	tmStream = ts;
+        }
+    }]]></PRE>
+
+During application initialization, the telemetry manager component must be configured by loading into it a concrete telemetry stream. This initialization code might look like this:
+<PRE>	TelemetryStream* tmStream = new ConcreteTelemetryStream();
+	. . .
+	TelemetryManager* tmManager = new TelemetryManager ();
+	TmHandler->loadTmStream(tmStream);</PRE>
+
+Two points deserve to be noted. First, the telemetry stream is created as an instance of some concrete telemetry stream class but is always handled as an instance of the abstract <CODE>TelemetryStream</CODE> abstract interface. Second, a change of telemetry stream component would have no impact on the telemetry manager component: the code used to configure it would have to be changed but the internal component code would remain unaffected.
+</p>
+</SampleCode>
+
+<Remarks>
+None
+</Remarks>
+
+<LastModified>
+2002-06-22
+</LastModified>
+
+<Author>
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+</Author>
+
+</DesignPattern>

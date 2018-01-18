@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Chapter>
+    <Title> Domain Dictionary </Title>
+    <Author>
+        <Name> A. Pasetti </Name>
+        <Affiliation>
+            <a HREF="http://www.pnp-software.com">P&amp;P Software</a>
+        </Affiliation>
+        <EMail> pasetti@pnp-software.com </EMail>
+    </Author>
+    <LastModified> 2003-04-17 </LastModified>
+    <Introduction>
+        <p>The domain dictionary defines a number of terms which emerge, directly or indirectly,
+            from the description of the <a href="indexDesignPatterns.html" target="_parent">OBS
+                design patterns</a>. Domain dictionry entries are useful because they provide a
+            vocabulary for describing applications in the OBS domain.</p>
+        <p>Domain dictionary terms can designate either <i>abstractions</i> that exist in many
+            applications in the domain but take a different form in each or they can designate
+                <i>domain-invariant functionalities</i> that share the same implemention in all
+            applications in the domain. At architectural level, the domain dictionary abstractions
+            are often mapped to <a HREF="indexAbstractInterfaces.html" target="_parent">abstract
+            interfaces</a> and the domain-invariant functionalities are often mapped to <a
+                HREF="indexConcreteComponents.html" target="_parent">concrete components</a>.</p>
+        <p>The domain dictionary entries are well-suited to describing an application in a
+            non-formal manner. Formal description of an application is best done using the <a
+                HREF="indexModellingApproach.html" target="_parent">modelling techniques</a> offered
+            by the OBS Framework. In a typical scenario, the domain dictionary entries can be used
+            to formulate the requirements baseline whereas more formal modelling techniques are used
+            to define the application software requirements.</p>
+        <p>For each entry, the domain dictionary provides the following information:</p>
+        <ul>
+            <li>The name of the dictionary entry</li>
+            <li>The definition of the dictionary entry</li>
+            <li>The design pattern where the dictionary entry is introduced (only for entries that
+                are directly associated to a design pattern)</li>
+        </ul>
+        <p>In most cases, the OBS Framework offers syntactical constructs that directly support the
+            implementation of a domain dictionary entry. These can be found by navigating from the
+            domain dictionary entry to the design pattern that gives rise to it and then checking
+            the "Framework Mapping" section of the design pattern description.</p>
+        <p>This <a HREF="DomainDictionaryEntries.html">pointer</a> gives access to the OBS domain dictionary.</p>
+    </Introduction>
+</Chapter>

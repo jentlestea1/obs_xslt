@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:/D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="Tracer">
+            <Feature nameOfFeature="Tracer">
+                  <Description text="The tracer component"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type>
+                        <BuildingBlock>
+                              <Interface status="provided" type="System/Tracer"/>
+                        </BuildingBlock>
+                  </Type>
+                  <Group nameOfGroup="Options">
+                        <Description text="The generic tracer components foreseen by the framework"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="CustomTracer">
+                              <Description text="An application-specific tracer"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="missing"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="DefaultAttributes">
+                                    <Description text="The default attributes of a custom tracer"/>
+                                    <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                    <CallMacro nameOfCalledMacro="DefaultAttributes"/>
+                              </Group>
+                        </Feature>
+                        <Feature nameOfFeature="DummyTracer">
+                              <Description text="A dummy tracer"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="provided" type="System/DC_DummyTracer"/>
+                                    </BuildingBlock>
+                              </Type>                              
+                        </Feature>
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>

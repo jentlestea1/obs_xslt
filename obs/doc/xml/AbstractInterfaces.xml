@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Chapter>
+    <Title> Abstract Interfaces </Title>
+    <Author>
+        <Name> A. Pasetti </Name>
+        <Affiliation>
+            <a HREF="http://www.pnp-software.com">P&amp;P Software</a>
+        </Affiliation>
+        <EMail> pasetti@pnp-software.com </EMail>
+    </Author>
+    <LastModified> 2003-12-08 </LastModified>
+    <Introduction>
+        <p> Abstract interfaces are one of the building blocks that are provided by the OBS
+            Framework. Abstract interfaces are introduced to support the instantiation of the <a
+                href="indexDesignPatterns.html" target="_parent">framework design patterns</a>. An
+            abstract interface defines a set of services that must be provided by the framework but
+            it leaves their implementation open. The framework can provide default implementations
+            (as <a href="indexConcreteComponents.html" target="_parent">concrete components</a>) or
+            it can leave the implementation entirely open and to be specified at application level.</p>
+        <p>In general, the mapping of the abstract interface concept to a concrete architectural
+            construct in a framework depends on the facilities provided by the language selected for
+            the implementation of the framework. In the case of the OBS Framework, the
+            implementation language is C++. An abstract interface in C++ is normally implemented as
+            a class that only declares pure virtual methods. This, however, is regarded as too
+            restrictive. A more flexible approach is to use a class with virtual methods since this
+            allows for the possibility of providing a default implementation of some of the
+            interface services. The fact that the services are implemented through virtual methods
+            means that they can be overridden with application-specific implementations.
+            </p><p>
+            There is a second reason for the choice to implement the framework abstract interfaces
+            as C++ abstract classes. The use of C++ pure virtual classes to represent abstract interfaces
+            would require the use of multiple inheritance but this is excluded in the case of the OBS
+            Framework because of the desire to remain within the EC++ subset of the language (see
+            the discussion of the <a href="indexQualificationApproach.html#CppCodeQuality">framework code quality</a>).
+            </p>
+    </Introduction>
+</Chapter>

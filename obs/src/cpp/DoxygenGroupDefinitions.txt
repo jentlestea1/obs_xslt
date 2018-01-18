@@ -1,0 +1,96 @@
+//
+// Copyright 2003 P&P Software GmbH (Konstanz, Germany) - All Rights Reserved
+//
+// DoxygenGroupDefinitions.txt 
+//
+// Version	1.0
+// Date		17.12.03 
+// Author	A. Pasetti
+//
+// Change Record:
+
+/**
+ * @defgroup Base General Base Classes
+ * This module contains general-purpose base classes from which several functionally
+ * unrelated classes are derived. General-purpose base classes encapsulate generic
+ * functionalities (such as enable/disable, event report archiving, mode switching, etc).
+ */
+
+/**
+ * @defgroup FunctionalityManagers Functionality Managers
+ * This module contains the functionality manager classes. The term "functionality manager" is
+ * used in the sense of the <i>manager design pattern</i> (see the
+ * <a href="../../DesignPatternTable.html">design pattern table</a>).
+ */
+
+/**
+ * @defgroup ModeManagement Mode Management 
+ * This module gathers together the key classes that support the implementation of the
+ * <i>mode management design pattern</i>. In particular it contains the abstract mode management
+ * classes from which concrete mode managers are derived (see the 
+ * <a href="../../DesignPatternTable.html">design pattern table</a>).
+ */
+
+/**
+ * @defgroup Manoeuvre Manoeuvre Management
+ * This module gathers together the key classes that support the implementation of manoeuvre-related
+ * functionalities. The implementation of the manoeuvre concept is primarily based on the <i>manoeuvre
+ * design pattern</i> (see the <a href="../../DesignPatternTable.html">design pattern table</a>).
+ */
+
+/**
+ * @defgroup FSM Finite State Machines 
+ * This module gathers together the key classes that support the implementation of finite state
+ * machines (FSM). The implementation of the FSM concept is primarily based on the <i>Finite
+ * State Machine design pattern</i> (see the <a href="../../DesignPatternTable.html">design pattern table</a>).
+ */
+
+/**
+ * @defgroup FDIR Fault Detection Identification and Recovery 
+ * This module gathers together the key classes that support the implementation of fault detection, 
+ * identification, and recovery (FDIR) functionalities. The implementation of the FDIR concept is 
+ * primarily based on the <i>FDIR Check</i> and on the <i>Variable Monitoring</i> design 
+ * patterns (see the <a href="../../DesignPatternTable.html">design pattern table</a>).
+ */
+
+/**
+ * @defgroup Data Data Processing 
+ * This module gathers together the key classes that support the manipulation and processing of data. This 
+ * include the implementation of shared data pools and of control blocks to 
+ * encapsulate generic data processing algorithms. The design of these classes is
+ * primarily based upon the <i>control block</i>, <i>data pool</i> and <i>connection</i> design patterns (see the 
+ * <a href="../../DesignPatternTable.html">design pattern table</a>).
+ */
+
+/**
+ * @defgroup Telecommand Telecommand Management 
+ * This module gathers together the key classes that support the implementation of telecommanding-related
+ * functionalities. The implementation of the telecommanding concept is primarily based on the <i>telecommand
+ * design pattern</i> (see the <a href="../../DesignPatternTable.html">design pattern table</a>).
+ */
+
+/**
+ * @defgroup Telemetry Telemetry Management
+ * This module gathers together the key classes that support the implementation of telemetry-related
+ * functionalities. The implementation of the telemetry concept is primarily based on the <i>telemetry
+ * item</i>, <i>telemetry stream</i> and <i>telemetry management</i> design patterns.
+ */
+
+/**
+ * @defgroup PUS Packet Utilization Standard (PUS)
+ * This module gathers together the key classes that support the implementation of the 
+ * services defined by the Packet Utilization Standard (PUS). Note that the support of
+ * PUS services in the OBS Framework is integrated within the management of telecommands
+ * and telemetry. This module only lists PUS-specific classes but support to PUS service 
+ * implementation is also provided by classes in the Telecommand Management and Telemery Management modules.
+ */
+
+/**
+ * @defgroup TestCases Test Case Support
+ * This module contains the utility classes and functions that
+ * support the definition and implementation of the test cases.
+ * The test cases themselves are implemented as subclasses of class
+ * <code>TestCase</code>. Refer to the "class hierarchy" page for
+ * a full hypelinked list of the test case classes.
+ */
+

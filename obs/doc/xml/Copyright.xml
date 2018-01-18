@@ -1,0 +1,30 @@
+<Chapter>
+    <Title> Copyright </Title>
+    <Author>
+        <Name> A. Pasetti </Name>
+        <Affiliation>
+            <a HREF="http://www.pnp-software.com">P&amp;P Software</a>
+        </Affiliation>
+        <EMail> pasetti@pnp-software.com </EMail>
+    </Author>
+    <LastModified> 2003-12-05 </LastModified>
+    <Introduction>
+        <p>The copyright for the OBS Framework described in this web site belongs to 
+        <a HREF="http://www.pnp-software.com" target="_parent">P&amp;P Software GmbH</a>.
+            The material available through this web site - including in particular all the
+            source code of the OBS Framework - is made available under the terms of the
+            <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public Licence</a>.</p>
+        <p>
+            <b> THE OBS FRAMEWORK IS PROVIDED ''AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
+                INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+                FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL P&amp;P SOFTWARE GMBH
+                BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+                DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+                LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+                THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+                NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+                ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</b>
+        </p>
+        <p>For more information about licensing conditions, please <a href="mailto:pnp-software@pnp-software.com"> contact the company</a>.</p>
+    </Introduction>
+</Chapter>

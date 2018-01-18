@@ -1,0 +1,73 @@
+<Chapter>
+    <Title>Framework Language Subset</Title>
+    <Author>
+        <Name> A. Pasetti </Name>
+        <Affiliation>
+            <a HREF="http://www.pnp-software.com">P&amp;P Software</a>
+        </Affiliation>
+        <EMail> pasetti@pnp-software.com </EMail>
+    </Author>
+    <LastModified> 2003-12-05 </LastModified>
+    <Introduction>
+        <p>The table below lists the syntactical constructs that are specific to the C++ language
+            and that are used in the OBS Framework code. For each construct, a brief explanation of
+            why it is included is given. Language features and constructs that are not explicitly
+            listed in the table are never used in the framework code. The selected constructs
+            represent a small subset of all the constructs offered by the C++ language and they in
+            particular exclude all its dangerous or ambiguous features.</p>
+    </Introduction>
+    <Section>
+        <table WIDTH="90%" BORDER="1" ALIGN="center" CELLPADDING="5%">
+            <tr>
+                <th>Construct</th>
+                <th>Justification for Inclusion</th>
+            </tr>
+            <tr>
+                <td>Class</td>
+                <td>Classes are needed to encapsulate logically related data and the functions to
+                    manipulate them.</td>
+            </tr>
+            <tr>
+                <td>Virtual Methods</td>
+                <td>Virtual methods are needed as an adaptation mechanism to allow the default
+                    behaviour encapsulated in a framework class to be adapted to the needs of a
+                    specific application.</td>
+            </tr>
+            <tr>
+                <td>Pure Virtual Methods</td>
+                <td>Pure virtual methods are needed to mark adaptation points for which no default
+                    implementation is provided. </td>
+            </tr>
+            <tr>
+                <td>Single Inheritance</td>
+                <td>Inheritance is needed for two purposes: to provide concrete implementations for
+                    a pure virtual class and to adapt a concrete class by overriding one or more of
+                    its virtual methods. </td>
+            </tr>
+            <tr>
+                <td>Method Inlining</td>
+                <td>Method inlining is needed to improve execution speed. In order to avoid any
+                    negative impacts on code size, it is used in only two situations. Firstly, it
+                    may be used with accessor methods (so-called "getter" and "setter" methods) that
+                    simply get or set the value of an atomic property. Secondly, it may be used
+                    where a method is implemented by delegation to another method (for an example,
+                    see method <code>createEventReport</code> in class <code>CC_RootObject</code>) </td>
+            </tr>
+            <tr>
+                <td>Constant Methods</td>
+                <td>Constant methods are needed as a safety feature to prevent some methods from
+                    modifying class variables.</td>
+            </tr>
+            <tr>
+                <td>Constant Variables</td>
+                <td>Constant variables are needed as a safety feature to enforce the
+                    non-modifiability of some variables. </td>
+            </tr>
+            <tr>
+                <td>Enumerator Types</td>
+                <td>Enumerator types are needed as a safety feature to constrain the values of
+                    certain variables.</td>
+            </tr>
+        </table>
+    </Section>
+</Chapter>

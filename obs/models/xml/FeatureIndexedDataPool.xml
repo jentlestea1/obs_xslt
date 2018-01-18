@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+    <Macro nameOfMacro="IndexedDataPool">
+        <Feature nameOfFeature="IndexedDataPool">
+            <Description text="An indexed data pool"/>
+            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+            <Type>
+                <BuildingBlock>
+                    <Component status="generable"/>
+                </BuildingBlock>
+            </Type>
+            <Group nameOfGroup="IndexedDataPoolItems">
+                <Description text="The data pool items in the data pool"/>
+                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                <Feature nameOfFeature="DataPoolItem">
+                    <Description text="A data pool item"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                    <Type>
+                        <Composite/>
+                    </Type>
+                    <Group nameOfGroup="Attributes">
+                        <Description text="The attributes of the data pool item"/>
+                        <GroupCardinality GroupCardMin="5" GroupCardMax="5"/>
+                        <Feature nameOfFeature="Name">
+                            <Description text="The name of the data pool item"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="string"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="Id">
+                            <Description text="The numerical identifier of the data pool item"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="int">
+                                        <Range minValue="0" maxValue="+"/>
+                                    </Property>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="Type">
+                            <Description text="The syntactical type of the data pool item"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Property status="provided" type="string">
+                                        <Enumeration>
+                                            <Item value="TD_Float"/>
+                                            <Item value="TD_Integer"/>
+                                        </Enumeration>
+                                    </Property>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <CallMacro nameOfCalledMacro="MonitoringProfiles"/>
+                        <CallMacro nameOfCalledMacro="RecoveryActions"/>
+                    </Group>
+                </Feature>
+            </Group>
+            <Group nameOfGroup="Attributes">
+                <Description text="The global attributes of the data pool"/>
+                <GroupCardinality GroupCardMin="0" GroupCardMax="8"/>
+                <Feature nameOfFeature="TimeStamp">
+                    <Description text="A time-stamp is attached to each data pool item"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <Attribute>
+                            <Functionality status="generable"/>
+                        </Attribute>
+                    </Type>
+                    <Group nameOfGroup="IndexedDataPoolObsClock">
+                          <Description text="The OBS Clock used by the indexed data pool to time-stamp data pool values."/>
+                          <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                          <Feature nameOfFeature="IndexedDataPoolObsClock">
+                                <Description text="The OBS Clock used by the indexed data pool to time-stamp data pool values."/>
+                                <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                <Type><Attribute><Property status="provided" type="component" name="ObsClock"/></Attribute></Type>
+                          </Feature>
+                    </Group>
+                </Feature>
+                <Feature nameOfFeature="ValidityStatus">
+                    <Description text="A validity status is attached to each data pool item"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <Attribute>
+                            <Functionality status="generable"/>
+                        </Attribute>
+                    </Type>
+                </Feature>
+                <Feature nameOfFeature="RobustnessLevel">
+                    <Description text="The level of robustness to illegal accesses to data pool items"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <Composite/>
+                    </Type>
+                    <Group nameOfGroup="RobustnessLevels">
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="NoChecks">
+                            <Description text="No checks on legality of accesses"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Functionality status="generable"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="Low">
+                            <Description text="Low level of robustness to illegal accesses"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Functionality status="generable"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="Medium">
+                            <Description text="Medium level of robustness to illegal accesses"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Functionality status="generable"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="High">
+                            <Description text="High level of robustness to illegal accesses"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute>
+                                    <Functionality status="generable"/>
+                                </Attribute>
+                            </Type>
+                        </Feature>
+                    </Group>
+                </Feature>
+                <Feature nameOfFeature="BackUpValue">
+                    <Description text="A back-up value is attached to each data pool item"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <Attribute>
+                            <Functionality status="generable"/>
+                        </Attribute>
+                    </Type>
+                </Feature>
+                <Feature nameOfFeature="DataItem">
+                    <Description text="Data pool items can be accessed as data items "/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <Attribute>
+                            <Functionality status="generable"/>
+                        </Attribute>
+                    </Type>
+                </Feature>
+                <Feature nameOfFeature="MonitoringProfile">
+                    <Description text="A monitoring profile is attached to each data pool item"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <Attribute>
+                            <Functionality status="generable"/>
+                        </Attribute>
+                    </Type>
+                </Feature>
+                <Feature nameOfFeature="RecoveryAction">
+                    <Description text="A recovery action is attached to each data pool item"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <Attribute>
+                            <Functionality status="generable"/>
+                        </Attribute>
+                    </Type>
+                </Feature>
+                <Feature nameOfFeature="TypeChecking">
+                    <Description text="Type information is attached to each data pool item"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                    <Type>
+                        <Attribute>
+                            <Functionality status="generable"/>
+                        </Attribute>
+                    </Type>
+                </Feature>
+            </Group>
+        </Feature>
+    </Macro>
+</FrameworkFeatureModel>

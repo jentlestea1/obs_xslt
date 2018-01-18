@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+    <Macro nameOfMacro="DefaultAttributes">
+        <Feature nameOfFeature="DefaultAttributes">
+            <Description text="The default attributes of a generic framework component"/>
+            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+            <Type>
+                <Composite/>
+            </Type>
+            <Group nameOfGroup="DefaultAttribute">
+                <Description text="An attribute of a generic framework component"/>
+                <GroupCardinality GroupCardMin="1" GroupCardMax="4"/>
+                <Feature nameOfFeature="Property">
+                    <Description text="A read-write property"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="*"/>
+                    <Type>
+                        <Attribute><Property status="generable" type="method"></Property></Attribute>
+                    </Type>
+                    <Group nameOfGroup="PropertyAttributes">
+                        <Description text="The attributes of the property"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="Type">
+                            <Description text="The syntactical type of the property"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute><Property status="generable" type="string"/></Attribute>
+                            </Type>
+                        </Feature>
+                    </Group>
+                </Feature>
+                <Feature nameOfFeature="DataPoolInput">
+                    <Description text="A data pool location from which the custom component reads an input value"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="*"/>
+                    <Type>
+                        <Composite/>
+                    </Type>
+                    <Group nameOfGroup="Attributes">
+                        <Description text="The attributes of the data pool input"/>
+                        <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                        <Feature nameOfFeature="ItemName">
+                            <Description text="The name of the data pool item"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute><Property status="generable" type="string"/></Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="InputDescriptor">
+                            <Description text="The descriptor of the input linked to data pool item"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Composite/>
+                            </Type>
+                            <Group nameOfGroup="InputDescriptorOptions">
+                                <Description text="The possible descriptions of the input linked to data pool item"/>
+                                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                <Feature nameOfFeature="Name">
+                                    <Description text="The input is described by name"/>
+                                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                    <Type>
+                                        <Attribute><Property status="generable" type="string"/></Attribute>
+                                    </Type>
+                                </Feature>
+                                <Feature nameOfFeature="Number">
+                                    <Description text="The input is described by a numerical index"/>
+                                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                    <Type>
+                                        <Attribute><Property status="generable" type="int"><Range minValue="0" maxValue="+"/></Property></Attribute>
+                                    </Type>
+                                </Feature>
+                            </Group>
+                        </Feature>
+                    </Group>
+                </Feature>
+                <Feature nameOfFeature="DataPoolOutput">
+                    <Description text="A data pool location to which the custom component writes an output value"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="*"/>
+                    <Type>
+                        <Composite/>
+                    </Type>
+                    <Group nameOfGroup="Attributes">
+                        <Description text="The attributes of the data pool output"/>
+                        <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                        <Feature nameOfFeature="ItemName">
+                            <Description text="The name of the data pool item"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                 <Attribute><Property status="generable" type="string"/></Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="OutputDescriptor">
+                            <Description text="The descriptor of the output linked to data pool item"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Composite/>
+                            </Type>
+                            <Group nameOfGroup="OutputDescriptorOptions">
+                                <Description text="The possible descriptions of the output linked to data pool item"/>
+                                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                <Feature nameOfFeature="Name">
+                                    <Description text="The output is described by name"/>
+                                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                    <Type>
+                                         <Attribute><Property status="generable" type="string"/></Attribute>
+                                    </Type>
+                                </Feature>
+                                <Feature nameOfFeature="Number">
+                                    <Description text="The output is described by a numerical index"/>
+                                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                    <Type>
+                                        <Attribute><Property status="generable" type="int"><Range minValue="0" maxValue="+"/></Property></Attribute>
+                                    </Type>
+                                </Feature>
+                            </Group>
+                        </Feature>
+                    </Group>
+                </Feature>
+                <Feature nameOfFeature="DatabaseParameter">
+                    <Description text="A database location where a parameter for the custom component is stored"/>
+                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="*"/>
+                    <Type>
+                        <Composite/>
+                    </Type>
+                    <Group nameOfGroup="Attributes">
+                        <Description text="The attributes of the database attribute"/>
+                        <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                        <Feature nameOfFeature="ItemName">
+                            <Description text="The name of the database parameter"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Attribute><Property status="generable" type="string"/></Attribute>
+                            </Type>
+                        </Feature>
+                        <Feature nameOfFeature="LinkDescriptor">
+                            <Description text="The descriptor of the internal variable to which the database parameter is linked"/>
+                            <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                            <Type>
+                                <Composite/>
+                            </Type>
+                            <Group nameOfGroup="LinkDescriptorOptions">
+                                <Description text="The possible descriptions of the internal variable"/>
+                                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                <Feature nameOfFeature="Name">
+                                    <Description text="The internal variable is described by name"/>
+                                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                    <Type>
+                                         <Attribute><Property status="generable" type="string"/></Attribute>
+                                    </Type>
+                                </Feature>
+                                <Feature nameOfFeature="Number">
+                                    <Description text="The internal variable is described by a numerical index"/>
+                                    <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                    <Type>
+                                        <Attribute><Property status="generable" type="int"><Range minValue="0" maxValue="+"/></Property></Attribute>
+                                    </Type>
+                                </Feature>
+                            </Group>
+                        </Feature>
+                    </Group>
+                </Feature>
+            </Group>
+        </Feature>
+    </Macro>
+</FrameworkFeatureModel>

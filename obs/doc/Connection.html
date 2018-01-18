@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?><html><head><link rel="stylesheet" type="text/css" href="css/main.css"/><link rel="stylesheet" type="text/css" href="css/3col_leftNav.css"/></head><body><div id="header"><h1 id="siteName">OBS Framework </h1><div id="globalNav"><a href="Home.html">Home</a> | <a href="General.html">General</a> | <a href="Implementation.html">Implementation</a> | <a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a> | <a href="http://www.pnp-software.com/ObsFramework/ObsFramework_0_8_3.zip">Download</a> | <a href="indexDisclaimer.html">Disclaimer</a></div><h2 id="pageName">Implementation - Design Patterns</h2></div><div id="navbar"><div id="sectionLinks"><ul><li><a href="indexDomainDictionary.html">Domain Dictionary</a></li><li><a href="indexDesignPatterns.html">Design Patterns</a></li><li><a href="indexAbstractInterfaces.html">Abstract Interfaces</a></li><li><a href="indexConcreteComponents.html">Concrete Components</a></li><li><a href="indexGeneratorMeta-Components.html">Generator Meta-Components</a></li><li><a href="indexTransformerMeta-Components.html">Transformer Meta-Components</a></li><li><a href="indexRealTimeIssues.html">Real Time Issues</a></li><li><a href="indexImplementationIssues.html">Implementation Issues</a></li><li><a href="indexInstallationIssues.html">Installation Issues</a></li><li><a href="indexSourceCode.html">Source Code</a></li><li><a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a></li></ul></div></div><div id="subnavbar"><li><a href="DesignPatternTable.html">- CATALOGUE -</a></li><li><a href="Connection.html">Connection</a></li><li><a href="ControlBlock.html">Control Block</a></li><li><a href="Event.html">Event</a></li><li><a href="FDIRCheck.html">FDIR Check</a></li><li><a href="FSM.html">FSM</a></li><li><a href="Manager.html">Manager</a></li><li><a href="ManoeuvreManagement.html">Manoeuvre Management</a></li><li><a href="ModeManagement.html">Mode Management</a></li><li><a href="OperatingSystemInterface.html">Operating System Interface</a></li><li><a href="ParameterDatabase.html">Parameter Database</a></li><li><a href="PunctualAction.html">Punctual Action</a></li><li><a href="RecoveryAction.html">Recovery Action</a></li><li><a href="ReconfigurationManagement.html">Reconfiguration Management</a></li><li><a href="SharedData.html">Shared Data</a></li><li><a href="TelecommandManagement.html">Telecommand Management</a></li><li><a href="Telemeterable.html">Telemeterable</a></li><li><a href="TelemetryManagement.html">Telemetry Management</a></li><li><a href="TelemetryStream.html">Telemetry Stream</a></li><li><a href="TelemetryItem.html">Telemetry Item</a></li><li><a href="Trace.html">Trace</a></li><li><a href="VariableMonitoring.html">Variable Monitoring</a></li></div><div id="content"><p><H4>Connection
+        Design Pattern
+         </H4></p><p><H3><b>Intent</b></H3></p><p>
+
+Decouple data-processing application components from the source from which they take their inputs and from the destination to which they write their outputs.
+
+</p><p><H3><b>Based On</b></H3></p><p>
+
+This pattern is based on the principle of <i>data encapsulation</i>.
+
+</p><p><H3><b>Motivation</b></H3></p><p>
+
+On-board systems typically contain objects that process data: they take one or more data as inputs, they perform some operations upon them and produce 
+
+      one or more data as outputs. The link to the locations of their data inputs and outputs is often hard-coded. At best, some flexibility is achieved by endowing the data processing object with setter and getter methods through which some supervisory entity can set the input values and read the output values. This solution however merely shifts the problem. Additionally, it imposes an unnecessary burden on the supervisory entity that has to perform several data shuffling operations every time the data processing object is activated.
+
+<p>
+
+In a better solution, the link between the data processing object and its data sources and data sinks is set up as part of the object's configuration. The data processing object then becomes capable of autonomously retrieving its inputs and writing its outputs and the locations where the data are read   from and written to are configuration parameters.
+
+</p><p>
+
+The connection pattern proposes a mechanism through which this reconfigurable connection between objects and their data sources and sinks can be effected.
+
+</p>
+
+</p><H3><b>Dictionary Entries</b></H3><p>The following abstractions or domain-wide concepts are defined to support the
+        implementation of this design pattern:</p><ul><li><i><a HREF="domainDictionaryDataItem.html">Data Item</a></i></li></ul><p><H3><b>Structure</b></H3></p><p>
+
+
+
+The connection pattern represents the data item abstraction through a concrete object <CODE>DataItem</CODE> that encapsulates an atomic data and gives read and write access to it.
+
+<p>
+
+Objects that need to access the atomic data do so through the data item instance. At configuration time, they are loaded with the data item instance and during normal operation they use it internally to access and update the value of the data. The loading is done through the <CODE>linkInput</CODE> and <CODE>linkOutput</CODE> methods. The name of these methods alludes to the fact that their purpose is to set up a link between a data processing object and its data sources and data sinks.
+
+</p>
+
+</p><p><center><img src="../figures/gif/ConnectionDP.gif"/></center></p><H3><b>Participants</b></H3><ul><li><CODE>Client</CODE>:  <Role>The data processing component that read or update the data item value. </Role></li><li><CODE>DataItem</CODE>:  <Role>The concrete object that encapsulate the access to the data value. </Role></li></ul><p><H3><b>Collaborations</b></H3></p><p>
+
+The typical operational scenario for this design pattern is:
+
+<ul>
+
+<li>A number of data item instances are created to encapsulate access to certain variables.</li>
+
+<li>At configuration time, a data processing component is loaded with the data item instances.</li>
+
+<li>The data processing component reads its inputs from the (internally stored) data item instances, processes them, and writes its outputs to the (internally stored) data item instances.</li>
+
+</ul>
+
+</p><H3><b>Consequences</b></H3><ul><li>
+
+Data processing components can be written in a manner that is independent of where its inputs come from or where its outputs go to.
+
+</li><li>
+
+Data processing components are directly responsible for managing their own data acquisition and data writing process. This relieves other components of this task.
+
+</li><li>
+
+Access to a data item involves a level of indirection and is therefore less efficient than when the connection with the data inputs and outputs is hard-coded in the data processing components.
+
+</li></ul><p><H3><b>Applicability</b></H3></p><p>
+
+This design pattern is useful when:
+
+<ul>
+
+<li>It is desired to decouple data processing components from the sources from which they read their inputs and from the destinations to which they write their outputs.</li>
+
+</ul>
+
+</p><H3><b>Implementation Issues</b></H3><p>
+
+How is the data item encapsulated in the <CODE>DataItem</CODE> object? In a C++ implementation a data item is a variable of primitive type and the <CODE>DataItem</CODE> object could simply be a wrapper for a pointer to the variable. The getter and setter methods then simply deference the pointer.
+
+</p><p>
+
+Data items could be set up to perform operations other than just reading and writing a value. For instance, they could attach time-stamps to written values. Or they could be made to check that the client component is authorized to access a particular data item.
+
+</p><p>
+
+The class diagram of the design pattern shows a <CODE>DataItem</CODE> object that gives both read and write access to the data item. Some applications will want to introduce two separate data item objects of which one offers read-only access and the second offers read-write access. The two type of data item objects would then be obtained as instances of two classes like <CODE>DataItemRead</CODE> and <CODE>DataItemWrite</CODE> of which the second is derived from the first one and adds a setter method to it.
+
+</p><p>
+
+What is the type of the data item value returned or written by the getter and setter methods in the <CODE>DataItem</CODE> class? Some implementations could extend the class to have several getter/setter pairs, one for each primitive type. Other might decided to have different classes, one for each primitive type. Still other implementation might opt for a single external type for data item values and the getter and setter methods then become responsible for performing the conversion between this external type and the internal type of the data item.
+
+</p><p>
+
+The pattern structure described tacitly assumes that the <CODE>DataItem</CODE> class encapsulates a primitive variable. The concept of data item however could be extended to cover more complex data structures such as vectors or collections of related data. A data item could also encapsulate a reference to an I/O port. This would allow uniform treatment of data stored in memory with data stored outside the processor and accessed through the I/O ports.
+
+</p><p>
+
+The structure of the design pattern assumes that <CODE>DataItem</CODE> is a concrete class. Clients would then normally receive an instance of this class and would have direct access to its getter and setter methods. In an alternative solution, <CODE>DataItem</CODE> is implemented as an abstract interface (or as an abstract class) and clients receive a reference to it. This second solution has the drawback that clients have one more level of indirection in accessing the data encapsulated in the data item but it has the advantage that it allows several types of data item classes to be created. Such different classes would be typically be useful to encapsulate different types of atomic data.
+
+</p><p>
+
+The crucial considerations in implementing the data item concept is likely to be the efficiency of the access to the data encapsulated in the data items. If <CODE>DataItem</CODE> is realized as concrete class with non-overridable methods, then its getter and setter methods can be declared inline.
+
+</p><H3><b>OBS Framework Mapping</b></H3><p>The implementation of this design pattern in the OBS Framework is supported by
+        the following classes:</p><ul><li><i>Data Item</i>component --&gt; <CODE><a href="doxygen/html/classDC__DataItem.html">DC_DataItem</a></CODE></li></ul><a NAME="#SampleCode"><p><H3><b>Sample Code</b></H3></p></a><p>
+
+<p>
+
+As a first example, consider an application where all variables are of integer types. The <CODE>DataItem</CODE> class can then be defined as follows:
+
+<PRE>	
+    class DataItem {
+
+        int* var;        // variable behind the data item
+
+        DataItem(int* var) {    // constructor
+            this-&gt;var=var;
+        }
+
+        int getValue() {
+            return *var;
+        }
+
+        void setValue(int newValue) {
+            *var = newValue;
+        }
+    }  </PRE>
+
+
+
+Consider the case of a component <CODE>procComponent</CODE> that processes one input and produces one output. This component would be configured as follows:
+
+<PRE>
+   
+    int input;                // the input variable
+    int output;		// the output variable
+	. . .
+    DataItem dpInp(&amp;input);
+    DataItem dpOut(&amp;output);
+	. . .
+    procComponent.linkInput(dpInp);
+    procComponent.linkOutput(dpOut);  
+</PRE>
+
+
+
+Note that the processing component receives a copy of the data item objects. This allows it to directly call their getter and setter methods.
+
+</p><p>
+
+If the application needs to handle several different types of data items but data processing components only need to see one single data type, one solution is to have a <CODE>DataItem</CODE> class with several constructors, one for each possible data item type. Consider for instance the situation where some data types are integers (32 bits) and others are short integers (16 bits) but where data processing components can be made to deal exclusively with 32-bits integers. In that case, the <CODE>DataItem</CODE> class can be defined as follows:
+
+<PRE>
+    class DataItem {
+        int* var32;
+        short* var16;
+        bool typeFlag;
+
+        DataItem(int* var) {		// constructor
+	var32=var;
+	typeFlag=true;
+        }
+
+        DataItem(short* var) {		// constructor
+            var16=var;
+            typeFlag=false;
+        }
+
+        int getValue() {
+            if (typeFlag)
+                return var32;
+            else
+                return (int)var16;
+        }
+
+        void setValue(int newValue) {
+
+            if (typeFlag)
+                var32 = newValue;
+            else
+                var16 = (short)newValue;
+        }    
+    }</PRE>
+
+
+
+The implementation of the getter and setter methods uses the value of the <CODE>typeFlag</CODE> decide which of the two representation to use. This introduces some overhead in the data access. An alternative solution would be to have a base <CODE>DataItem</CODE> class that deals with 32-bits integers (assumed to be the default) but with getter and setter methods defined virtual. This class could then be subclassed and its setter and getter methods could be redefined to handle 16-bits integers.
+
+This second solution simplifies the implementation of the getter and setter methods and removes the need for an if clause as in the last example but it introduces two other kinds of overheads:
+
+<ul>
+
+<li>the getter and setter methods are virtual and therefore calling them involves a level of indirection (note that if DataItem is a non-extensible concrete class, then its getter and setter methods can be declared as inline methods which would increase the efficiency of their usage)</li>
+
+<li>
+
+the data processing clients must now be given references to the data item objects which introduces one further level of indirection in the access to their methods.</li>
+
+</ul>
+
+</p>
+
+</p><p><H3><b>Remarks</b></H3></p><p>
+
+None
+
+</p><p><H3><b>Author</b></H3></p><p>
+
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+
+</p><p><H3><b>Last Modified</b></H3></p><p>
+
+2002-06-22
+
+</p></div><div id="siteInfo"><a href="mailto:pasetti@control.ee.ethz.ch, cechti@control.ee.ethz.ch">Contact Us</a> | The OBS Framework Project</div></body></html>

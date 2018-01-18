@@ -1,0 +1,76 @@
+#
+# Copyright 2004 P&P Software GmbH (Konstanz, Germany) - All Rights Reserved
+#
+# Makefile
+#
+# Version      1.5
+# Date         22.12.03
+# Author       R. Totaro / A. Pasetti
+#
+# Makefile to build the RegressionTest for the OBS Framework, the test coverage files, and some test programs
+# useful as references for memory occupation tests.
+
+.phony: all clean
+
+SRCDIR     = ../src/cpp
+OBJDIR     = .
+TARGET     = ./RegressionTest
+
+CC         = gcc
+CC         = sparc-rtems-gcc
+CFLAGS     = -g -fno-inline -fno-default-inline  -O
+CFLAGS     = -g -fno-inline -fno-default-inline -fprofile-arcs -ftest-coverage -O
+CFLAGS     = -O2 -fno-rtti -fno-exceptions
+CXX        = gcc
+CXX        = sparc-rtems-gcc
+CXXFLAGS   = -g -fno-inline -fno-default-inline -O
+CXXFLAGS   = -g -fprofile-arcs -ftest-coverage -O
+CXXFLAGS   = -O2 -fno-rtti -fno-exceptions
+CPPFLAGS   =
+LDFLAGS    = 
+
+VPATH      = ${shell for dir in `find ${SRCDIR} -type d | grep -v CVS`;do echo -n $$dir:;done}
+
+HFILES     = ${shell find ${ABSSRCDIR} -name \*.h | grep -v CVS}
+CPPSOURCES = ${shell find ${SRCDIR} -name \*.cpp -not -name SampleApplication.cpp | grep -v CVS}
+CSOURCES   = ${shell find  ${SRCDIR} -name \*.c | grep -v CVS}
+SOURCES    = ${CPPSOURCES} ${CSOURCES}
+OBJECTS    = ${shell for obj in ${CPPSOURCES:.cpp=.o} ${CSOURCES:.c=.o}; do echo ${OBJDIR}/`basename $$obj`;done}
+COVSOURCES = ${shell echo ${SOURCES} | sed -e "s@ ${SRCDIR}/RegressionTest/[^ ]*@@g" -e "s@ ${SRCDIR}/GeneralUtilities/[^ ]*@@g"}
+
+${OBJDIR}/%.o: %.cpp
+	${CXX} -c ${CXXFLAGS} ${CPPFLAGS} $< -o $@
+
+${OBJDIR}/%.o: %.c
+	${CC} -c ${CFLAGS} ${CPPFLAGS} $< -o $@
+
+all: ${TARGET}
+
+ifeq (.depend,${wildcard .depend})
+include .depend
+endif
+
+${OBJECTS}: .depend
+
+${TARGET}: ${OBJECTS}
+	${CXX} ${CXXFLAGS} ${LDFLAGS} ${OBJECTS} -o $@
+
+coverage: ${TARGET}
+	@${TARGET} >/dev/null 2>&1
+	@for file in ${COVSOURCES}; do \
+		gcov $$file -o ${OBJDIR};\
+	done | grep -v Creating | sort -k 8 > coverage.txt
+#	@rm -f coverage.zip
+#	@zip coverage.zip coverage *.gcov
+
+.depend: ${SOURCES} ${HFILES}
+	@echo -n > .depend.tmp
+	/usr/X11R6/bin/makedepend -f.depend.tmp -- ${CPPFLAGS} -- ${SOURCES}
+	@sed -e "s@^[^:]*/@${OBJDIR}/@" < .depend.tmp > .depend
+
+clean:
+	rm -f ${TARGET} .depend *.gcov coverage coverage.zip *~ *.html *.txt \#*\# *.bak
+	cd ${OBJDIR}; rm -f *.o *.bb *.bbg *.da *.gcov
+
+cleanObj:
+	cd ${OBJDIR}; rm -f *.o

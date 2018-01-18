@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Vaclav Cechticky (Automatic Control Laboratory ETH Zuerich) -->
+<!-- edited by Vaclav Cechticky (Automatic Control Laboratory ETH Zuerich) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <!-- new simple types -->
+    <!-- the simple type "zero2inf" accepts data like 0, ..., 9999999...etc., and +, * -->
+    <xs:simpleType name="zero2inf">
+        <xs:restriction base="xs:token">
+            <xs:pattern value="([1-9][0-9]*|0|\+|\*)"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="one2inf">
+        <xs:restriction base="xs:token">
+            <xs:pattern value="([1-9][0-9]*|\+|\*)"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="greaterThanZero">
+        <xs:restriction base="xs:token">
+            <xs:pattern value="([1-9][0-9]*)"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- definition of simple elements -->
+    <!-- definition of attributes -->
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="type" type="xs:string"/>
+    <xs:attribute name="nameOfFeature" type="xs:string"/>
+    <xs:attribute name="nameOfGroup" type="xs:string"/>
+    <xs:attribute name="nameOfMacro" type="xs:string"/>
+    <xs:attribute name="nameOfCalledMacro" type="xs:string"/>
+    <xs:attribute name="nameOfClass" type="xs:string"/>
+    <xs:attribute name="macroName" type="xs:string"/>
+    <xs:attribute name="appendedGroupName" type="xs:string"/>
+    <xs:attribute name="appendedFeatureName" type="xs:string"/>
+    <xs:attribute name="FeatureCardMin" type="greaterThanZero"/>
+    <xs:attribute name="FeatureCardMax" type="one2inf"/>
+    <xs:attribute name="GroupCardMin" type="zero2inf"/>
+    <xs:attribute name="GroupCardMax" type="greaterThanZero"/>
+    <xs:attribute name="newMinCard" type="zero2inf"/>
+    <xs:attribute name="newMaxCard" type="zero2inf"/>
+    <xs:attribute name="minValue" type="xs:string"/>
+    <xs:attribute name="maxValue" type="xs:string"/>
+    <xs:attribute name="value" type="xs:string"/>
+    <xs:attribute name="text" type="xs:string"/>
+    <xs:attribute name="classId" type="xs:string"/>
+    <xs:attribute name="index" type="xs:integer"/>
+    <xs:attribute name="status">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="missing"/>
+                <xs:enumeration value="provided"/>
+                <xs:enumeration value="generable"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:attribute>
+    <!-- definition of complex elements -->
+    <xs:element name="FrameworkFeatureModel" type="FrameworkFeatureModelType">
+        <!--
+        <xs:unique name="UniqueGroupName">
+            <xs:selector xpath=".//Group"/>
+            <xs:field xpath="@nameOfGroup"/>
+        </xs:unique>
+
+		<xs:keyref name="macroNameKeyRef" refer="macroNameKey">
+			<xs:selector xpath=".//Feature/CallMacro"/>
+			<xs:field xpath="@name"/>
+		</xs:keyref>
+		<xs:key name="macroNameKey">
+			<xs:selector xpath=".//Macro"/>
+			<xs:field xpath="@name"/>
+		</xs:key>
+		<xs:unique name="UniqueName">
+			<xs:selector xpath=".//Feature|.//Group|.//Macro"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>				
+		<xs:unique name="UniqueFeatureName">
+			<xs:selector xpath=".//Feature"/>
+			<xs:field xpath="@name"/>
+		</xs:unique> -->
+        <!--
+		<xs:unique name="UniqueMacroName">
+			<xs:selector xpath=".//Macro"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>		
+		-->
+    </xs:element>
+    <xs:complexType name="FrameworkFeatureModelType">
+        <xs:sequence>
+            <xs:element ref="Feature" minOccurs="0"/>
+            <xs:element ref="Macro" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute ref="name" use="optional"/>
+    </xs:complexType>
+    <xs:element name="Feature">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Description" minOccurs="0"/>
+                <xs:element ref="FeatureComment" minOccurs="0"/>
+                <xs:element ref="FeatureCardinality"/>
+                <xs:element ref="Type"/>
+                <xs:element ref="Group" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute ref="nameOfFeature" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CallMacro">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="CallMacroComment" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute ref="nameOfCalledMacro" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Group">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Description" minOccurs="0"/>
+                <xs:element ref="GroupComment" minOccurs="0"/>
+                <xs:element ref="GroupCardinality"/>
+                <xs:choice maxOccurs="unbounded">
+                    <xs:element ref="Feature"/>
+                    <xs:element ref="CallMacro"/>
+                </xs:choice>
+            </xs:sequence>
+            <xs:attribute ref="nameOfGroup" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="FeatureCardinality">
+        <xs:complexType>
+            <xs:attribute ref="FeatureCardMin" use="required"/>
+            <xs:attribute ref="FeatureCardMax" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GroupCardinality">
+        <xs:complexType>
+            <xs:attribute ref="GroupCardMin" use="required"/>
+            <xs:attribute ref="GroupCardMax" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Option">
+        <xs:complexType>
+            <xs:attribute ref="value" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Macro">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element ref="Feature"/>
+                <xs:element ref="Extension"/>
+            </xs:choice>
+            <xs:attribute ref="nameOfMacro" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Extension">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Description" minOccurs="0"/>
+                <xs:choice maxOccurs="unbounded">
+                    <xs:element ref="AppendFeatureToGroup"/>
+                    <xs:element ref="AppendGroupToFeature"/>
+                </xs:choice>
+            </xs:sequence>
+            <xs:attribute ref="macroName" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AppendFeatureToGroup">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ModifyGroupCardinality" minOccurs="0"/>
+                <xs:element ref="Feature" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute ref="appendedGroupName" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AppendGroupToFeature">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Group" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute ref="appendedFeatureName" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ModifyGroupCardinality">
+        <xs:complexType>
+            <xs:attribute ref="newMinCard" use="required"/>
+            <xs:attribute ref="newMaxCard" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Description">
+        <xs:complexType>
+            <xs:attribute ref="text" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="FeatureComment">
+        <xs:complexType>
+            <xs:attribute ref="text" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GroupComment">
+        <xs:complexType>
+            <xs:attribute ref="text" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CallMacroComment">
+        <xs:complexType>
+            <xs:attribute ref="text" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="BuildingBlock">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element ref="Aspect"/>
+                <xs:element ref="Component"/>
+                <xs:element ref="Interface"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Aspect">
+        <xs:complexType>
+            <xs:attribute ref="name" use="optional"/>
+            <xs:attribute ref="status" use="required"/>
+            <xs:attribute ref="type" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Attribute">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element ref="Property"/>
+                <xs:element ref="IndexedProperty"/>
+                <xs:element ref="Operation"/>
+                <xs:element ref="ObjectList"/>
+                <xs:element ref="EventListener"/>
+                <xs:element ref="Functionality"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Component">
+        <xs:complexType>
+            <xs:attribute ref="name" use="optional"/>
+            <xs:attribute ref="status" use="required"/>
+            <xs:attribute ref="type" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Composite">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="Interface">
+        <xs:complexType>
+            <xs:attribute ref="name" use="optional"/>
+            <xs:attribute ref="status" use="required"/>
+            <xs:attribute ref="type" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Type">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element ref="Attribute"/>
+                <xs:element ref="BuildingBlock"/>
+                <xs:element ref="Composite"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Range">
+        <xs:complexType>
+            <xs:attribute ref="minValue" use="required"/>
+            <xs:attribute ref="maxValue" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Enumeration">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="Property">
+        <xs:complexType>
+            <xs:choice minOccurs="0">
+                <xs:element ref="Range"/>
+                <xs:element name="Enumeration">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Item" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute ref="value" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+            <xs:attribute ref="name" use="optional"/>
+            <xs:attribute ref="status" use="required"/>
+            <xs:attribute ref="type" use="required"/>
+            <xs:attribute ref="value" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="IndexedProperty">
+        <xs:complexType>
+            <xs:attribute ref="name" use="optional"/>
+            <xs:attribute ref="status" use="required"/>
+            <xs:attribute ref="type" use="required"/>
+            <xs:attribute ref="value" use="optional"/>
+            <xs:attribute ref="index" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ObjectList">
+        <xs:complexType>
+            <xs:attribute ref="name" use="optional"/>
+            <xs:attribute ref="status" use="required"/>
+            <xs:attribute ref="type" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Operation">
+        <xs:complexType>
+            <xs:attribute ref="name" use="optional"/>
+            <xs:attribute ref="status" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="EventListener">
+        <xs:complexType>
+            <xs:attribute ref="name" use="optional"/>
+            <xs:attribute ref="status" use="required"/>
+            <xs:attribute ref="type" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Functionality">
+        <xs:complexType>
+            <xs:attribute ref="name" use="optional"/>
+            <xs:attribute ref="status" use="required"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

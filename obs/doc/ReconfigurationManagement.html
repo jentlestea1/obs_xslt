@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?><html><head><link rel="stylesheet" type="text/css" href="css/main.css"/><link rel="stylesheet" type="text/css" href="css/3col_leftNav.css"/></head><body><div id="header"><h1 id="siteName">OBS Framework </h1><div id="globalNav"><a href="Home.html">Home</a> | <a href="General.html">General</a> | <a href="Implementation.html">Implementation</a> | <a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a> | <a href="http://www.pnp-software.com/ObsFramework/ObsFramework_0_8_3.zip">Download</a> | <a href="indexDisclaimer.html">Disclaimer</a></div><h2 id="pageName">Implementation - Design Patterns</h2></div><div id="navbar"><div id="sectionLinks"><ul><li><a href="indexDomainDictionary.html">Domain Dictionary</a></li><li><a href="indexDesignPatterns.html">Design Patterns</a></li><li><a href="indexAbstractInterfaces.html">Abstract Interfaces</a></li><li><a href="indexConcreteComponents.html">Concrete Components</a></li><li><a href="indexGeneratorMeta-Components.html">Generator Meta-Components</a></li><li><a href="indexTransformerMeta-Components.html">Transformer Meta-Components</a></li><li><a href="indexRealTimeIssues.html">Real Time Issues</a></li><li><a href="indexImplementationIssues.html">Implementation Issues</a></li><li><a href="indexInstallationIssues.html">Installation Issues</a></li><li><a href="indexSourceCode.html">Source Code</a></li><li><a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a></li></ul></div></div><div id="subnavbar"><li><a href="DesignPatternTable.html">- CATALOGUE -</a></li><li><a href="Connection.html">Connection</a></li><li><a href="ControlBlock.html">Control Block</a></li><li><a href="Event.html">Event</a></li><li><a href="FDIRCheck.html">FDIR Check</a></li><li><a href="FSM.html">FSM</a></li><li><a href="Manager.html">Manager</a></li><li><a href="ManoeuvreManagement.html">Manoeuvre Management</a></li><li><a href="ModeManagement.html">Mode Management</a></li><li><a href="OperatingSystemInterface.html">Operating System Interface</a></li><li><a href="ParameterDatabase.html">Parameter Database</a></li><li><a href="PunctualAction.html">Punctual Action</a></li><li><a href="RecoveryAction.html">Recovery Action</a></li><li><a href="ReconfigurationManagement.html">Reconfiguration Management</a></li><li><a href="SharedData.html">Shared Data</a></li><li><a href="TelecommandManagement.html">Telecommand Management</a></li><li><a href="Telemeterable.html">Telemeterable</a></li><li><a href="TelemetryManagement.html">Telemetry Management</a></li><li><a href="TelemetryStream.html">Telemetry Stream</a></li><li><a href="TelemetryItem.html">Telemetry Item</a></li><li><a href="Trace.html">Trace</a></li><li><a href="VariableMonitoring.html">Variable Monitoring</a></li></div><div id="content"><p><H4>
+Reconfiguration Management
+
+        Design Pattern
+         </H4></p><p><H3><b>Intent</b></H3></p><p>
+Decouple the use of a redundant functionality from the management and implementation
+of the redundancy switching logic.
+</p><p><H3><b>Based On</b></H3></p><p>
+This pattern is essentially identical to the reconfiguration management pattern of
+the <a HREF="http://www.pnp-software.com/AocsFramework">AOCS Framework</a> (see also:
+A. Pasetti, <i>Embedded Control Systems and Software Frameworks</i>, Springer-Verlag, 2002).
+</p><p><H3><b>Motivation</b></H3></p><p>
+If the same functionality can be implemented in two or more independent ways, then
+the functionality is said to be <i>redundant</i>. A redundant functionality can be
+<i>reconfigured</i>. Reconfiguration means switching between different independent
+implementations of the same functionality.
+<p/>
+Reconfigurability is often used in
+OBS applications to provide robustness to faults. This is typically done for
+external sensors and actuators. When a fault is detected in one of these units,
+a reconfiguration is performed that replaces the faulty unit with its redundant
+pair. The concept proposed here is more general and can be applied to any
+functionality for which several implementations are available.
+<p/>
+The functionalities that must be reconfigurable and the way in which reconfigurations
+are performed are obviously application-specific. The problem addressed by this
+design pattern is to define an application-independent mechanism for handling
+reconfigurations in a generic manner.
+</p><H3><b>Dictionary Entries</b></H3><p>The following abstractions or domain-wide concepts are defined to support the
+        implementation of this design pattern:</p><ul><li><i><a HREF="domainDictionaryReconfigurationManager.html">Reconfiguration Manager</a></i></li></ul><p><H3><b>Structure</b></H3></p><p>
+Functionalities are implemented as services provided by components. The
+functionality with respect to which reconfiguration takes place is called the
+<i>reconfigurable functionality</i>. Conceptually, this can be
+represented by an abstract interface <code>ReconfigurableFunctionality</code>.
+<p/>
+Two types of clients are involved in this design pattern. The
+<i>functionality client</i> that is interested in accessing the
+reconfigurable functionality and the <i>reconfiguration client</i> which
+is interested in performing reconfigurations. The main objective of the
+design pattern is to allow the functionality client to access the
+reconfigurable functionality without being aware that it is
+reconfigurable and without being aware of which particular implementation
+(among the multiple redundant implementations) is in force at a
+particular point in time.
+<p/>
+In order to achieve this objective, a new component is introduced -
+the <code>ReconfigurationManager</code>. This component implements
+the <code>ReconfigurableFunctionality</code> interface and therefore
+"looks like" a provider of the reconfigurable functionality. The
+multiple (and equivalent) implementations of the reconfigurable functionality are
+provided by the <code>Redundant</code> components. At any given time,
+one of these is selected by the reconfiguration manager as the
+active redundant component. The reconfiguration manager implements
+the reconfigurable functionality by delegating it to the
+currently active redundant component.
+<p/>
+The reconfiguration manager implements a second interface -
+<code>Reconfigurable</code> - that represents the "face" it
+offers to the reconfiguration client. This interface declares the
+operations that are required to handle the reconfiguration
+process. The key operation is <code>reconfigure</code> that
+is called by the reconfiguration client to start a reconfiguration.
+In response to a call to this operation, the reconfiguration
+manager reviews the available implementations of the
+reconfigurable functionality and decides whether a new
+implementation should be selected.
+</p><p><center><img src="../figures/gif/ReconfigurationManagementDP.gif"/></center></p><H3><b>Participants</b></H3><ul><li><CODE>FunctionalityClient</CODE>:  <Role>The component that is interestd in accessing the reconfigurable
+functionality. </Role></li><li><CODE>ReconfigurationClient</CODE>:  <Role>The component that commands reconfigurations.</Role></li><li><CODE>ReconfigurableFunctionality</CODE>:  <Role>The abstract interface that defines the reconfigurable
+functionality.</Role></li><li><CODE>Reconfigurable</CODE>:  <Role>The abstract interface that declares the operations required to
+handle the reconfiguration process.</Role></li><li><CODE>Redundant</CODE>:  <Role>The concrete class that implements the multiple and equivalent
+implementations of the reconfigurable functionality. This could
+a configurable class with different configurations representing
+different implementations of the reconfigurable functionality
+or an abstract class with several concrete subclasses each implementing
+one implementation of the reconfigurable class.</Role></li><li><CODE>ReconfigurationManager</CODE>:  <Role>Component responsible for implementing a reconfiguration and for
+presenting the reconfigurable functionality to the reconfiguration
+clients.</Role></li></ul><p><H3><b>Collaborations</b></H3></p><p>
+The reconfiguration managers plays two roles and there are two
+typical collaboration sequences in which it is involved. The
+first one arises when a functionality client needs to access
+the reconfigurable functionality:
+<ol>
+<li>
+ The functionality access the functionality through the
+ reconfiguration manager (which it sees as an instance of type
+ <code>ReconfigurableFunctionality</code>).
+</li>
+<li>
+ The reconfiguration manager identifies the currently active
+ redundant component and forwards to it the client request.
+</li>
+</ol>
+The second collaboration arises when a reconfiguration client
+wishes to command a reconfiguration:
+<ol>
+<li>
+ The reconfiguration client sends a reconfiguration request
+ to the reconfiguration manager (which it sees as an instance of type
+ <code>Reconfigurable</code>).
+</li>
+<li>
+ The reconfiguration manager checks whether a reconfiguration is
+ possible and, if so, it changes its currently active
+ redundant component.
+</li>
+</ol>
+</p><H3><b>Consequences</b></H3><ul><li>
+Functionality clients are completely decoupled from the management
+of the reconfiguration. They access an abstract functionality and
+can assume that it has only one single implementation.
+Conversely, the reconfiguration clients are shielded from knowledge
+of the redundany functionality.
+</li><li>
+The reconfiguration algorithm (the algorithm used to select a new
+active redundant component when a reconfiguration request is issued)
+is conveniently encapsulated in the reconfiguration manager and
+can be easily changed without impact on either the functionality
+or reconfiguration clients.
+</li><li>
+The functionality clients access the reconfiguration functionality
+through the reconfiguration manager. This introduces an additional
+layer of indirection with a consequent loss of performance.
+</li></ul><p><H3><b>Applicability</b></H3></p><p>
+There is a need to handle reconfigurable functionality and it is desired
+to make the application independent of which functionalities are reconfigurable.
+</p><H3><b>Implementation Issues</b></H3><p>
+The class diagram shown above implies a situation where the reconfiguration
+manager implements two abstract interfaces. In a language like C++,
+this requires use of multiple inheritance. If multiple inheritance is
+not allowed, an implementation as in the figure can be used:
+<p/>    
+<H1 ALIGN="center"><img src="../figures/gif/ReconfigurationManagementDP_2.gif"/></H1>
+<p/>    
+The reconfiguration manager now becomes only responsible for
+selecting an abstract configuration. A separate component is
+responsible for using this information to re-route accesses
+to the reconfiguration functionality to the appropriate
+redundant component.
+</p><p>
+With the implementation suggested in the previous paragraph,
+the reconfiguration management pattern becomes very
+similar to the <a href="ModeManagement.html">mode management pattern</a>.
+The reconfiguration manager then plays the role of the mode
+manager and a reconfiguration becomes equvalent to a
+change of operational mode.
+</p><p>
+The redundant class in the class diagrams encapsulates the
+implementation of the reconfigurable functionality. There must be
+several alternative, but functionally equivalent, implementations
+of this functionality. These can be provided by different instances
+of the same class or by instances of different subclasses of
+the same super class.
+</p><H3><b>OBS Framework Mapping</b></H3><p>The implementation of this design pattern in the OBS Framework is supported by
+        the following classes:</p><ul><li><i>ReconfigurationManager</i>component --&gt; <CODE><a href="doxygen/html/classDC__BasicReconfigurer.html">DC_BasicReconfigurer</a></CODE></li><li><i>Reconfigurable</i>abstract interface --&gt; not directly supported</li></ul><a NAME="#SampleCode"><p><H3><b>Sample Code</b></H3></p></a><p>
+Consider a reconfiguration manager that must handle
+two redundant sensors. Its key methods could be
+implemented as follows:
+
+<PRE>
+class SensorReconfigurer : public Reconfigurable {
+	Sensor sensor[2];
+	bool isHealthy[2];
+	Sensor* activeSensor;
+
+	. . .
+	void reconfigure() {
+	   if ( (activeSensor == sensor[0]) &amp;&amp; (isHealthy[1]) ) {
+	      activeSensor = sensor[1];
+	      isHealthy[0] = false;
+	    }
+	   if ( (activeSensor == sensor[1]) &amp;&amp; (isHealthy[0]) ) {
+	      activeSensor = sensor[0];
+	      isHealthy[1] = false;
+	    }
+	}
+
+	Data getSensorData() {
+	    activeSensor-&gt;getSensorData();
+	}
+}
+</PRE>
+
+This reconfiguration manager keeps track of the health status of
+the sensors it manages and it performs a switch to the non-active
+sensor if it is healthy. Otherwise it does nothing.
+<p/>
+Reconfigurations are often initiated by telecommand. If the
+<a href="TelecommandManagement.html">telecommand management</a> design
+pattern is used to implement telecommands, then a reconfiguration
+telecommand can be constructed as follows:
+
+<PRE>
+class ReconfigTc : public Telecommand {
+	Reconfigurable* r;
+	. . .
+	void execute() {
+	   r-&gt;reconfigure();
+	}
+}
+</PRE>
+
+Note that the telecommand is defined in terms of an abstract
+reconfiguration manager of type <code>Reconfigurable</code>.
+This makes it possible to use the same telecommand to reconfigure
+different types of reconfiguration functions.
+</p><p><H3><b>Remarks</b></H3></p><p>
+None
+</p><p><H3><b>Author</b></H3></p><p>
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+</p><p><H3><b>Last Modified</b></H3></p><p>
+2003-04-19
+</p></div><div id="siteInfo"><a href="mailto:pasetti@control.ee.ethz.ch, cechti@control.ee.ethz.ch">Contact Us</a> | The OBS Framework Project</div></body></html>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<DesignPattern>
+
+<Name>Manoeuvre Management</Name>
+
+<BasedOn>
+This pattern is essentially identical to the manoeuvre management pattern of the
+<a HREF="http://www.aut.ee.ethz.ch/~pasetti/AocsFramework/index.html">AOCS Framework</a> (see also:
+A. Pasetti, <i>Embedded Control Systems and Software Frameworks</i>, Springer-Verlag, 2002).
+It can also be seen as an instance of the <a href="Manager.html">manager design pattern</a>.
+</BasedOn>
+
+<Intent>
+Decouple the management of manoeuvres from their implementation.
+</Intent>
+
+<Motivation>
+<p>
+The term <i>manoeuvre</i> is used here to designate a sequence of actions that must
+be performed by an application at specified times to achieve a specified goal.
+Although individual manoeuvres - to slew an antenna, to perform a unit switch-on
+sequence, etc - exist in almost any OBS application, their diversity is such that
+usually no concept of abstract manoeuvre is used. This also means that there is
+usually no attempt made to manage manoeuvres in a uniform manner. This lack of
+uniformity is incompatible with software reuse and with a framework approach.
+</p><p>
+This design pattern introduces a manoeuvre abstraction that allows the <i>management</i>
+of a generic manoeuvre to be done in a manner that is independent of the <i>implementation</i>
+of the manoeuvre, namely of the actions that must be performed to execute the manoeuvre.
+</p>
+</Motivation>
+
+<DictionaryEntry>Manoeuvre</DictionaryEntry>
+<DictionaryEntry>Manoeuvre Manager</DictionaryEntry>
+
+
+<Structure>
+<p>
+This design pattern postulates the encapsulation of manoeuvres in components and
+proposes an abstract interface <CODE>Manoeuvre</CODE> to characterize them.
+An abstract manoeuvre is characterized by:
+<ul>
+<li>the actions that are associated to the manoeuvres.</li>
+<li>a <i>start  check</i> that verifies whether manoeuvre execution can start.
+Depending on the manoeuvre, readiness to start can be defined by a time tag or
+by the occurrence of certain operational conditions.</li>
+<li>a <i>continuation check</i> that verifies whether an on-going manoeuvre can
+continue its execution.</li>
+<li>a <i>termination check</i> that verifies whether the manoeuvre has terminated
+execution. Depending on the manoeuvre, termination can be defined by a time tag or
+by the achievement of pre-specified operational conditions.</li>
+</ul>
+The introduction of an abstract interface to characterize manoeuvres, makes it
+possible to introduce a manoeuvre manager component responsible for executing them.
+Since it sees the manoeuvres only through the abstract interface <code>Manoeuvre</code>, the
+manoeuvre manager can be developed as an application-independent component that can
+be reused across applications without changes to its source code.
+</p><p>
+The manoeuvre manager maintains a list of components of abstract type <code>Manoeuvre</code>.
+Whenever it is activated, it goes through the list and checks the status of each
+pending manoeuvre. If a pending manoeuvre has not yet started, then the manoeuvre
+manager asks it to perform a start check (method <code>canStart</code>). If this is
+successful, the manoeuvre manager starts the execution of the manoeuvre. If a manoeuvre is already
+executing, then the manoeuvre manager asks it to perform a continuation check (method
+<code>canContinue</code>). If this is successful, then the manoeuvre manager advances the
+execution of the manoeuvre (method <code>doContinue</code>). Finally, the manoeuvre manager
+asks executing manoeuvres to perform a termination check (method <code>isFinished</code>).
+If the outcome of the check indicates that the manoeuvre has terminated execution, then
+the manoeuvre manager removes it from its list of pending manoeuvres and unloads it.
+</p>
+<p>
+The manoeuvre manager exposes a <code>load</code> method to allow clients to load manoeuvres
+that must be executed. Note that there is no corresponding <code>unload</code> method
+because removal from the list of pending manoeuvres is done autonomously and internally
+to the manoeuvre manager when a manoeuvre has terminated its execution. An <code>abort</code>
+method could however be provided to allow clients to force the interruption of the execution
+of pending manoeuvres.
+</p>
+</Structure>
+
+<StructureFigure>ManoeuvreDP</StructureFigure>
+
+<Participant>
+<Name>ManoeuvreManager</Name>
+<Role>The component that is responsible for executing manoeuvres.
+</Role>
+</Participant>
+
+<Participant>
+<Name>Manoeuvre</Name>
+<Role>The abstract interface that characterizes all components that encapsulate manoeuvres.
+</Role>
+</Participant>
+
+<Participant>
+<Name>ConcreteManoeuvre</Name>
+<Role>Component implementing interface <CODE>Manoeuvre</CODE> to represent a specific and concrete manoeuvre.</Role>
+</Participant>
+
+<Collaborations>
+The typical operational scenario for this design pattern is:
+<ul>
+<li>A client component wishes a manoeuvre to be executed. The manoeuvre is encapsulated in an object that
+implements interface <CODE>Manoeuvre</CODE>. The client component loads the manoeuvre object in the manoeuvre
+manager by using its <code>load</code> method. </li>
+<li>The manoeuvre manager periodically checks the status of the loaded manoeuvre and advances its
+execution accodingly</li>
+<li>When execution of the manoeuvre is terminated, the manoeuvre manager unloads the manoeuvre</li>
+</ul>
+</Collaborations>
+
+<Consequence>
+The management of manoeuvres is decoupled from their implementation. New manoeuvres
+can be added and existing manoeuvres can be modified without impact on the code
+that performs the manoeuvre management and on the code that uses the manoeuvres.
+</Consequence>
+
+<Consequence>
+The manoeuvre management code (the manoeuvre manager component) can be developed as an
+application-independent component reusable without changes across applications.
+</Consequence>
+
+<Consequence>
+For each manoeuvre, a dedicated class implementing interface <CODE>Manoeuvre</CODE> must
+be created. This may lead to a proliferation of small classes.
+</Consequence>
+
+<Applicability>
+This design pattern is useful when:
+<ul>
+<li> there is a need to handle sequences of actions but the implementation of these
+actions can vary from application to application.
+</li>
+<li> there is a need to decouple the implementation of these sequences of actions from
+their managegement.
+</li>
+</ul>
+</Applicability>
+
+<ImplementationIssue>
+What operations should be defined by the <CODE>Manoeuvre</CODE> interface? In addition
+to those defined above, there might be other housekeeping operations. One notable example
+could be an operation to abort an on-going manoeuvre.
+</ImplementationIssue>
+
+<ImplementationIssue>
+There is an obvious similarity between manoeuvres as defined here and telecommands as defined
+in the <a HREF="TelecommandManagement.html">telecommand management design pattern</a>. Both
+categories of components encapsulate actions that must be performed on the (or by the) on-board
+software. Perhaps the main conceptual difference is that telecommands are intended to be performed
+in one shot whereas the execution of manoeuvres extends over time. This is not an essential difference
+though, because telecommands could be seen as special cases of manoeuvres with a punctual execution
+(their <CODE>isFinished</CODE> method always returns true). In the concept proposed here, manoeuvres
+and telecommands are kept separate primarily because they are normally seen as distinct by the on-board
+application designers but also for implementation reasons. Telecommands have special implementation needs
+because, unlike other components in an on-board application, they must be created dynamically upon reception
+of messages from the ground. This requirement is likely to have an impact on the management of the telecommands
+and advises against treating them as a special kind of manoeuvres.
+</ImplementationIssue>
+
+<ImplementationIssue>
+In a typical implementation, the on-board software will internally store a number of manoeuvre components
+to perform often recurring manoeuvre such as antenna slews or unit switch-on sequences. When conditions
+warrant it or when the ground commands it, one of these pre-defined manoeuvre components can be loaded into
+the manoeuvre manager (by calling its <CODE>load</CODE> method). This will cause the manoeuvre to
+be executed.
+</ImplementationIssue>
+
+<FrameworkMapping>
+  <Name>ManoeuvreManager</Name>
+  <Type>component</Type>
+  <FrameworkClass>CC_ManoeuvreManager</FrameworkClass>
+</FrameworkMapping>
+
+<FrameworkMapping>
+  <Name>Manoeuvre</Name>
+  <Type>abstract interface</Type>
+  <FrameworkClass>Manoeuvre</FrameworkClass>
+</FrameworkMapping>
+
+
+<SampleCode>
+<p>
+As an example of a concrete manoeuvre consider the case of an application that, upon entry into normal mode,
+must switch on a certain unit. Assume moreover that the switch-on procedure may extend over a maximum of 4
+cycles spanning the interval between the time when the switch-on command is sent to the unit and the time
+when the unit, after completing its initialization procedure, is fully operational. This switch-on procedure
+can be implemented as a manoeuvre component. This means that it must be implemented as an instance of a
+class <CODE>SwitchOnUnit</CODE> that implements interface <CODE>Manoeuvre</CODE>. The basic definition of
+this class could be as follows:
+<PRE>
+    class SwitchOnUnit : Manoeuvre {
+
+        bool canStart() {
+          . . .    // return true if operational mode is NORMAL_MODE
+        }
+        
+        void doContinue() {
+        . . .    // The first time the method is called,
+        . . .    // send a switch-on command to the unit.
+        . . .    // Afterwards, do nothing
+        }
+        
+        bool canContinue() {
+        . . .    // return true if the number of cycles elapsed
+        . . .    // since the manoeuvre started is less than four
+        }
+        
+        bool isFinished() {
+        . . .    // return true if the unit is operational
+        }
+
+    }</PRE>
+
+An instance of this manoeuvre should be loaded into the manoeuvre manager before
+the application enters normal mode. The code to load it might look like this:
+<PRE>
+    Manoeuvre* switchOnUnit = new SwitchOnUnit();
+    . . .
+    ManoeuvreManager* manoeuvreManager;
+    . . .
+    manoeuvreManager->load(switchOnUnit);
+</PRE>
+
+After it is loaded, the execution of the manoeuvre is entirely under the control of
+the manoeuvre manager and the component that created and loaded it need no longer
+be concerned with it.
+</p><p>
+As a second example of sample code, consider the manoeuvre manager. If the
+<CODE>Manoeuvre</CODE> interface is as hypothesized in the pattern class diagram,
+then its core could be implemented as follows:
+<PRE><![CDATA[    class ManoeuvreManager {
+
+        // list of pending manoeuvres
+        Manoeuvre* manoeuvreList[N];
+        . . .
+    
+        void activate() {
+    
+            for (int j:=0; j++; j<N)
+            {	if (manoeuvreList[j]->canStart())
+                        if (manoeuvreList[j]->canContinue())
+                            manoeuvreList[j]->doContinue();
+                        else
+                        . . .// abort manoeuvre
+                        if (manoeuvreList[j]->isFinished())
+                        . . .// remove manoeuvre from manoeuvreList[]
+            }
+        }
+    
+        void load(Manoeuvre* newManoeuvre) {
+            . . .	// add newManoeuvre to manoeuvreList[]
+        }
+    }]]></PRE>
+
+In this implementation, the manoeuvre manager maintains a list of pending manoeuvres.
+The manoeuvre manager is intended to be periodically activated by some external agency
+(perhaps a scheduler). When it is activated it goes through the list of pending manoeuvres
+and checks which are ready to start. On active manoeuvres, it checks which ones are in a
+condition to continue execution and on the latter it calls method <CODE>doContinue</CODE>
+to advance the manoeuvre execution. Finally, the manoeuvre manager checks whether manoeuvres
+have terminated their execution and, if they have, removes them from the list of pending manoeuvres.
+</p><p>
+In a more realistic implementation, the manoeuvre manager would also perform other
+housekeeping operations such as recording execution or abortion of manoeuvres in a
+history area. The important point however is that all the operations performed
+by the manoeuvre manager are independent of the manoeuvre implementation and that
+therefore the manoeuvre manager is a potentially reusable component.
+</p>
+</SampleCode>
+
+<Remarks>
+None
+</Remarks>
+
+<LastModified>
+2002-06-22
+</LastModified>
+
+<Author>
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+</Author>
+
+</DesignPattern>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?><html><head><link rel="stylesheet" type="text/css" href="css/main.css"/><link rel="stylesheet" type="text/css" href="css/3col_leftNav.css"/></head><body><div id="header"><h1 id="siteName">OBS Framework </h1><div id="globalNav"><a href="Home.html">Home</a> | <a href="General.html">General</a> | <a href="Implementation.html">Implementation</a> | <a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a> | <a href="http://www.pnp-software.com/ObsFramework/ObsFramework_0_8_3.zip">Download</a> | <a href="indexDisclaimer.html">Disclaimer</a></div><h2 id="pageName">Implementation - Domain Dictionary</h2></div><div id="navbar"><div id="sectionLinks"><ul><li><a href="indexDomainDictionary.html">Domain Dictionary</a></li><li><a href="indexDesignPatterns.html">Design Patterns</a></li><li><a href="indexAbstractInterfaces.html">Abstract Interfaces</a></li><li><a href="indexConcreteComponents.html">Concrete Components</a></li><li><a href="indexGeneratorMeta-Components.html">Generator Meta-Components</a></li><li><a href="indexTransformerMeta-Components.html">Transformer Meta-Components</a></li><li><a href="indexRealTimeIssues.html">Real Time Issues</a></li><li><a href="indexImplementationIssues.html">Implementation Issues</a></li><li><a href="indexInstallationIssues.html">Installation Issues</a></li><li><a href="indexSourceCode.html">Source Code</a></li><li><a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a></li></ul></div></div><div id="subnavbar"><li><a href="DomainDictionaryEntries.html">- ALL ENTRIES -</a></li><li><a href="domainDictionaryAbstractUnit.html">Abstract Unit</a></li><li><a href="domainDictionaryConditionalPunctualAction.html">Conditional Punctual Action</a></li><li><a href="domainDictionaryControlAction.html">Control Action</a></li><li><a href="domainDictionaryControlBlock.html">Control Block</a></li><li><a href="domainDictionaryControllerManager.html">Controller Manager</a></li><li><a href="domainDictionaryCriticalTelecommand.html">Critical Telecommand</a></li><li><a href="domainDictionaryDataItem.html">Data Item</a></li><li><a href="domainDictionaryDataPool.html">Data Pool</a></li><li><a href="domainDictionaryEvent.html">Event</a></li><li><a href="domainDictionaryEventRepository.html">Event Repository</a></li><li><a href="domainDictionaryFDIRCheck.html">FDIR Check</a></li><li><a href="domainDictionaryFSM.html">FSM</a></li><li><a href="domainDictionaryFsmEvent.html">FsmEvent</a></li><li><a href="domainDictionaryFsmState.html">FsmState</a></li><li><a href="domainDictionaryFunctionalityImplementer.html">Functionality Implementer</a></li><li><a href="domainDictionaryFunctionalityManager.html">Functionality Manager</a></li><li><a href="domainDictionaryManoeuvre.html">Manoeuvre</a></li><li><a href="domainDictionaryManoeuvreManager.html">Manoeuvre Manager</a></li><li><a href="domainDictionaryModeManager.html">Mode Manager</a></li><li><a href="domainDictionaryMonitoringProfile.html">Monitoring Profile</a></li><li><a href="domainDictionaryOperatingSystemInterface.html">Operating System Interface</a></li><li><a href="domainDictionaryParameterDatabase.html">Parameter Database</a></li><li><a href="domainDictionaryPunctualAction.html">Punctual Action</a></li><li><a href="domainDictionaryReconfigurationManager.html">Reconfiguration Manager</a></li><li><a href="domainDictionaryRecoveryAction.html">Recovery Action</a></li><li><a href="domainDictionaryTelecommand.html">Telecommand</a></li><li><a href="domainDictionaryTelecommandLoader.html">Telecommand Loader</a></li><li><a href="domainDictionaryTelecommandManager.html">Telecommand Manager</a></li><li><a href="domainDictionaryTelemeterable.html">Telemeterable</a></li><li><a href="domainDictionaryTelemetryItem.html">Telemetry Item</a></li><li><a href="domainDictionaryTelemetryManager.html">Telemetry Manager</a></li><li><a href="domainDictionaryTelemetryStream.html">Telemetry Stream</a></li><li><a href="domainDictionaryTracer.html">Tracer</a></li></div><div id="content"><a name="AbstractUnit"><b>Abstract Unit</b></a><p class="links"><Definition>
+    Encapsulation of the access to an external unit. External units are
+    represented within an application by proxy components. An abstract
+    unit is a proxy component for an external unit. All access to the
+    external unit is performed through its abstract unit proxy.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="OperatingSystemInterface.html">Operating System Interface</a> design pattern.
+        </p><a name="ConditionalPunctualAction"><b>Conditional Punctual Action</b></a><p class="links"><Definition>
+    A <a href="#PunctualAction">punctual action</a> whose associated
+    actions are only executed if some conditions are satisfied.
+    Conditional punctual action specialize punctual actions by adding
+    an <i>execution check</i> to them. The execution check is performed
+    immediately before executing the actions associated to the conditional
+    punctual actions and the execution of the latter is conditional
+    upon the outcome of the execution check.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="PunctualAction.html">Punctual Action</a> design pattern.
+        </p><a name="ControlAction"><b>Control Action</b></a><p class="links"><Definition>
+     A <a href="#ConditionalPunctualAction">conditional punctual action</a> that enapsulates
+     the propagation of a <a href="#ControlBlock">control block</a> and the conditions under
+     which the control block is to be propagated .
+     </Definition></p><p class="links">
+            See the
+            <a HREF="ControlBlock.html">Control Block</a> design pattern.
+        </p><a name="ControlBlock"><b>Control Block</b></a><p class="links"><Definition>
+    Encapsulation of a generic data processing algorithm. A control block is connected
+    to a set of inputs u<sub>k</sub> and to a set of outputs y<sub>k</sub> and is capable
+    of propagating the inputs
+    to the outputs by applying a transfer function to them. The transfer function is of the
+    generic kind: y<sub>k+1</sub>=f(x<sub>k</sub>,u<sub>k</sub>) where x<sub>k</sub> is an
+    state variable that is internally propagated according to an equation like:
+    x<sub>k+1</sub>=g(x<sub>k</sub>,u<sub>k</sub>).
+   </Definition></p><p class="links">
+            See the
+            <a HREF="ControlBlock.html">Control Block</a> design pattern.
+        </p><a name="ControllerManager"><b>Controller Manager</b></a><p class="links"><Definition>
+      A <a href="#FunctionalityManager">functionality manager</a> that controls the execution of
+      a number of <a href="#ControlBlock">control blocks</a>. Control managers are application-independent
+     components that are intended to be periodically activated by an external agent. When they are activated,
+     they processes the control blocks by deciding which ones should be propagated and sending them the
+     <code>propagate</code> requests.
+      </Definition></p><p class="links">
+            See the
+            <a HREF="ControlBlock.html">Control Block</a> design pattern.
+        </p><a name="CriticalTelecommand"><b>Critical Telecommand</b></a><p class="links"><Definition>
+    Encapsulation of a critical telecommand that must be executed according to an "arm-fire" protocol. Execution of the actions
+associated to this telecommand must be performed in two steps. First, an "arm" request is received and then a "fire" request is
+received. The telecommand actions are executed only after both the arm and the fire requests have been received and only if the
+two requests satisfy certain constraints (e.g. separation in time less than a certain threshold).
+   </Definition></p><p class="links">
+            See the
+            <a HREF="TelecommandManagement.html">Telecommand Management</a> design pattern.
+        </p><a name="DataItem"><b>Data Item</b></a><p class="links"><Definition>
+    Encapsulation of an access to some atomic variable. An atomic variable is a variable that cannot be further broken down
+    into lower-level elements and that has one single value. The data item component allows this value to be read and to be set.
+    The data item variable hides the physical nature of the variable (the address at which the variable is stored, the I/O port from
+    which the variable value is read and to which it is written, etc). A component that holds a reference to a data item has a
+    permanent link to the variable encapsulated in the data item. Some data items may give read-only access to a variables.
+    Others may give both read and write access.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="Connection.html">Connection</a> design pattern.
+        </p><a name="DataPool"><b>Data Pool</b></a><p class="links"><Definition>
+   A component that acts as a shared data area for data that must be exchanged among other
+   components. The data pool physically contains the data to be exchanged. The producers of data
+   deposit them into the data pool and the consumers of data retrieve them from the data pool.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="SharedData.html">Shared Data</a> design pattern.
+        </p><a name="Event"><b>Event</b></a><p class="links"><Definition>
+    Encapsulation of a report describing a synchronous or asynchronous occurence together with its associated data.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="Event.html">Event</a> design pattern.
+        </p><a name="EventRepository"><b>Event Repository</b></a><p class="links"><Definition>
+    A container for an ordered sequence of <a HREF="#Event">events</a>. An event repository is used either by components that wish to create event reports or by components that wish to inspect the event reports created by other components.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="Event.html">Event</a> design pattern.
+        </p><a name="FDIRCheck"><b>FDIR Check</b></a><p class="links"><Definition>
+    An encapsulation of a Fault Detection Isolation and Recovery (FDIR) check
+    consisting of an FDI check and its associated <a HREF="#RecoveryAction">recovery action</a>.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="FDIRCheck.html">FDIR Check</a> design pattern.
+        </p><a name="FSM"><b>FSM</b></a><p class="links"><Definition>
+    A generic and customizable finite state machine (FSM). An FSM is characterized
+    by a set of <a HREF="#FsmState">FsmStates</a>. It is intended to be
+    periodically activated by some external agent. When it is activated, the
+    FSM executes the actions associated to the current state and performs
+    any required state transitions.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="FSM.html">Finite State Machine</a> design pattern.
+        </p><a name="FsmEvent"><b>FsmEvent</b></a><p class="links"><Definition>
+    An encapsulation of an event that, when it is fired, commands a
+    specific state transition in a specific <a HREF="#FSM">FSM</a>.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="FSM.html">Finite State Machine</a> design pattern.
+        </p><a name="FsmState"><b>FsmState</b></a><p class="links"><Definition>
+    An encapsulation of the behaviour associated to one state in
+    an <a HREF="#FSM">FSM</a>. This behaviour consists of:
+<ul>
+<li>actions that are associated to the FSM state.</li>
+<li>an <i>entry check</i> that verifies whether the state can be entered.</li>
+<li>an <i>exit check</i> that verifies whether the state can be exited.</li>
+<li>a <i>termination check</i> that verifies if all actions associated to the current state have been executed.</li>
+<li>a <i>next state</i> that must be entered when the actions associated to the current state have been completed.</li>
+</ul>
+The actions that are associated to a state are of three types:
+<ul>
+<li>An <i>initialization action</i>: a punctual action performed immediately after the state is entered</li>
+<li>A <i>continued action</i>: an action performed continuously while the state is active</li>
+<li>An <i>exit action</i>: a punctual action that is performed immediately before the state is exited</li>
+</ul>
+Finally, to each state, a <i>next state</i> may be associated. If B is the next state associated to state A, then the FSM will perform an autonomous transition to state B after execution of all the actions associated to state A has been completed (i.e. after its termination check reports
+"terminated").
+   </Definition></p><p class="links">
+            See the
+            <a HREF="FSM.html">Finite State Machine</a> design pattern.
+        </p><a name="FunctionalityImplementer"><b>Functionality Implementer</b></a><p class="links"><Definition>
+    An encapsulation of a repetitive action to be controlled by a
+    <a href="#FunctionalityManager">functionality manager</a>.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="Manager.html">Manager</a> design pattern.
+        </p><a name="FunctionalityManager"><b>Functionality Manager</b></a><p class="links"><Definition>
+    An application-indepedent component responsible for controlling the repetitive execution
+    of actions that are encapsulated in components characterized by a standard
+    <a href="#FunctionalityImplementer">functionality implementer</a> interface.
+    The functionality manager decouples the management of the actions from their implementation
+    by processing them exclusively through this standard interface.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="Manager.html">Manager</a> design pattern.
+        </p><a name="Manoeuvre"><b>Manoeuvre</b></a><p class="links"><Definition>
+    An encapsulation of a sequence of actions that must be performed by the application at specified times to achieve a specified goal. A manoeuvre is characterized by:
+<ul>
+<li>the actions that are associated to the manoeuvre.</li>
+<li>a <i>start  check</i> that verifies whether manoeuvre execution can start. Depending on the manoeuvre, readiness to start can be defined by a time tag or by the occurrence of certain operational conditions.</li>
+<li>a <i>continuation check</i> that verifies whether an on-going manoeuvre can continue its execution.</li>
+<li>a <i>termination check</i> that verifies whether the manoeuvre has terminated execution. Depending on the manoeuvre, termination can be defined by a time tag or by the achievement of pre-specified operational conditions.</li>
+ </ul>
+   </Definition></p><p class="links">
+            See the
+            <a HREF="ManoeuvreManagement.html">Manoeuvre Management</a> design pattern.
+        </p><a name="ManoeuvreManager"><b>Manoeuvre Manager</b></a><p class="links"><Definition>
+    An application-independent component responsible for controlling the execution of generic
+    <a HREF="#Manoeuvre">manoeuvres</a>. The manoeuvre manager is intended to be
+    periodically activated by an external agent. When it is activated, it processes
+    all pending manoeuvres and decides which ones should start execution, which ones
+    should continue execution, and which ones should be terminated.
+Manoeuvre managers are a form of <a href="#FunctionalityManager">functionality managers</a>.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="ManoeuvreManagement.html">Manoeuvre Management</a> design pattern.
+        </p><a name="ModeManager"><b>Mode Manager</b></a><p class="links"><Definition>
+A component that encapsulates the mode switching logic for a <i>mode-dependent component</i>.
+A mode-dependent component is a component whose behaviour depends on <i>operational mode</i>.
+More specifically, a mode-dependent component is a component that must implement one or more
+<i>strategies</i> where, for each strategy, several <i>implementations</i> are possible, one
+for each operational mode. If i<sub>s</sub> is the implementation for strategy s, then:
+i<sub>s</sub> = f<sub>s</sub>(m) where m is the operational mode and f<sub>s</sub>(.) is a
+function that associates an implementation to each operational mode. A mode manager is a
+component that, for a specific component, implements the logic to determine the operational
+mode as a function of current operational conditions and that implements the f<sub>s</sub>(.)
+functions for all the strategies used by the mode-dependent component.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="ModeManagement.html">Mode Management</a> design pattern.
+        </p><a name="MonitoringProfile"><b>Monitoring Profile</b></a><p class="links"><Definition>
+    Encapsulation of a time profile representing the desired behaviour over time of a
+    variable that must be subjected to monitoring.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="VariableMonitoring.html">Variable Monitoring</a> design pattern.
+        </p><a name="OperatingSystemInterface"><b>Operating System Interface</b></a><p class="links"><Definition>
+    Application-independent encapsulation of the access to a group of related
+    operating system services. .
+   </Definition></p><p class="links">
+            See the
+            <a HREF="OperatingSystemInterface.html">Operating System Interface</a> design pattern.
+        </p><a name="ParameterDatabase"><b>Parameter Database</b></a><p class="links"><Definition>
+    An encapsulation of a data structure that holds a set of parameters and offers read and write access to them through symbolic identifiers.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="ParameterDatabase.html">Parameter Database</a> design pattern.
+        </p><a name="PunctualAction"><b>Punctual Action</b></a><p class="links"><Definition>
+    An action that is executed in one-shot mode, namely an action
+    that is activated once and executes to completion during its
+    single activation. Punctual actions are opposed to
+    <a HREF="#Manoeuvre">manoeuvres</a> that instead represent
+    actions that are executed over several activations and over
+    a period of time.
+    </Definition></p><p class="links">
+            See the
+            <a HREF="PunctualAction.html">Punctual Action</a> design pattern.
+        </p><a name="ReconfigurationManager"><b>Reconfiguration Manager</b></a><p class="links"><Definition>
+    A component that encapsulates the reconfiguration logic for a <i>reconfigurable
+    functionality</i>. A reconfigurable functionality is a functionality for which
+    several independent but functionally equivalent implementations exist of which only one
+    is intended to be active at any given time. A <i>reconfiguration</i> is a switch
+    between two alternative implementations of the same functionality.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="ReconfigurationManagement.html">Reconfiguration Management</a> design pattern.
+        </p><a name="RecoveryAction"><b>Recovery Action</b></a><p class="links"><Definition>
+    Encapsulation of an action or set of actions that must be executed in response
+    to the detection of an anomaly. The recovery action is triggered by the component
+    that detects the anomaly. To each anomaly conditions, one recovery action should
+    be associated. Detection of an anomaly should result in the associated recover
+    action being triggered. Recovery actions can be linked in chains so that the
+    triggering of the recovery action at the head of the chain will cause all recovery
+    actions in the chain to be triggered in sequence.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="RecoveryAction.html">Recovery Action</a> design pattern.
+        </p><a name="Telecommand"><b>Telecommand</b></a><p class="links"><Definition>
+    Encapsulation of an action to be performed on or by the application software in a punctual fashion. A telecommand is characterized by:
+<ul>
+<li>the action that is associated to the telecommand.</li>
+<li>a <i>time tag</i> that defines the earliest time when the telecommand should be considered for execution.</li>
+<li>a <i>validity check</i> that verifies whether the attributes associated to the telecommand have legal values. </li>
+<li>an <i>execution check</i> that verifies that the operational conditions at the time the telecommand is due for execution are compatible with the safe execution of the telecommand. operational conditions hold.</li>
+</ul>
+   </Definition></p><p class="links">
+            See the
+            <a HREF="TelecommandManagement.html">Telecommand Management</a> design pattern.
+        </p><a name="TelecommandLoader"><b>Telecommand Loader</b></a><p class="links"><Definition>
+    The encapsulation of the mechanism for receiving raw telecommands, decoding them and loading them into
+    the <a HREF="#Telecommand Manager">telecommand manager</a>.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="TelecommandManagement.html">Telecommand Management</a> design pattern.
+        </p><a name="TelecommandManager"><b>Telecommand Manager</b></a><p class="links"><Definition>
+    A component that processes telecommands. A telecommand manager maintains a list of pending telecommands. It decides when and whether individual telecommands should be executed and perform all actions relative to their execution that are independent of the specific actions that are associated to the telecommand.
+ Telecommand managers are a form of <a href="#FunctionalityManager">functionality managers</a>.
+  </Definition></p><p class="links">
+            See the
+            <a HREF="TelecommandManagement.html">Telecommand Management</a> design pattern.
+        </p><a name="Telemeterable"><b>Telemeterable</b></a><p class="links"><Definition>
+The attribute of components that are potentially capable of supplying a telemetry image containing a subset of their internal state. The same telemeterable component may be required to supply different telemetry images depending on operational conditions. Telemeterable components are therefore endowed with a format attribute whose value defines the type of telemetry image that they supply at any given time.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="Telemeterable.html">Telemeterable</a> design pattern.
+        </p><a name="TelemetryItem"><b>Telemetry Item</b></a><p class="links"><Definition>
+Encapsulation of a single telemetry item together with the process to acquire, format and validate
+it. A telemetry item represents a small set of closely related telemetry data that are to be inserted
+in the telemetry stream as contiguous data. It will often consist of one or a small number of word of 16
+bits each but may also consist of groups of bits of different sizes.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="TelemetryItem.html">Telemetry Item</a> design pattern.
+        </p><a name="TelemetryManager"><b>Telemetry Manager</b></a><p class="links"><Definition>
+    A component that manages the telemetry data generation process. A telemetry manager is responsible for maintaining a list of components that can contribute data to the telemetry stream. When it is activated, it directs these components to generate their telemetry data and dispatches the data thus generated to the <a HREF="#Telemetry Stream">telemetry stream</a>.
+ Telemetry managers are a form of <a href="#FunctionalityManager">functionality managers</a>.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="TelemetryManagement.html">Telemetry Management</a> design pattern.
+        </p><a name="TelemetryStream"><b>Telemetry Stream</b></a><p class="links"><Definition>
+An encapsulation of the data sink to which telemetry data are written. A telemetry stream represents a generic channel through which telemetry data can be forwarded to the ground station and encapsulates details about the physical implementation of this channel.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="TelemetryStream.html">Telemetry Stream</a> design pattern.
+        </p><a name="Tracer"><b>Tracer</b></a><p class="links"><Definition>
+Encapsulation of the mechanism for forwarding trace signals to an external test set up. A trace signal is a physical signal that is generated by the software in response to the execution of selected statements. It is used as a means of performing timing measurements and other checks on the execution of an embedded application.
+   </Definition></p><p class="links">
+            See the
+            <a HREF="Trace.html">Trace</a> design pattern.
+        </p></div><div id="siteInfo"><a href="mailto:pasetti@control.ee.ethz.ch, cechti@control.ee.ethz.ch">Contact Us</a> | The OBS Framework Project</div></body></html>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:/D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="PUSTelecommands">
+            <Feature nameOfFeature="PUSTelecommands">
+                  <Description text="The PUS Telecommands"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type>
+                        <Composite/>
+                  </Type>
+                  <Group nameOfGroup="PUSTelecommandGlobalAttributes">
+                        <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                        <Feature nameOfFeature="TcApplicationId">
+                              <Description text="The APID of the application processing the telecommands"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="int" name="ApplicationId">
+                                                <Range minValue="0" maxValue="+"/>
+                                          </Property>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="PUSTelecommand">
+                              <Description text="The PUS telecommands provided by this application"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Interface status="provided" type="Telecommand/PUSTelecommand"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="PUSTelecommandOptions">
+                                    <GroupCardinality GroupCardMin="1" GroupCardMax="11"/>
+                                    <Feature nameOfFeature="DummyPUSTelecommand">
+                                          <Description text="A PUS telecommand with dummy functionality"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Component status="provided" type="Telecommand/DC_DummyPUSTelecommand"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="PUSClearDataReporting">
+                                          <Description text="A PUS telecommand to clear the data reporting definitions"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Component status="provided" type="Telecommand/DC_PUSClearDataReporting"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="MandatoryAttributes">
+                                                <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                                                <Feature nameOfFeature="MaxNumberSID">
+                                                      <Description text="The maximum number of SIDs that can be cleared by the TC"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int" name="MaxNumberSID">
+                                                                        <Range minValue="1" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="PUSTelemetryModeManager">
+                                                      <Description text="The name of the PUS telemetry mode manager"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="component" name="PUSTelemetryModeManager"/>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                                    <Feature nameOfFeature="PUSControlDataReporting">
+                                          <Description text="A PUS telecommand to enable/disable the data reporting definitions"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Component status="provided" type="Telecommand/DC_PUSControlDataReporting"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="MandatoryAttributes">
+                                                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                                <Feature nameOfFeature="MaxNumberSID">
+                                                      <Description text="The maximum number of SIDs that can be enabled/disabled by the TC"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int" name="MaxNumberSID">
+                                                                        <Range minValue="1" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                                    <Feature nameOfFeature="PUSDefineDataReporting">
+                                          <Description text="A PUS telecommand to define a data reporting definitions"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Component status="provided" type="Telecommand/DC_PUSDefineDataReporting"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="MandatoryAttributes">
+                                                <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                                                <Feature nameOfFeature="MaxSize">
+                                                      <Description text="The maximum size of the application buffer"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int" name="NumberOfRawData">
+                                                                        <Range minValue="1" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="PUSTelemetryModeManager">
+                                                      <Description text="The name of the PUS telemetry mode manager"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="component" name="PUSTelemetryModeManager"/>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                                    <Feature nameOfFeature="TestPUSTelecommand">
+                                          <Description text="A PUS telecommand with configurable checks and actions"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Component status="provided" type="Telecommand/DC_TestPUSTelecommand"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="OptionalAttributes">
+                                                <Description text="The optional attributes of the telecommand"/>
+                                                <GroupCardinality GroupCardMin="0" GroupCardMax="5"/>
+                                                <Feature nameOfFeature="ExecutionCheckValue">
+                                                      <Description text="The initial execution check status of the telecommand has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string" name="ExecutionCheckValue">
+                                                                        <Enumeration>
+                                                                              <Item value="ENABLED"/>
+                                                                              <Item value="DISABLED"/>
+                                                                        </Enumeration>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="ValidityCheckValue">
+                                                      <Description text="The initial validity check status of the telecommand has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string" name="ValidityCheckValue">
+                                                                        <Enumeration>
+                                                                              <Item value="ENABLED"/>
+                                                                              <Item value="DISABLED"/>
+                                                                        </Enumeration>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="ActionOutcome">
+                                                      <Description text="The initial action outcome  status of the telecommand has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string" name="ActionOutcome">
+                                                                        <Enumeration>
+                                                                              <Item value="ENABLED"/>
+                                                                              <Item value="DISABLED"/>
+                                                                        </Enumeration>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="ExecutionCheckCode">
+                                                      <Description text="The initial execution check code of the telecommand has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int" name="ExecutionCheckCode">
+                                                                        <Range minValue="0" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="ValidityCheckCode">
+                                                      <Description text="The initial validity check code of the telecommand has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int" name="ValidityCheckCode">
+                                                                        <Range minValue="0" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                                    <Feature nameOfFeature="PUSDumpMemory">
+                                          <Description text="A PUS memory dump telecommand"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Interface status="provided" type="Telecommand/PUSDumpMemory"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="MandatoryAttributes">
+                                                <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                                                <Feature nameOfFeature="MaxSize">
+                                                      <Description text="The maximum size of the application buffer"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int" name="NumberOfRawData">
+                                                                        <Range minValue="1" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="TelemetryManager">
+                                                      <Description text="The name of the telemetry manager"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="component" name="TelemetryManager"/>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                          <Group nameOfGroup="PUSMemoryDumpOptions">
+                                                <GroupCardinality GroupCardMin="1" GroupCardMax="2"/>
+                                                <Feature nameOfFeature="PUSDumpMemoryAbsolute">
+                                                      <Description text="An absolute memory dump"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <BuildingBlock>
+                                                                  <Component status="provided" type="Telecommand/DC_PUSDumpMemoryAbsolute"/>
+                                                            </BuildingBlock>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="PUSDumpMemoryOffset">
+                                                      <Description text="A memory dump with offset"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <BuildingBlock>
+                                                                  <Component status="provided" type="Telecommand/DC_PUSDumpMemoryOffset"/>
+                                                            </BuildingBlock>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                                    <Feature nameOfFeature="PUSMemoryLoad">
+                                          <Description text="A PUS memory load telecommand"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Interface status="provided" type="Telecommand/PUSMemoryLoad"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="MandatoryAttributes">
+                                                <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                                                <Feature nameOfFeature="MaxNumberData">
+                                                      <Description text="The maximum number of load data "/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int" name="MaxNumberData">
+                                                                        <Range minValue="1" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="MaxNumberBlocks">
+                                                      <Description text="The maximum number of memory blocks"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int" name="MaxNumberBlocks">
+                                                                        <Range minValue="1" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                          <Group nameOfGroup="PUSMemoryLoadOptions">
+                                                <GroupCardinality GroupCardMin="1" GroupCardMax="2"/>
+                                                <Feature nameOfFeature="PUSMemoryLoadAbsolute">
+                                                      <Description text="An absolute memory load"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <BuildingBlock>
+                                                                  <Component status="provided" type="Telecommand/DC_PUSMemoryLoadAbsolute"/>
+                                                            </BuildingBlock>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="PUSMemoryLoadOffset">
+                                                      <Description text="A memory load with offset"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <BuildingBlock>
+                                                                  <Component status="provided" type="Telecommand/DC_PUSMemoryLoadOffset"/>
+                                                            </BuildingBlock>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                                    <Feature nameOfFeature="PUSFunctionManagement">
+                                          <Description text="A PUS funtion management telecommand"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Interface status="provided" type="Telecommand/PUSFunctionManagement"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="Options">
+                                                <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                                <CallMacro nameOfCalledMacro="DefaultAttributes"/>
+                                          </Group>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>

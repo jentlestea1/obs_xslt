@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <meta>
+        <lastOpenedFiles>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/InstantiatorGeneratorMeta-Components.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/ImplementationIssues.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/ModellingApproach.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/GeneratorMeta-Components.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/ConfigurerGeneratorMeta-Components.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/scripts/build.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/InstallationIssues.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/scripts/buildSampleApplication.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/scripts/runGeneratorMetaComponent.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/RealTimeIssues.xml"/>
+            <file name="file:/D:/Projects/index.html"/>
+            <file focused="true" name="file:/D:/Projects/ObsFramework/index.html"/>
+        </lastOpenedFiles>
+    </meta>
+    <projectTree name="WebSite.xpr">
+        <folder name="Ant">
+            <file name="file:/D:/Projects/ObsFramework/scripts/build.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/scripts/buildModel.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/scripts/buildSampleApplication.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/scripts/runGeneratorMetaComponent.xml"/>
+        </folder>
+        <folder name="WebPages">
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/AbstractInterfaces.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/AspectOrientedProgramming.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/ConcreteComponents.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/ConfigurerGeneratorMeta-Components.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/Copyright.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/DesignPatterns.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/DesignProcess.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/DevelopmentProcess.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/DomainDictionary.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/Dummy.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/GeneratorMeta-Components.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/Home.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/ImplementationIssues.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/InstallationIssues.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/InstantiatorGeneratorMeta-Components.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/Introduction.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/ModellingApproach.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/PUSCompatibility.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/PUSServicesImplementation.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/ProjectSpecificCodingRules.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/QualificationApproach.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/RealTimeIssues.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/SourceCode.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/TransformerMeta-Components.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xml/WebSiteStructure.xml"/>
+            <file name="file:/D:/Projects/ObsFramework/index.html"/>
+        </folder>
+        <folder name="XSL">
+            <file name="file:/D:/Projects/ObsFramework/doc/xsl/BottomLeftSideBar.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xsl/DesignPattern.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xsl/DesignPatternEvaluation.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xsl/DesignPatternSideBar.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xsl/DesignPatternTable.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xsl/DomainDictionary.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xsl/DomainDictionarySideBar.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xsl/FirstLevelPage.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xsl/Index.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xsl/ProjectSpecificCodingRules.xsl"/>
+            <file name="file:/D:/Projects/ObsFramework/doc/xsl/SecondLevelPage.xsl"/>
+        </folder>
+    </projectTree>
+</project>

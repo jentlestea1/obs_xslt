@@ -1,0 +1,82 @@
+<Chapter>
+    <Title>Project Specific Naming Conventions</Title>
+    <Author>
+        <Name> A. Pasetti </Name>
+        <Affiliation>
+            <a HREF="http://www.pnp-software.com">P&amp;P Software</a>
+        </Affiliation>
+        <EMail> pasetti@pnp-software.com </EMail>
+    </Author>
+    <LastModified> 2003-12-05 </LastModified>
+    <Introduction>
+        <p>This page defines the project-specific naming conventions that were applied to the
+            implementation of the OBS Framework. These naming conventions complement those <a
+                href="ComplianceWithEsaCodingStandard.html">taken over</a> from the "C and C++
+            Coding Standard" prepared by the ESA Board for Software Standardisation and Control (BSSC).</p>
+    </Introduction>
+    <Section>
+        <table WIDTH="90%" BORDER="1" ALIGN="center" CELLPADDING="5%">
+            <tr>
+                <th>N.</th>
+                <th>Naming Convention</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>The name of classes encapsulating core components shall begin with the prefix
+                    "CC_". </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>The name of classes encapsulating default components shall begin with the prefix
+                    "DC_". </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>The name of classes representing abstract interfaces shall being with "I_". Note
+                    that, in a C++ context, this rule only comes into play if multiple inheritance
+                    is allowed. It is therefore not used in the OBS Framework.</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>The name of pointer variables shall being with the prefix "p". </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>The name of <code>typedef</code> types shall being with "TD_". </td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>The name of constant variables (variables that in a C program would be defined
+                    as <code>#define</code> constants) shall be written in capital letters. </td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>The name of setter and getter methods for component properties shall follow the
+                    JavaBeans naming conventions. </td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>Classes that provide trivial implementations of abstract classes and which are
+                    intended to be used for testing purposes only shall have names that begin with:
+                    "DC_Dummy". </td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>Classes that provide non-trivial implementations of abstract classes and which
+                    are intended to be used for testing purposes only shall have names that begin
+                    with: "DC_Test". </td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>Classes that act as wrappers for code generated from Matlab shall have names
+                    that begin with the string: "DC_Matlab" </td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>Classes that are automatically generated and serve as examples of the classes
+                    that can be automatically generated in the OBS Framework by XSLT code generators
+                    shall have names that begin with the string: "DC_Sample" </td>
+            </tr>
+        </table>
+    </Section>
+</Chapter>

@@ -1,0 +1,29 @@
+
+      
+       WARNING: this XSL program hardcodes the directory where output files are written in variable $TargetFile
+            
+           
+            Generating code for class DC_SCM_FsmState in files /Projects/ObsFramework/src/cpp/FSM/DC_SCM_FsmState.h/.cpp
+
+            
+                 
+            Generating code for class DC_OCM_FsmState in files /Projects/ObsFramework/src/cpp/FSM/DC_OCM_FsmState.h/.cpp
+
+            
+                 
+            Generating code for class DC_SBY_PreSepFsmState in files /Projects/ObsFramework/src/cpp/FSM/DC_SBY_PreSepFsmState.h/.cpp
+
+            
+                 
+            Generating code for class DC_SBY_PostSepFsmState in files /Projects/ObsFramework/src/cpp/FSM/DC_SBY_PostSepFsmState.h/.cpp
+
+            
+                 
+            Generating code for class DC_SM_PreSepFsmState in files /Projects/ObsFramework/src/cpp/FSM/DC_SM_PreSepFsmState.h/.cpp
+
+            
+                 
+            Generating code for class DC_AfsFsmState in files /Projects/ObsFramework/src/cpp/FSM/DC_AfsFsmState.h/.cpp
+
+            
+            

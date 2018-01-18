@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?><html><head><link rel="stylesheet" type="text/css" href="css/main.css"/><link rel="stylesheet" type="text/css" href="css/3col_leftNav.css"/></head><body><div id="header"><h1 id="siteName">OBS Framework </h1><div id="globalNav"><a href="Home.html">Home</a> | <a href="General.html">General</a> | <a href="Implementation.html">Implementation</a> | <a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a> | <a href="http://www.pnp-software.com/ObsFramework/ObsFramework_0_8_3.zip">Download</a> | <a href="indexDisclaimer.html">Disclaimer</a></div><h2 id="pageName">Implementation - Design Patterns</h2></div><div id="navbar"><div id="sectionLinks"><ul><li><a href="indexDomainDictionary.html">Domain Dictionary</a></li><li><a href="indexDesignPatterns.html">Design Patterns</a></li><li><a href="indexAbstractInterfaces.html">Abstract Interfaces</a></li><li><a href="indexConcreteComponents.html">Concrete Components</a></li><li><a href="indexGeneratorMeta-Components.html">Generator Meta-Components</a></li><li><a href="indexTransformerMeta-Components.html">Transformer Meta-Components</a></li><li><a href="indexRealTimeIssues.html">Real Time Issues</a></li><li><a href="indexImplementationIssues.html">Implementation Issues</a></li><li><a href="indexInstallationIssues.html">Installation Issues</a></li><li><a href="indexSourceCode.html">Source Code</a></li><li><a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a></li></ul></div></div><div id="subnavbar"><li><a href="DesignPatternTable.html">- CATALOGUE -</a></li><li><a href="Connection.html">Connection</a></li><li><a href="ControlBlock.html">Control Block</a></li><li><a href="Event.html">Event</a></li><li><a href="FDIRCheck.html">FDIR Check</a></li><li><a href="FSM.html">FSM</a></li><li><a href="Manager.html">Manager</a></li><li><a href="ManoeuvreManagement.html">Manoeuvre Management</a></li><li><a href="ModeManagement.html">Mode Management</a></li><li><a href="OperatingSystemInterface.html">Operating System Interface</a></li><li><a href="ParameterDatabase.html">Parameter Database</a></li><li><a href="PunctualAction.html">Punctual Action</a></li><li><a href="RecoveryAction.html">Recovery Action</a></li><li><a href="ReconfigurationManagement.html">Reconfiguration Management</a></li><li><a href="SharedData.html">Shared Data</a></li><li><a href="TelecommandManagement.html">Telecommand Management</a></li><li><a href="Telemeterable.html">Telemeterable</a></li><li><a href="TelemetryManagement.html">Telemetry Management</a></li><li><a href="TelemetryStream.html">Telemetry Stream</a></li><li><a href="TelemetryItem.html">Telemetry Item</a></li><li><a href="Trace.html">Trace</a></li><li><a href="VariableMonitoring.html">Variable Monitoring</a></li></div><div id="content"><p><H4>Trace
+        Design Pattern
+         </H4></p><p><H3><b>Intent</b></H3></p><p>
+
+Decouple the signaling of trace events from the implementation of the interface to the trace test set.
+
+</p><p><H3><b>Based On</b></H3></p><p>
+
+This is pattern is based on the principle of <i>abstract coupling</i>.
+
+</p><p><H3><b>Motivation</b></H3></p><p>
+
+<p>
+
+Some OBS applications are instrumented to generate so-called trace signals that are sent to an external test set-up where an operator can use them to monitor the execution of a test.
+
+The interface to the test set-up varies from application to application but the type of traces that can be generated is constant in a certain domain.
+
+</p><p>
+
+This design pattern introduces an application-independent interface for the signaling of trace events that decouples the signaling of trace events on the part of the instrumented code from the component that is responsible for forwarding the trace signal to the test set up. </p>
+
+</p><H3><b>Dictionary Entries</b></H3><p>The following abstractions or domain-wide concepts are defined to support the
+        implementation of this design pattern:</p><ul><li><i><a HREF="domainDictionaryTracer.html">Tracer</a></i></li></ul><p><H3><b>Structure</b></H3></p><p>
+
+<p>
+
+This design pattern represents the tracer abstraction as a component that implements the abstract interface <CODE>Tracer</CODE>. This interface defines two types of operations. It firstly defines operations to send the trace signals and it secondly defines housekeeping operations to reset the tracer component, to enable and disable tracing, etc.
+
+</p><p>
+
+The trace design pattern introduces an abstract coupling between the client - the entity sending the trace signal - and the tracer component and this allows it to achieve its objective of making the code that sends the trace signals from the code that implements the interface to the external set up.
+
+</p>
+
+</p><p><center><img src="../figures/gif/TraceDP.gif"/></center></p><H3><b>Participants</b></H3><ul><li><CODE>Client</CODE>:  <Role>The component that sends the trace signals.</Role></li><li><CODE>Tracer</CODE>:  <Role>The abstract interface or base abstract class that defines the basic operations that can be performed on a generic tracer.
+
+</Role></li><li><CODE>ConcreteTracer</CODE>:  <Role>Component implementing (or derived from) <CODE>Tracer</CODE> that represents a specific and concrete interface to a tracing set-up.
+
+</Role></li></ul><p><H3><b>Collaborations</b></H3></p><p>
+
+The typical operational scenario for this design pattern is:
+
+<ul>
+
+<li>A component that wishes to send a trace signal calls the appropriate trace method on the tracer component which it sees as an instance of interface <CODE>Tracer</CODE></li>
+
+<li>An initialization component resets or initializes the tracer component by using its housekeeping operations</li>
+
+<li>An operator disables or enables tracing either by calling the disable and enable method (perhaps from a test harness built into the OBS) or by overwriting the memory locations that represent the enable/disable status inside the concrete tracer component.</li>
+
+</ul>
+
+</p><H3><b>Consequences</b></H3><ul><li>
+
+Clients that wish to send trace signals are decoupled from the implementation of the interface to the trace test set-up. They only see the tracer as a plug-in component of abstract type tracer.
+
+</li></ul><p><H3><b>Applicability</b></H3></p><p>
+
+This design pattern is useful when:
+
+<ul>
+
+<li>components in an application need to send trace signals and the interface to the trace test set-up can vary across applications.
+
+</li>
+
+</ul>
+
+</p><H3><b>Implementation Issues</b></H3><p>
+
+The main implementation issues arises in connection with the requirement that there should be the possibility of enabling and disabling specific traces. By itself, this requirement would dictate that each trace be encapsulated in a dedicated object with its own disable/disable method. This approach however is inappropriate because the toggling of the disabled and enabled status is normally done not by code but by an operator that directly patches the OBS. Having a large set of small objects each with its own enable/disable flag would make this kind of manual management difficult. The proposed solution has a single tracer component that should be implemented in a manner to facilitate individual toggling of enable/disable status. In practice, this might mean that the enable/disable flags are stored as an array of boolean or even that they are stored in the individual bits of a single long integer variable.
+
+</p><p>
+
+Conceptually, <CODE>Tracer</CODE> is an abstract interface but instantiation of the pattern will often implement it as a base abstract class that provides concrete implementations for its housekeeping operations and in particular for the management of the enable/disable status. This allows some invariant code to be reused across applications.
+
+</p><p>
+
+
+
+In a typical implementation, trace signals should be generated whenever event reports (see the <a href="Event.html">event design pattern</a>). In such a case, the tracer component is best implemented as a 
+
+plug-in component of the event repository component. The firing of tracing signals can then be done by the event repository itself.
+
+</p><p>
+
+The tracer component can often be implemented as a singleton.
+
+</p><H3><b>OBS Framework Mapping</b></H3><p>The implementation of this design pattern in the OBS Framework is supported by
+        the following classes:</p><ul><li><i>Tracer</i>abstract interface --&gt; <CODE><a href="doxygen/html/classTracer.html">Tracer</a></CODE></li></ul><a NAME="#SampleCode"><p><H3><b>Sample Code</b></H3></p></a><p>
+
+<p>
+
+As a simple example, consider the case of a module that wishes to send a trace signal. This could be done as follows:
+<PRE>	
+    Tracer* tracer;
+	. . .
+    if (conditions to send trace signal are satisfied)
+        tracer.sendTRaceSignal(TRACE_ID);</PRE>
+
+</p>
+
+</p><p><H3><b>Remarks</b></H3></p><p>
+
+None
+
+</p><p><H3><b>Author</b></H3></p><p>
+
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+
+</p><p><H3><b>Last Modified</b></H3></p><p>
+
+2003-04-17
+
+</p></div><div id="siteInfo"><a href="mailto:pasetti@control.ee.ethz.ch, cechti@control.ee.ethz.ch">Contact Us</a> | The OBS Framework Project</div></body></html>

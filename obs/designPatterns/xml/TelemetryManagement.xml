@@ -1,0 +1,376 @@
+<DesignPattern>
+
+
+
+<Name>
+
+Telemetry Management
+
+</Name>
+
+
+
+<BasedOn>
+
+This is pattern is essentially identical to the telemetry management pattern of the
+
+<a HREF="http://www.aut.ee.ethz.ch/~pasetti/AocsFramework/index.html">AOCS Framework</a> (see also:
+
+A. Pasetti, <i>Embedded Control Systems and Software Frameworks</i>, Springer-Verlag, 2002).
+
+This pattern relies on design solutions offered by the
+
+<a HREF="Telemeterable.html">Telemeterable</a>, <a HREF="TelemetryItem.html">Telemetry Item</a>,
+
+and <a HREF="TelemetryStream.html">Telemetry Stream</a> design patterns in this catalogue.
+
+It can also be seen as an instance of the <a href="Manager.html">manager design pattern</a>.
+
+</BasedOn>
+
+
+
+<Intent>
+
+Decouple the management of telemetry from the format and layout of the telemetry data and allow the development of an application-independent telemetry manager.
+
+</Intent>
+
+
+
+<Motivation>
+
+<p>The management of the telemetry data collection process is traditionally delegated to a dedicated component. This component is normally not reusable because it directly interacts with the concrete application components from which the telemetry data are collected.
+
+</p>
+
+<p>
+
+This design pattern proposes to decouple the telemetry management component from the components supplying the telemetry data through an abstract interface. This allows abstract management functions to be concentrated in the telemetry management component which then becomes application-independent. The nature of this abstract interface is not dictated by the design patterns. Possible solutions are provided by the
+
+<a HREF="Telemeterable.html">Telemeterable</a> and <a HREF="TelemetryItem.html">Telemetry Item</a> design patterns in this catalogue.
+
+</p>
+
+<p>
+
+The telemetry manager must also interface to the hardware channel to which the telemetry data must be written. Application independence in this respect can be achieved y using the solution proposed by the <a HREF="TelemetryStream.html">Telemetry Stream</a> design pattern.
+
+</p>
+
+</Motivation>
+
+
+
+<DictionaryEntry>Telemetry Manager</DictionaryEntry>
+
+
+
+<Structure>
+
+<p>This design pattern postulates the existence of two abstract interfaces. The first such interface is
+
+<CODE>TmInterface</CODE>. It characterizes a generic component capable of somehow contributing data to
+
+the telemetry data stream and it declares operations through which this component can be made to collect
+
+the telemetry data or to send it to the telemetry stream. Potential solutions for the implementation of
+
+this interface are offered by the <a HREF="Telemeterable.html">Telemeterable</a> and
+
+<a HREF="TelemetryItem.html">Telemetry Item</a> design patterns. These two patterns differ in the way
+
+the telemetry data are to be collected. In the former case, components that can potentially contribute
+
+data to the telemetry stream must be capable of supplying an image of their internal state that represents
+
+their contribution to the telemetry data. In the latter case, instead, dedicated components are introduced
+
+that are responsible for gathering and formatting individual items of telemetry data (the "telemetry items").
+
+In both cases, however, interaction between the concrete components from which telemetry data are acquired
+
+and the component responsible for managing the telemetry data flow is through an abstract interface.
+
+</p>
+
+<p>
+
+The second abstract interface postulated by this design pattern is <CODE>TelemetryStream</CODE>. This interface serves as an encapsulation of the interface to the hardware channel through which telemetry data are forwarded t the ground. This interface is introduced by the <a HREF="TelemetryStream.html">Telemetry Stream</a> design pattern.
+
+</p>
+
+<p>
+
+The presence of these two interfaces allows the definition of a concrete component, the <i>telemetry manager</i>, that is responsible for managing the telemetry data flow. This component holds a reference to an abstract telemetry stream and to the list of components from which the telemetry data are to be collected. Since the latter are seen exclusively through abstract interfaces, the telemetry manager component can be built in an application-independent manner.
+
+</p>
+
+</Structure>
+
+
+
+<StructureFigure>TelemetryManagementDP</StructureFigure>
+
+
+
+<Participant>
+
+<Name>TelemetryManager</Name>
+
+<Role>The component that is responsible for managing the collection of telemetry data and their dispatcing to the ground.</Role>
+
+</Participant>
+
+
+
+<Participant>
+
+<Name>TelemetryStream</Name>
+
+<Role>The abstract interface that characterizes a generic data stream representing the hardware channel through which telemetry data are sent to the ground.</Role>
+
+</Participant>
+
+
+
+<Participant>
+
+<Name>ConcreteTmStream</Name>
+
+<Role>Component implementing interface TelemetryStream that represents a specific and concrete telemetry stream.</Role>
+
+</Participant>
+
+
+
+<Participant>
+
+<Name>TmInterface</Name>
+
+<Role>The abstract interface that characterize a generic component capable of supplying data for the telemetry stream.</Role>
+
+</Participant>
+
+
+
+<Participant>
+
+<Name>TmDataProvider</Name>
+
+<Role>A concrete component that must contribute data to the telemetry stream.</Role>
+
+</Participant>
+
+
+
+<Collaborations>
+
+The typical operational scenario for this design pattern is:
+
+<ul>
+
+<li>
+
+During the configuration phase, a list of components that must contribute telemetry data is constructed as a list of components of type <CODE>TmInterface</CODE>.
+
+</li>
+
+<li>
+
+During the configuration phase, the telemetry manager is instatiated and loaded with a concrete telemetry stream and with the list of <CODE>TmInterface</CODE> components.
+
+</li>
+
+<li>
+
+At run-time, the telemetry manager is activated. This causes it to go through the list of <CODE>TmInterface</CODE> components, to process them in turn and to send the telemetry data to the telemetry stream.
+
+</li>
+
+</ul>
+
+</Collaborations>
+
+
+
+<Consequence>
+
+The management of telemetry is decoupled from the layout and content of the telemetry data. These can be modified without having to change the telemetry manager.
+
+</Consequence>
+
+<Consequence>
+
+Depending on how the <CODE>TmInterface</CODE> interface is defined, classes that contribute telemetry data may have to implement this interface. This may lead to existing code having to be modified.
+
+</Consequence>
+
+
+
+<Applicability>
+
+There is a need to centralize the management of the flow of telemetry data and the layout and content
+
+of the telemetry data may vary from application to application.
+
+</Applicability>
+
+
+
+<ImplementationIssue>
+
+In some domains, the content of telemetry varies over time in the same application. For instance,
+
+different operational situations may require different sets of telemetry data to be generated and
+
+sent to the ground. This requirement may be accommodated by having the telemetry manager maintain
+
+several <CODE>tmList</CODE> components, one for each type of telemetry data, and switching across
+
+them in response to changes in its operational environment, or perhaps in response to commands from
+
+the ground.
+
+</ImplementationIssue>
+
+
+
+<ImplementationIssue>
+
+If the telemetry manager must maintain several telemetry lists of which only one is active
+
+at any given time, the <a href="ModeManagement.html">mode management pattern</a> can be
+
+used to manage the switching between <CODE>tmList</CODE> components. This situation is
+
+illustrated in the class diagram below. Now the telemetry manager retrieves the telemetry
+
+list from the mode manager component. The mode manager is responsible for implementing the
+
+logic that decides, at any given time, which telemetry list should be used (this logic
+
+is implemented in the <code>updateTmList</code> operation). The telemetry mode manager
+
+is defined through an abstract interface to allow different switching logics to be
+
+plugged into the same telemetry manager.
+<p/>
+<Figure>TelemetryModeManager</Figure>
+<p/>
+</ImplementationIssue>
+
+
+
+<ImplementationIssue>
+
+Since this design pattern is built on the <a HREF="Telemeterable.html">Telemeterable</a>,
+
+<a HREF="TelemetryItem.html">Telemetry Item</a>, and <a HREF="TelemetryStream.html">Telemetry Stream</a>
+
+design patterns,the considerations made in the <i>implementation issues</i> sections of these telecommands
+
+are also applicable.
+
+</ImplementationIssue>
+
+
+
+
+
+<FrameworkMapping>
+
+  <Name>TelemetryManager</Name>
+
+  <Type>component</Type>
+
+  <FrameworkClass>CC_TelemetryManager</FrameworkClass>
+
+</FrameworkMapping>
+
+
+
+<SampleCode>
+
+If one assumes that the <CODE>TmInterface</CODE> abstract interface is implemented using
+
+the <CODE>TelemetryItem</CODE> interface of the <a HREF="TelemetryItem.html">Telemetry Item</a>
+
+design pattern, then a pseudo-code implementation of a telemetry manager is as follows:
+
+<PRE><![CDATA[
+
+    class TelemetryManager {
+
+        TelemetryStream* tmStream;
+        TelemetryItem* tmList[N];
+		. . .
+
+        void activate() {
+            short int tmWord;
+
+            for (int j:=0; j++; j<N) {	
+            
+                tmList[i]->update();
+
+                if (tmList[i]->isValid())
+                {	
+                    tmWord=tmList[i].getItem();
+                    tmStream->write(tmWord);
+                } 
+                else
+                {  . . .   // handle invalid TM word
+                }
+            }
+        }
+
+    }  ]]></PRE>
+
+<p>
+
+In this implementation, a telemetry frame is made up of a set of N 16-bits words.
+
+These are collected by dedicated <code>TelemetryItem</code> components. The telemetry manager is responsible
+
+for controlling the collection process and for sending the individual telemetry items
+
+to the telemetry stream.
+
+</p>
+
+<p>
+
+For another example of an implementation of the Telemetry Manager component, see the sample code section of the <a HREF="Telemeterable.html#SampleCode">Telemeterable</a> design pattern.
+
+</p>
+
+</SampleCode>
+
+
+
+<Remarks>
+
+None
+
+</Remarks>
+
+
+
+<LastModified>
+
+2002-07-25
+
+</LastModified>
+
+
+
+<Author>
+
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+
+</Author>
+
+
+
+</DesignPattern>
+

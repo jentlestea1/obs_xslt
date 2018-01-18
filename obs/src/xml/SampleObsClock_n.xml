@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ObsApplication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="file:/D:/Projects/ObsFramework/models/xsd/ObsFrameworkAppModel.xsd">
+      <!--
+      Model for the sample OBS Clock to be used for the sample application of the OBS Framework.
+      -->
+     <ObsClock_2 kind="interface" type="System/ObsClock" status="provided">
+           <DummyObsClock kind="component" type="System/DC_DummyObsClock" status="provided" name="obsClk">
+                 <Description>The OBS Clock of the sample application.</Description>
+                 <DummyTime kind="property" name="Time" type="int" value="10" status="provided"/>
+                 <DummyCycle kind="property" name="Cycle" type="int" value="20" status="provided"/>
+           </DummyObsClock>
+     </ObsClock_2>
+     
+</ObsApplication>

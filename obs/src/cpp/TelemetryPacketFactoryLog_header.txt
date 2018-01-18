@@ -1,0 +1,20 @@
+
+            
+            The following telemetry packet types with their configuration parameters are processed:
+            
+                  TC Type: Telemetry/DC_DummyPUSTelemetryPacket
+                     Config. Properties: 
+                  TC Type: Telemetry/DC_DummyPUSTelemetryPacket
+                     Config. Properties: 
+                  TC Type: Telemetry/DC_PUSDataReportingPacket
+                     Config. Properties: DefinitionBufferSize  ValueBufferSize  MaxNumberFA  
+                  TC Type: Telemetry/DC_PUSDataReportingPacket
+                     Config. Properties: DefinitionBufferSize  ValueBufferSize  MaxNumberFA  
+                  TC Type: Telemetry/DC_PUSMemoryDumpAbsolute
+                     Config. Properties: MaxNumberBlocks  DumpBufferSize  
+                  TC Type: Telemetry/DC_PUSMemoryDumpOffset
+                     Config. Properties: MaxNumberBlocks  DumpBufferSize  
+                  TC Type: Telemetry/DC_PUSTcVerificationPacket
+                     Config. Properties:      
+            Generating code for class CC_TelemetryPacketFactory in file /Projects/ObsFramework/src/cpp/Telemetry/CC_TelemetryPacketFactory.h
+            

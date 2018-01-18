@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<DesignPattern>
+
+<Name>Shared Data</Name>
+
+<BasedOn>
+This pattern is essentially identical to the shared data design pattern of the
+<a HREF="http://www.aut.ee.ethz.ch/~pasetti/AocsFramework/index.html">AOCS Framework</a> (see also:
+A. Pasetti, <i>Embedded Control Systems and Software Frameworks</i>, Springer-Verlag, 2002).
+</BasedOn>
+
+<Intent>
+Decouple the production of data from their consumption.
+</Intent>
+
+<Motivation>
+Consider the case of an application built as a collection of components. These components
+interact by exchanging data. In a data exchange, the component that generates the
+data is called the <i>data producer</i> and the component that receives the data
+is called the <i>data consumer</i>. It is in general desirable desirable
+to decouple the producer from the consumer of the data. This has several advantages:<ul>
+<li>Unit-level testing is simplified because a data consumer can be tested in isolation from
+its data producer.</li>
+<li>Design is simplified because data consumers can be designed in isolation from
+their data producers.</li>
+<li>Design changes are easier to implment because data consumers can be modified in isolation from
+their data producers.</li>
+</ul>
+This design pattern proposes a solution to the problem of decoupling the production from
+the consumption of data in a component-based application.
+<p/>
+In an embedded control application,
+two major categories of data can be recognized. <i>Event data</i> are produced asynchronously by
+components that wish to signal a change in their internal state or the occurrence of some event
+(e.g. the notification of an error condition). <i>Cyclical data</i>
+are instead data that are produced or consumed on a periodic basis by
+the application components (e.g. sensor read-out values). The chief characteristic of
+cyclical data is that, for a given category of data, only the latest value is of
+interest. In the case of event data, there is instead normally an interest in preserving
+all data values generated over a certain time interval. The solution proposed by this design pattern
+
+
+</Motivation>
+
+<DictionaryEntry>Data Pool</DictionaryEntry>
+
+
+<Structure>
+The solution proposed by this design pattern is based on a shared memory mechanism.
+<i>Data pools</i> are introduced to act as shared memory areas through which data
+are exchanged among application components. The data pools physically contain the
+data items. The producers of data deposit the data into the data pool and the
+consumers of data retrieve the data they need from the data pool.
+<p/>
+As indicated by the class diagram of the pattern, there is normally only one
+producer for a certain type of datum but there may be multiple consumers (all
+of which access the same value of the data). Data consumers only retrieve
+<i>copies</i> of the data. The data always remain present in the data pool.
+This is essential to allow one-to-many exchanges between consumers and producers
+and to decouple the consumers from each other.
+<p/>
+Normally, only one instance of a data of a certain type is stored in the pool.
+This means that if a data setter method is called twice, then the datum written
+to the pool at the second call overwrites the datum written at the first call.
+This mechanism is rigid but safe. It is suitable for cyclical data whose number
+and type is fixed and can be determined at design time. If these conditions do
+not hold (i.e. if the data are event-like), then a repository mechanism as proposed
+by the <a href="Event.html">event design pattern</a> may be considered as a solution
+to the problem of data exchanges among components.
+<p/>
+An application can use several data pools with each individual data pool grouping together
+a set of logically related data.
+<p/>
+Although the structure of a data pool component is simple, it is in general impossible
+to define a non-trivial base class from which more specific data pools can be
+derived or to define an abstract interface that should be implemented by all
+data pools. For this reason, it is not possible to map the abstract concept of
+<i>data pool</i> to any architectural construct. Data pools normally exist
+as concrete components only.
+</Structure>
+
+<StructureFigure>SharedDataDP</StructureFigure>
+
+<Participant>
+<Name>DataProducer</Name>
+<Role>The component that generates the data to be exchanged.
+</Role>
+</Participant>
+
+<Participant>
+<Name>DataPool</Name>
+<Role>The data pool component where the data to be exchanged are stored.
+</Role>
+</Participant>
+
+<Participant>
+<Name>DataConsumer</Name>
+<Role>The component that must receive the data to be exchanged.</Role>
+</Participant>
+
+<Collaborations>
+The typical operational scenario for this design pattern is:
+<ul>
+<li>The data producer, as soon as it has generated a new value for the data, stores it
+in the data in the data pool.</li>
+<li>The data consumer, when it needs the data, retrieves its latest value from the
+data pool.</li>
+</ul>
+</Collaborations>
+
+<Consequence>
+The production of data is completely decoupled from their consumption. There is no
+direct connection between data producers and consumers.
+</Consequence>
+
+<Consequence>
+An overhead is introduced in all data exchanges because the data must be copied into
+and copied out of the data pool.
+</Consequence>
+
+<Consequence>
+It is easy to implement one-to-many data exchanges where one data producer must
+feed the same data to several data consumers.
+</Consequence>
+
+<Consequence>
+In the presence of concurrency, access to the data pool must be done in mutual
+exclusion to ensure that a data get and a data set operations do not interfere with
+each other. This may make the implementation of the data pool rather complex but
+will often be preferable to implementing the synchronization code in the producer
+and consumer components themselves.
+</Consequence>
+
+<Consequence>
+There is no mechanism for a data consumer to be notifed when a new value of a
+certain data is deposited in the data pool. The data consumer must check for
+new values by polling the data pool. As already noted, the solution proposed by this
+design pattern is only suitable for data that are produced synchronously (typically,
+cyclically).
+</Consequence>
+
+
+<Applicability>
+This design pattern is useful when one or more of the following conditions hold:
+<ul>
+<li>There is a need to decouple the producers from the consumers of data.</li>
+<li>The data to be exchanged between producers and consumers are generated synchronously.</li>
+<li>Only the most recent value of a certain datum is important.</li>
+</ul>
+</Applicability>
+
+<ImplementationIssue>
+Given the fixed structure of data pools, automatic generation of their
+code might often be a practical option. A very simple solution might be as follows.
+The structure of the data pool (the names and types of the data it must store, etc)
+is described in an XML file. An XSLT program is used to generate from it the source code
+of the data pool.
+</ImplementationIssue>
+
+<ImplementationIssue>
+In its simplest form, a data pool simply offers a getter and a setter method for each
+data it holds. In this case, data consumers and producers must call the getter and,
+respectively, the setter methods whenever they want to access the data in the pool.
+In an alternative implementation instead the data pool offers a mechanism to allow
+an external component to establish a fixed link to the data in the pool. This could
+for instance be done using the data item mechanism proposed by the <a href="Connection.html">connection
+design pattern</a>. In this case, the consumer and producer components are linked
+to the data pool during the application configuration phase but no longer need to
+directly access it subsequently.
+</ImplementationIssue>
+
+<ImplementationIssue>
+Normally, for each setter method in a data pool, there is a matching getter method.
+In some cases, however, it is possible to have additional getter methods that return
+values that are obtained by combining the raw data that are set with the setter methods.
+</ImplementationIssue>
+
+<ImplementationIssue>
+Data pools could be used to enforce some kind of access restrictions whereby certain
+data are only accessible for certain components. This could be done by implementing
+the data getter methods to check the identity of the consumer component and to deny
+access to unauthorized components. Similarly, the data setter methods could be
+implemented to allow only some components to change the value of a datum.
+</ImplementationIssue>
+
+<ImplementationIssue>
+In most implementations, only the latest value of each datum in the data pool is preserved
+in the data pool. Where necessary, however, it would be easy to modify the proposed
+concept to hold sequences of values. In this case, the data pool concept becomes similar
+to the event repository concept of the <a href="Event.html">event design pattern</a>.
+</ImplementationIssue>
+
+<FrameworkMapping>
+  <Name>DataPool</Name>
+  <Type>component</Type>
+  <FrameworkClass>DataPool</FrameworkClass>
+</FrameworkMapping>
+
+
+<SampleCode>
+As a very simple example of a concrete data pool, consider the following code:
+<PRE>	class SampleDataPool {
+
+	  int data_a;
+          float data_b;
+
+          void setData_a(int val) {
+             data_a = val;
+	  }
+
+          void setData_b(float val) {
+             data_b = val;
+          }
+
+          int getData_a() {
+             return data_a;
+          }
+
+          float getData_b() {
+             return data_b;
+          }
+
+	}</PRE>
+
+The data pool in this example holds two items of data. More complex implementations
+might include mutual exclusion mechanisms for concurrent access or mechanisms for
+linking to the data in the pool (as opposed to reading/writing their values).
+However, in all cases, one will find that the data pool has a repetitive structure:
+the same basic structure is reproduced for each data that the pool holds. As already
+noted, this repetitive structure would often make it possible to generate the
+code for a data pool automatically from a description of the data they must hold.
+</SampleCode>
+
+<Remarks>
+None
+</Remarks>
+
+<LastModified>
+2003-05-14
+</LastModified>
+
+<Author>
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+</Author>
+
+</DesignPattern>

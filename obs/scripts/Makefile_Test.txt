@@ -1,0 +1,19 @@
+helloBaseClassORE:
+	sparc-rtems-gcc -g -O -fno-rtti -fno-exceptions TestMains/PrintHelloWorldBaseClass.cpp \
+	TestMains/helloBaseClass.cpp -o helloBaseClassORE
+
+helloBaseClassO:
+	sparc-rtems-gcc -g -O TestMains/PrintHelloWorldBaseClass.cpp \
+	TestMains/helloBaseClass.cpp -o helloBaseClassO
+
+helloDerivedClassORE:
+	sparc-rtems-gcc -g -O -fno-rtti -fno-exceptions TestMains/PrintHelloWorldAbstractClass.cpp \
+	TestMains/PrintHelloWorldDerivedClass.cpp TestMains/helloDerivedClass.cpp -o helloDerivedClassORE
+
+helloDerivedClassO:
+	sparc-rtems-gcc -g -O TestMains/PrintHelloWorldAbstractClass.cpp \
+	TestMains/PrintHelloWorldDerivedClass.cpp TestMains/helloDerivedClass.cpp -o helloDerivedClassO
+
+all: helloBaseClassORE helloBaseClassO helloDerivedClassORE helloDerivedClassO
+
+

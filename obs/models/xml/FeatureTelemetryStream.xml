@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="TelemetryStream">
+            <Feature nameOfFeature="TelemetryStream">
+                  <Description text="A telemetry stream"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type>
+                        <BuildingBlock>
+                              <Interface status="provided" type="Telemetry/TelemetryStream"/>
+                        </BuildingBlock>
+                  </Type>
+                  <Group nameOfGroup="Options">
+                        <Description text="The telemetry streams offered by the framework"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="BasicPUSTmStream">
+                              <Description text="A basic telemetry stream for PUS-based telemetry packets"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="provided" type="Telemetry/DC_BasicPUSTmStream"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="Attributes">
+                                    <Description text="The attributes of the telemetry stream"/>
+                                    <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                                    <Feature nameOfFeature="Capacity">
+                                          <Description text="The size in bytes of the telemetry write area"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property name="Capacity" status="provided" type="int"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="StartAddress">
+                                          <Description text="The start address of the telemetry write area"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property name="StartAddress" status="provided" type="string"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                        <Feature nameOfFeature="PUSTmLogger">
+                              <Description text="A PUS-based telemetry stream that logs telemetry packets and makes them available for later inspection"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="provided" type="Telemetry/DC_PUSTmLogger"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="Attributes">
+                                    <Description text="The attributes of the telemetry stream"/>
+                                    <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                                    <Feature nameOfFeature="BufferCapacity">
+                                          <Description text="The maximum number of telemetry packets that can be stored in the log"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property name="BufferCapacity" status="provided" type="int"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="MaxPacketLength">
+                                          <Description text="The maximum length in number of bytes of a telemetry packet"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property name="MaxPacketLength" status="provided" type="int"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                        <Feature nameOfFeature="ByteArrayTmStream">
+                              <Description text="A telemetry stream that writes the telemetry packets data to an array of bytes"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="provided" type="Telemetry/DC_ByteArrayTelemetryStream"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="Attributes">
+                                    <Description text="The attributes of the telemetry stream"/>
+                                    <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                                    <Feature nameOfFeature="Capacity">
+                                          <Description text="The size in bytes of the byte array"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property name="Capacity" status="provided" type="int"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="StartAddress">
+                                          <Description text="The start address of the byte array"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property name="StartAddress" status="provided" type="string"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                        <Feature nameOfFeature="CycleDataItem16TmStream">
+                              <Description text="A telemetry stream that writes the telemetry packets data to a set of 16-bit locations encapsulated in data items"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="provided" type="Telemetry/DC_CycleDataItem16TmStream"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="Attributes">
+                                    <Description text="The attributes of the telemetry stream"/>
+                                    <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                    <CallMacro nameOfCalledMacro="DataItems"/>
+                              </Group>
+                        </Feature>
+                        <Feature nameOfFeature="DummyTelemetryStream">
+                              <Description text="A dummy telemetry stream that discards all telemetry packets"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="provided" type="Telemetry/DC_DummyTelemetryStream"/>
+                                    </BuildingBlock>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="CustomTelemetryStream">
+                              <Description text="An application-specific telemetry stream"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="missing"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="DefaultAttributes">
+                                    <Description text="The default attributes of a custom telemetry stream"/>
+                                    <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                    <CallMacro nameOfCalledMacro="DefaultAttributes"/>
+                              </Group>
+                        </Feature>
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>

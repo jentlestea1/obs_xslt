@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<DesignPatternTable>
+
+  <Title>Design Pattern Catalogue</Title>
+
+  <Introduction>
+The table below gives an summary view of the patterns in the OBS Design Pattern Catalogue.
+The full definition of the design patterns can be accessed either by clicking on the corresponding entry in the
+table or on the pattern name in the side bar to the left.
+The model behind the OBS design patterns is described <a HREF="indexDesignPatterns.html">here</a>.
+  </Introduction>
+
+  <DesignPatternName>Connection</DesignPatternName>
+  <DesignPatternName>Control Block</DesignPatternName>
+  <DesignPatternName>Event</DesignPatternName>
+  <DesignPatternName>FSM</DesignPatternName>
+  <DesignPatternName>Manager</DesignPatternName>
+  <DesignPatternName>Manoeuvre Management</DesignPatternName>
+  <DesignPatternName>Mode Management</DesignPatternName>
+  <DesignPatternName>Operating System Interface</DesignPatternName>
+  <DesignPatternName>Parameter Database</DesignPatternName>
+  <DesignPatternName>Punctual Action</DesignPatternName>
+  <DesignPatternName>Recovery Action</DesignPatternName>
+  <DesignPatternName>Reconfiguration Management</DesignPatternName>
+  <DesignPatternName>Shared Data</DesignPatternName>
+  <DesignPatternName>Telecommand Management</DesignPatternName>
+  <DesignPatternName>Telemeterable</DesignPatternName>
+  <DesignPatternName>Telemetry Management</DesignPatternName>
+  <DesignPatternName>Telemetry Stream</DesignPatternName>
+  <DesignPatternName>Telemetry Item</DesignPatternName>
+  <DesignPatternName>Trace</DesignPatternName>
+  <DesignPatternName>Variable Monitoring</DesignPatternName>
+
+</DesignPatternTable>

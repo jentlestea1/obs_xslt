@@ -1,0 +1,32 @@
+
+            
+            The following telecommand types with their configuration parameters are processed:
+            
+                  TC Type: Telecommand/DC_DummyPUSTelecommand
+                     Config. Properties: 
+                  TC Type: Telecommand/DC_DummyTelecommand
+                     Config. Properties: 
+                  TC Type: Telecommand/DC_DummyTelecommand
+                     Config. Properties: 
+                  TC Type: Telecommand/DC_PUSControlDataReporting
+                     Config. Properties: MaxNumberSID  
+                  TC Type: Telecommand/DC_PUSDefineDataReporting
+                     Config. Properties: NumberOfRawData  
+                  TC Type: Telecommand/DC_PUSDumpMemoryAbsolute
+                     Config. Properties: NumberOfRawData  
+                  TC Type: Telecommand/DC_PUSDumpMemoryOffset
+                     Config. Properties: NumberOfRawData  
+                  TC Type: Telecommand/DC_PUSMemoryLoadAbsolute
+                     Config. Properties: MaxNumberData  MaxNumberBlocks  
+                  TC Type: Telecommand/DC_PUSMemoryLoadAbsolute
+                     Config. Properties: MaxNumberData  MaxNumberBlocks  
+                  TC Type: Telecommand/DC_PUSMemoryLoadOffset
+                     Config. Properties: MaxNumberData  MaxNumberBlocks  
+                  TC Type: Telecommand/DC_TestPUSTelecommand
+                     Config. Properties: 
+                  TC Type: Telecommand/DC_TestPUSTelecommand
+                     Config. Properties: 
+                  TC Type: Telecommand/DC_TestPUSTelecommand
+                     Config. Properties:      
+            Generating code for class CC_TelecommandFactory in file /Projects/ObsFramework/src/cpp/Telecommand/CC_TelecommandFactory.cpp
+            

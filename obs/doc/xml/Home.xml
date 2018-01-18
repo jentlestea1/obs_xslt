@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Chapter>
+    <Title> OBS Framework </Title>
+    <Author>
+        <Name> A. Pasetti </Name>
+        <Affiliation>
+            <a HREF="http://www.pnp-software.com" target="_parent">P&amp;P Software</a>
+        </Affiliation>
+        <EMail> pasetti@pnp-software.com </EMail>
+    </Author>
+    <LastModified> 2003-12-15 </LastModified>
+    <Introduction>
+        <p> This web site presents the OBS Framework. The OBS Framework is an object-oriented
+        software framework written in C++ to support the development of On-Board Software (OBS)
+        applications. The main items it provides are:</p><ul>
+            <li>A <a href="indexDesignPatterns.html" target="_parent">catalogue of design
+                patterns</a> offering optimized solutions to recurring design problems in the
+                on-board software field. Taken together, the design patterns define a configurable
+                architecture for on-board software applications.</li>
+            <li>A set of <a href="indexAbstractInterfaces.html" target="_parent">abstract
+                interfaces</a> that define the <i>adaptation points</i> where the configurable
+                architecture can be adapted to match the needs of specific on-board software applications.</li>
+            <li>A set of <a href="indexConcreteComponents.html" target="_parent">concrete
+                components</a> that support the implementation of the configurable architecture.</li>
+            <li>A set of <a href="indexGeneratorMeta-Components.html" target="_parent">generator
+                meta-components</a> that allow application-specific implementations of the framework
+                abstract interfaces to be automatically generated from a high-level specification.</li>
+            <li>A set of <a href="indexTransformerMeta-Components.html" target="_parent">transformer
+                meta-components</a> that allow the concrete components provided by the framework to
+                be automatically modified to endow them with application-specific properties.</li>
+            <li>A set of components that ensure that the OBS framework is <a
+                    href="indexPUSCompatibility.html"> compatible with the Packet Utilization Standard (PUS)</a>.</li>
+            <li>A <a href="indexQualificationApproach.html#TestSuite">test suite</a> that performs
+                unit-level tests on all the framework components and automatically generates a test report.</li>
+            <li>A <a href="InstantiatorGeneratorMeta-Components.html#MatlabBridge">Matlab bridge</a>
+                that interfaces the OBS Framework with code automatically generated from a Matlab
+                Simulink model.</li>
+            <li>A <a href="indexDomainDictionary.html" target="_parent">domain dictionary</a> that
+                defines a set of terms that facilitate the description of on-board software applications.</li>
+            <li>A <a href="indexQualificationApproach.html" target="_parent">qualification data
+                package</a> that supports the qualification of applications instantiated from the
+                OBS Framework.</li>
+        </ul> 
+        <p>The OBS Framework is packaged as a web site that is designed to allow its use by
+        people who were not involved in its development with only a minimum of training. The web
+        site will also provide information that is suitable for direct inclusion in the project
+        documentation for a software application that is built using the OBS Framework.
+        All the material available through this web site - including in particular all the
+            source code of the OBS Framework - is made available under the terms of the
+            <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public Licence</a>.</p>
+        <p>
+        <center>
+            <b>Please check the <a href="indexDisclaimer.html" target="_parent">disclaimer</a> 
+            before using this web site.</b>
+        </center>
+        </p>
+    </Introduction>
+</Chapter>

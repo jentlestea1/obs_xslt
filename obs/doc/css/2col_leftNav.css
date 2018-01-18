@@ -1,0 +1,67 @@
+/***********************************************/
+/* Layout Divs                                 */
+/***********************************************/
+
+#navbar{
+	float: left;
+	width: 20%;
+	margin: 0px;
+	padding: 0px;
+	background-color: #eeeeee;
+	border-right: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+	text-align: left;
+}
+
+#content{
+	float: left;
+            width: 75%;
+            margin-top: 1%;
+            margin-left: 2%;
+            margin-right: 0%;
+            margin-bottom: 2%;
+}
+
+
+/*********** #navbar link styles ***********/
+
+#navbar ul a:link, #navbar ul a:visited {display: block;}
+#navbar ul {list-style: none; margin: 0; padding: 0;}
+
+/* hack to fix IE/Win's broken rendering of block-level anchors in lists */
+#navbar li {border-bottom: 1px solid #EEE;}
+
+/* fix for browsers that don't need the hack */
+html>body #navbar li {border-bottom: none;}
+
+
+/*********** #sectionLinks styles ***********/
+
+#sectionLinks{
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+	border-bottom: 0px solid #cccccc;
+	font-size: 90%;
+}
+
+#sectionLinks a {
+            color: #006699;
+	text-decoration: none;
+	border: 1px solid #cccccc;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	display: block;
+}
+
+#sectionLinks a:hover{
+	background-color: #dddddd;
+}
+
+

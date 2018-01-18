@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<Chapter>
+    <Title> Concrete Components </Title>
+    <Author>
+        <Name> A. Pasetti </Name>
+        <Affiliation>
+            <a HREF="http://www.pnp-software.com">P&amp;P Software</a>
+        </Affiliation>
+        <EMail> pasetti@pnp-software.com </EMail>
+    </Author>
+    <LastModified> 2003-12-05 </LastModified>
+    <Introduction>
+        <p>Concrete components are one of the building blocks that are provided by the OBS
+            Framework. The term <i>concrete component</i> is used to designate an entity that
+            possesses the following properties:</p>
+        <ul>
+            <li>it can be compiled as a stand-alone unit</li>
+            <li>it exposes one or more interfaces</li>
+            <li>it provides an implementation for the interfaces it exposes</li>
+            <li>it is seen by its clients only through the interfaces it exposes</li>
+        </ul>
+        <p>The components provided by the OBS Framework are of two types: <i>core components</i> and
+                <i>default components</i>. The core components encapsulate invariant behaviour that
+            is not intended to be modified by applications in the framework domain. The default
+            components instead offer default implementations for some of the abstract interfaces in
+            the framework. They encapsulate behaviour that may be useful to many applications "as
+            is" but that applications may also want to tailor to their needs. At architectural
+            level, core components are mapped to classes that cannot be (or are not intended to be)
+            further extended. Default components are instead be mapped to extensible classes. In the
+            case of the OBS Framework where C++ is used as the implementation language, core
+            components are mapped to classes whose methods are non-virtual whereas default
+            components are mapped to classes with one or more virtual methods. Note that this
+            implies that, at architectural level, the same C++ class can be seen either as an
+            implementation of one of the framework abstract interfaces or as a default component.</p>
+        <p>Framework components often implement concepts defined in the <a
+                HREF="indexDomainDictionary.html" target="_parent">domain dictionary</a>.</p>
+    </Introduction>
+</Chapter>

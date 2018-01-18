@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:/D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="EventRepository">
+            <Feature nameOfFeature="EventRepository">
+                  <Description text="The application event repository"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type>
+                        <BuildingBlock>
+                              <Interface status="provided" type="Event/DC_EventRepository"/>
+                        </BuildingBlock>
+                  </Type>
+                  <Group nameOfGroup="Options">
+                        <Description text="The optional attributes of the punctual action"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <CallMacro nameOfCalledMacro="StandardEventRepository"/>
+                        <CallMacro nameOfCalledMacro="PUSEventRepository"/>
+                  </Group>
+            </Feature>
+      </Macro>
+      <!--                                                                                                                         -->
+      <Macro nameOfMacro="StandardEventRepository">
+            <Feature nameOfFeature="StandardEventRepository">
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type><BuildingBlock><Component status="provided" type="Event/DC_EventRepository"/></BuildingBlock></Type>
+                  <Group nameOfGroup="MandatoryAttributes">
+                        <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                        <Feature nameOfFeature="RepositorySize">
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type><Attribute><Property status="provided" type="int" name="RepositorySize"></Property></Attribute></Type>
+                        </Feature>
+                        <Feature nameOfFeature="ObsClock">
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type><Attribute><Property status="provided" type="component" name="ObsClock"></Property></Attribute></Type>
+                        </Feature>
+                  </Group>
+                  <Group nameOfGroup="OptionalAttributes">
+                        <GroupCardinality GroupCardMin="0" GroupCardMax="2"/>
+                        <Feature nameOfFeature="RepositoryInitialEnableStatus">
+                              <Description text="The repository has a non-default global initial enable status"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="string" name="Enabled">
+                                                <Enumeration>
+                                                      <Item value="ENABLED"/>
+                                                      <Item value="DISABLED"/>
+                                                </Enumeration>
+                                          </Property>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="SelectiveEnableStatus">
+                              <Description text="Selected eventId have a non-default initial enable status"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                              <Type><Composite/></Type>
+                              <Group nameOfGroup="EventEnableStatus">
+                                    <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                                    <Feature nameOfFeature="EventId">
+                                          <Description text="The symbolic identifier of the event identifier"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type><Attribute><Property status="provided" type="string"/></Attribute></Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="EventEnableStatus">
+                                          <Description text="The initial enable status of the event"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type><Attribute><Property status="provided" type="string"><Enumeration>
+                                                <Item value="ENABLED"/>
+                                                <Item value="DISABLED"/>
+                                          </Enumeration>
+                                          </Property></Attribute></Type>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                  </Group>
+            </Feature>
+      </Macro>                        
+      <!--                                                                                                                         -->
+      <Macro nameOfMacro="PUSEventRepository">
+            <Feature nameOfFeature="PUSEventRepository">
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type><BuildingBlock><Component status="provided" type="Event/DC_PUSEventRepository"/></BuildingBlock></Type>
+                  <Group nameOfGroup="MandatoryAttributes">
+                        <GroupCardinality GroupCardMin="3" GroupCardMax="3"/>
+                        <Feature nameOfFeature="RepositorySize">
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type><Attribute><Property status="provided" type="int" name="RepositorySize"></Property></Attribute></Type>
+                        </Feature>
+                        <Feature nameOfFeature="ObsClock">
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type><Attribute><Property status="provided" type="component" name="ObsClock"></Property></Attribute></Type>
+                        </Feature>
+                        <Feature nameOfFeature="RepositoryTelemetryManager">
+                              <Description text="The telemetry manager attached to the repository"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type><Attribute><Property status="provided" type="component" name="TelemetryManager"></Property></Attribute></Type>
+                        </Feature>
+                  </Group>
+                  <Group nameOfGroup="OptionalAttributes">
+                        <GroupCardinality GroupCardMin="0" GroupCardMax="2"/>
+                        <Feature nameOfFeature="RepositoryInitialEnableStatus">
+                              <Description text="The repository has a non-default global initial enable status"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="string" name="Enabled">
+                                                <Enumeration>
+                                                      <Item value="ENABLED"/>
+                                                      <Item value="DISABLED"/>
+                                                </Enumeration>
+                                          </Property>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="SelectiveEnableStatus">
+                              <Description text="Selected eventId have a non-default initial enable status"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                              <Type><Composite/></Type>
+                              <Group nameOfGroup="EventEnableStatus">
+                                    <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                                    <Feature nameOfFeature="EventId">
+                                          <Description text="The symbolic identifier of the event identifier"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type><Attribute><Property status="provided" type="string"/></Attribute></Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="EventEnableStatus">
+                                          <Description text="The initial enable status of the event"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type><Attribute><Property status="provided" type="string"><Enumeration>
+                                                <Item value="ENABLED"/>
+                                                <Item value="DISABLED"/>
+                                          </Enumeration>
+                                          </Property></Attribute></Type>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                  </Group>
+            </Feature>
+
+            
+            
+            <!--
+            <Extension macroName="StandardEventRepository">
+                  <AppendFeatureToGroup appendedGroupName="MandatoryAttributes">
+                        <ModifyGroupCardinality newMinCard="3" newMaxCard="3"/>
+                  </AppendFeatureToGroup>
+            </Extension>   -->
+      </Macro>
+</FrameworkFeatureModel>

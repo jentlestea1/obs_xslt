@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?><html><head><link rel="stylesheet" type="text/css" href="css/main.css"/><link rel="stylesheet" type="text/css" href="css/3col_leftNav.css"/></head><body><div id="header"><h1 id="siteName">OBS Framework </h1><div id="globalNav"><a href="Home.html">Home</a> | <a href="General.html">General</a> | <a href="Implementation.html">Implementation</a> | <a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a> | <a href="http://www.pnp-software.com/ObsFramework/ObsFramework_0_8_3.zip">Download</a> | <a href="indexDisclaimer.html">Disclaimer</a></div><h2 id="pageName">Implementation - Implementation Issues</h2></div><div id="navbar"><div id="sectionLinks"><ul><li><a href="indexDomainDictionary.html">Domain Dictionary</a></li><li><a href="indexDesignPatterns.html">Design Patterns</a></li><li><a href="indexAbstractInterfaces.html">Abstract Interfaces</a></li><li><a href="indexConcreteComponents.html">Concrete Components</a></li><li><a href="indexGeneratorMeta-Components.html">Generator Meta-Components</a></li><li><a href="indexTransformerMeta-Components.html">Transformer Meta-Components</a></li><li><a href="indexRealTimeIssues.html">Real Time Issues</a></li><li><a href="indexImplementationIssues.html">Implementation Issues</a></li><li><a href="indexInstallationIssues.html">Installation Issues</a></li><li><a href="indexSourceCode.html">Source Code</a></li><li><a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a></li></ul></div></div><div id="subnavbar"><li><a href="#MemoryOccupation">Memory Occupation</a></li><li><a href="#ByteOrdering">Byte Ordering</a></li><li><a href="#AlignmentConstraints">Alignment Constraints</a></li></div><div id="content">
+    
+    
+    
+    <Introduction>
+        <p class="links">This page discusses some issues that are related to the implementation of the OBS
+            Framework <a href="doxygen/html/index.html">source code</a> on an embedded target.</p>
+    </Introduction>
+    <h3><a name="MemoryOccupation">Memory Occupation</a></h3>
+        <p class="links">Since a framework is not an application, it is not possible to give a single memory
+            occupation figure for the OBS Framework. Most applications instantiated from the
+            framework will only use a subset of the classes it offers and hence the impact of the
+            framework usage on the memory footprint of the final application may vary. It is however
+            possible to gain a qualitative idea of the likely impact by measuring the memory
+            occupation of the <a href="indexQualificationApproach.html#TestSuite">
+                <code>RegressionTest</code>
+            </a> application that runs all the test cases provided by the framework in sequence. The
+            results of the measurements are given by the table below.</p>
+        <p class="links">The measurements were performed on the SIS ERC32 simulator (version 3.0.5). The
+            application was compiled and linked using the ERC32 GNU cross-compiler system (version
+            2.0.7). The figures refer to the version of the framework and its regression test as
+            they existed in the ObsFramework CVS repository on April 28-th 2004 at 2 pm. It should
+            also be noted that measurements on an earlier version of the framework had been
+            performed on an ERC32 board by Estec TOS-ESC personnel which demonstrated the
+            compatibility of the framework software with a real ERC32 hardware environment.</p>
+        <p class="links">At the time of the measurement, the framework consisted of 239 C++ classes (including the
+            test case classes). Note also that that <code>RegressionTest</code> application performs
+            I/O operations (to write the results of the tests to the standard output) and therefore
+            its memory requirements include the applicable library routines. These would obviously
+            not be needed in a real embedded applications. The framework classes make extensive use
+            of assertions to check pre- and post-conditions and invariants. The assertions were
+            however disabled for the measurements (as they would be in a real operational situation).</p>
+        <p class="links">The table shows the size of the <code>.text</code>, <code>.data</code>, and
+            <code>.bss</code> sections as reported by the SIS simulator when the application is
+            loaded. Five sets of measurements were made, corresponding to five different sets of
+            compiler options as indicated in the first column. As expected, the most important gain
+            arises from the use of the <code>-fno-rtti</code> and <code>-fno-exceptions</code>
+            options. The <code>-fno-rtti</code> option removes all code and data related to the use
+            of the C++ run-time type information mechanism. The <code>-fno-exceptions</code> removes
+            all code and data related to the use of the C++ exception mechanism (recall that the
+            framework classes use a very restricted <a href="LanguageSubset.html">subset of the C++
+            language</a> that does not use either the RTTI or the exception mechanisms). Taken
+            together, these two options basically eliminate the overhead associated to the use of
+            the C++ language.</p>
+        <p class="links">The compiler options obviously only have an impact on the framework code proper. They do
+            not affect the size of the run-time system or of any libraries that are linked into the
+            executable. Further gains could be achieved by rebuilding the gcc environment with the
+            same options used for the framework. The results of the tests done on the
+            <code>hello</code> and <code>empty</code> reference programs (see below in this page)
+            however indicate that any such overheads are very small.</p>
+        <table WIDTH="90%" BORDER="1" ALIGN="center" CELLPADDING="5%">
+            <tr>
+                <th>
+                    <b>Compiler Options</b>
+                </th>
+                <th>
+                    <b>
+                        <code>.text</code>
+                    </b>
+                </th>
+                <th>
+                    <b>
+                        <code>.data</code>
+                    </b>
+                </th>
+                <th>
+                    <b>
+                        <code>.bss</code>
+                    </b>
+                </th>
+            </tr>
+            <tr>
+                <td>-O</td>
+                <td align="center">317264</td>
+                <td align="center">65856</td>
+                <td align="center">5716</td>
+            </tr>
+            <tr>
+                <td>-O2</td>
+                <td align="center">311056</td>
+                <td align="center">65776</td>
+                <td align="center">5716</td>
+            </tr>
+            <tr>
+                <td>-O3</td>
+                <td align="center">311360</td>
+                <td align="center">65776</td>
+                <td align="center">5716</td>
+            </tr>
+            <tr>
+                <td>-Os</td>
+                <td align="center">313680</td>
+                <td align="center">70432</td>
+                <td align="center">5716</td>
+            </tr>
+            <tr>
+                <td>-O -fno-rtti -fno-exceptions</td>
+                <td align="center">268976</td>
+                <td align="center">18840</td>
+                <td align="center">1956</td>
+            </tr>
+        </table>
+        <p class="links">A perspective on the above figures can be gained by comparing them with the corresponding
+            figures for some simple reference applications (the source code for the reference
+            applications can be found in directory <code>scripts/TestMains</code> of the OBS
+            Framework delivery). The next table gives figures for the following reference applications:</p>
+        <p class="links"><ul>
+            <li>
+                <code>empty.c</code>: an application consisting of an empty <code>main</code> (the
+                main returns immediately without doing anything).</li>
+            <li>
+                <code>empty.cpp</code>: same as <code>main.c</code> but with the <code>cpp</code>
+                extension to force the use of the C++ compiler.</li>
+            <li>
+                <code>hello.c</code>: the classical 'Hello World' program consisting of a
+                <code>main</code> that writes "Hello World" and returns immediately.</li>
+            <li>
+                <code>hello.cpp</code>: same as <code>hello.c</code> but with the <code>cpp</code>
+                extension to force the use of the C++ compiler.</li>
+        </ul></p>
+        <p class="links">The table shows the memory occupation figures for two typical compiler configuration
+            options. For each application, two figures are given corresponding to
+            the<code>.text</code> and the <code>.data</code>. The figures for the <code>.bss</code>
+            section are not given as they are negligible in all cases.</p>
+        <table WIDTH="90%" BORDER="1" ALIGN="center" CELLPADDING="5%">
+            <tr>
+                <th>
+                    <b>Compiler Options</b>
+                </th>
+                <th>
+                    <b>
+                        <code>empty.c</code>
+                    </b>
+                </th>
+                <th>
+                    <b>
+                        <code>empty.cpp</code>
+                    </b>
+                </th>
+                <th>
+                    <b>
+                        <code>hello.c</code>
+                    </b>
+                </th>
+                <th>
+                    <b>
+                        <code>hello.cpp</code>
+                    </b>
+                </th>
+            </tr>
+            <tr>
+                <td>-O</td>
+                <td align="center">6384 / 16</td>
+                <td align="center">6384 / 72</td>
+                <td align="center">26496 / 1200</td>
+                <td align="center">26496 / 1256</td>
+            </tr>
+            <tr>
+                <td>-O -fno-rtti -fno-exceptions</td>
+                <td align="center">6384 / 16</td>
+                <td align="center">6384 / 16</td>
+                <td align="center">26496 / 1200</td>
+                <td align="center">26496 / 1200</td>
+            </tr>
+        </table>
+        <p class="links">The following remarks apply to the above results:</p>
+        <p class="links"><ul>
+            <li>There is no difference in the memory occupation of the <code>empty</code> and
+                <code>hello</code> programs between the case when they are compiled with the C and
+                with the C++ compiler. This suggests that the C++ compiler does not add unnecessary
+                overheads with respect to the C compiler when it is compiling code that, though
+                embedded within a <code>cpp</code> file, is really plain C code.</li>
+            <li>For the <code>empty</code> and <code>hello</code> programs, there is no difference
+                between the results with and without RTTI and exception handling because these two
+                programs are pure C programs which do not use classes (exception handling and RTTI
+                are class-related mechanisms).</li>
+        </ul></p>
+        <p class="links">The next set of figures explore the impact of the class construct on the memory
+            occupation. The following reference applications are considered:</p>
+        <p class="links"><ul>
+            <li>
+                <code>hello.c</code>: the classical 'Hello World' program consisting of a
+                <code>main</code> that writes "Hello World" and returns immediately.</li>
+            <li>
+                <code>helloBaseClass.cpp</code>: a class-based version of the classical 'Hello
+                World' program. This program consists of a single class with a dummy constructor
+                that returns without taking any action and a single <code>printHelloWorld</code>
+                method that writes "Hello World" and returns immediately. The main program
+                instantiates the class on the stack and calls its method <code>printHelloWorld</code>.</li>
+            <li>
+                <code>helloDerivedClass.cpp</code>: a class-based version of the classical 'Hello
+                World' program that includes a base and a derived classe with one pure virtual
+                methods. This program consists of two classes: a base class and a derived class that
+                extends the base class. The base class defines a dummy constructor that returns
+                without taking any action and a pure virtual method <code>printHelloWorld</code>.
+                The derived class defines a dummy constructor that returns without doing anything
+                and it provides an implementation for the method <code>printHelloWorld</code> that
+                writes "Hello World" and returns immediately. The main program instantiates the
+                derived class on the stack and calls its method <code>printHelloWorld</code>.</li>
+        </ul></p>
+        <p class="links">The table shows the memory occupation figures for the two compiler configuration options
+            as used above.</p>
+        <table WIDTH="90%" BORDER="1" ALIGN="center" CELLPADDING="5%">
+            <tr>
+                <th>
+                    <b>Compiler Options</b>
+                </th>
+                <th>
+                    <b>
+                        <code>hello.c</code>
+                    </b>
+                </th>
+                <th>
+                    <b>
+                        <code>helloBaseClass.cpp</code>
+                    </b>
+                </th>
+                <th>
+                    <b>
+                        <code>helloDerivedClass.cpp</code>
+                    </b>
+                </th>
+            </tr>
+            <tr>
+                <td>-O</td>
+                <td align="center">26496 / 1200</td>
+                <td align="center">26544 / 1328</td>
+                <td align="center">41360 / 4688</td>
+            </tr>
+            <tr>
+                <td>-O -fno-rtti -fno-exceptions</td>
+                <td align="center">26496 / 1200</td>
+                <td align="center">26544 / 1200</td>
+                <td align="center">26592 / 1232</td>
+            </tr>
+        </table>
+        <p class="links">The following remarks apply to the above results:</p>
+        <p class="links"><ul>
+            <li>There is basically no difference in the memory occupation of the <code>hello</code>
+                and <code>helloBaseClass</code> programs. Their functionality is the same but the
+                former is implemented as a pure C program whereas the latter is implemented as a C++
+                program that uses the class construct with only non-virtual methods. The essential
+                equality in memory footprint for the two applications indicates that the use of the
+                class construct - as long as only non-virtual methods are used - does not introduce
+                any memory overheads. The small difference in memory occupation (less than 100
+                bytes) is probably due to the code that implements the class constructors.</li>
+            <li>There is a very large difference in memory occupation between the
+                <code>helloBaseClass</code> and the <code>helloDerivedClass</code> programs when
+                only the <code>-O</code> compiler option is used. The second program differs from
+                the first one because it uses class extension and pure virtual methods. The extra
+                code probably originates in the RTTI and exception handling mechanisms. This is
+                suggested by the fact that when the "<code>-O -fno-rtti -fno-exceptions</code>"
+                compiler options are used (which remove all RTTI and exception handling), then the
+                memory overhead with respect to the simple <code>hello</code> program disappears
+                almost completely. This again indicates that the use of these compiler options
+                removes all overheads due to the C++ language.</li>
+        </ul></p>
+        <p class="links">Finally, memory occupation was measured for a <i>sample application</i>. Except for its
+            main program (which can be found in directory<code>src/cpp/SampleApplication</code>, the
+            sample application was entirely generated automatically by running the generator
+            meta-components (first the <a href="indexGeneratorMeta-Components.html#Instantiators">instantiators</a> and then the <a href="indexGeneratorMeta-Components.html#Configurers">configurers</a>) on the <a href="indexModellingApproach.html#ApplicationModel">sample application model</a>. The
+            resulting application is far from representative of a real on-board application but,
+            unlike the programs considered above, it only contains framework classes (i.e. no I/O
+            libraries). The total number of concrete classes that are explicitly defined in the
+            sample application model is 101. The real number of concrete classes used by the sample
+            application may be slightly higher due to components that are "pulled in" without being
+            explicitly defined in the application model (such as the dynamic factory components).
+            The total number of classes included in the executable is of course still higher because
+            it includes all the non-concrete classes that are used by the instantiated classes. The
+            memory usage figures for this sample application are as follows:</p>
+        <table WIDTH="90%" BORDER="1" ALIGN="center" CELLPADDING="5%">
+            <tr>
+                <th>
+                    <b>Compiler Options</b>
+                </th>
+                <th>
+                    <b>
+                        <code>SampleApplication.cpp</code>
+                    </b>
+                </th>
+            </tr>
+            <tr>
+                <td>-O</td>
+                <td align="center">143904 / 51112</td>
+            </tr>
+            <tr>
+                <td>-O -fno-rtti -fno-exceptions</td>
+                <td align="center">116736 / 15808</td>
+            </tr>
+        </table>
+    
+    <h3><a name="ByteOrdering">Byte Ordering</a></h3>
+        <p class="links">Most OBS Framework classes are independent of the byte ordering policy adopted by the
+            processor on which their code runs. The regression tests provided by the <a href="indexQualificationApproach.html#TestSuite">framework test suite</a>, in particular,
+            run without changes on both an Intel PC (little-endian) and on the SPARC-based ERC32 (big-endian).</p>
+        <p class="links">Byte ordering problems are relevant only for the classes that process the telemetry and
+            telecommand images (e.g. <cls>DC_BasicPUSTmStream</cls> or
+            <cls>DC_BasicPUSTcLoader</cls>). The assumptions made by the providers of the
+            telecommand data or by the users of the telemetry data may not be consistent with the
+            byte ordering policy enforced by the processor upon which the framework code runs. The
+            transfer of data between the internal data structures used by the framework classes and
+            the buffers holding the telecommand and telemetry images is always made using the
+            <code>memcpy</code> standard C routine. Byte ordering inconsistencies could therefore be
+            resolved, without touching the framework source code, by providing a new implementation
+            for this routine.</p>
+    
+    <h3><a name="AlignmentConstraints">Alignment Constraints</a></h3>
+        <p class="links">Some compiler and some processors enforce particular alignment constraints. The OBS
+            Framework code has been written to be independent of these constraints. The regression
+            tests provided by the <a href="indexQualificationApproach.html#TestSuite">framework test
+            suite</a>, in particular, run without changes both on an Intel PC with the Microsoft
+            VisualStudio compiler an Intel PC - to which no alignment constraints apply - and on the
+            SPARC-based ERC32 with the gcc compiler - for which alignment constraints apply.</p>
+    
+</div><div id="siteInfo"><a href="mailto:pasetti@control.ee.ethz.ch, cechti@control.ee.ethz.ch">Contact Us</a> | The OBS Framework Project</div></body></html>

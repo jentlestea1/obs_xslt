@@ -1,0 +1,227 @@
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="ManoeuvreManagement">
+            <Feature nameOfFeature="ManoeuvreManagement">
+                  <Description text="The application can execute manoeuvres"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type>
+                        <Composite/>
+                  </Type>
+                  <Group nameOfGroup="ManoeuvreManager">
+                        <Description text="A manoeuvre manager is responsible for controlling execution of the manoeuvres"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="ManoeuvreManager">
+                              <Description text="A manoeuvre manager is responsible for controlling execution of the manoeuvres"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="provided" type="Manoeuvre/CC_ManoeuvreManager"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="Attributes">
+                                    <Description text="The attributes of the manoeuvre manager"/>
+                                    <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                    <Feature nameOfFeature="PendingListSize">
+                                          <Description text="The maximum number of manoeuvres that can be loaded in the manoeuvre manager"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property status="provided" type="int"><Range minValue="1" maxValue="+"/></Property>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                  </Group>
+                  <Group nameOfGroup="Manoeuvres">
+                        <Description text="The manoeuvres that can be loaded in the manoeuvre manager"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="Manoeuvre">
+                              <Description text="A manoeuvre that can be loaded in the manoeuvre manager"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Interface status="provided" type="Manoeuvre/Manoeuvre"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="OptionalAttributes">
+                                    <Description text="The optional attributes of the manoeuvre"/>
+                                    <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                    <Feature nameOfFeature="Enabled">
+                                          <Description text="The initial enabled status of the manoeuvre has a non-default value"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property status="provided" type="string">
+                                                            <Enumeration>
+                                                                  <Item value="ENABLED"/>
+                                                                  <Item value="DISABLED"/>
+                                                            </Enumeration>
+                                                      </Property>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                              </Group>
+                              <Group nameOfGroup="ManoeuvreOptions">
+                                    <Description text="The manoeuvre options provided by the framework"/>
+                                    <GroupCardinality GroupCardMin="1" GroupCardMax="4"/>
+                                    <Feature nameOfFeature="DummyManoeuvre">
+                                          <Description text="A dummy manoeuvre with no functionality"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Component status="provided" type="Manoeuvre/DC_DummyManoeuvre"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="DummyConfigurableManoeuvre">
+                                          <Description text="A dummy manoeuvre with configurable checks and actions"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Component status="provided" type="Manoeuvre/DC_DummyConfigurableManoeuvre"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="OptionalAttributes">
+                                                <Description text="The optional attributes of the manoeuvre"/>
+                                                <GroupCardinality GroupCardMin="0" GroupCardMax="4"/>
+                                                <Feature nameOfFeature="StartCheckStatus">
+                                                      <Description text="The initial start check status of the manoeuvre has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string">
+                                                                        <Enumeration>
+                                                                              <Item value="ENABLED"/>
+                                                                              <Item value="DISABLED"/>
+                                                                        </Enumeration>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="ContinuationCheckStatus">
+                                                      <Description text="The initial continuation check status of the manoeuvre has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string">
+                                                                        <Enumeration>
+                                                                              <Item value="ENABLED"/>
+                                                                              <Item value="DISABLED"/>
+                                                                        </Enumeration>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="ContinuationCheckCode">
+                                                      <Description text="The initial continuation check code of the manoeuvre has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int">
+                                                                        <Range minValue="0" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="TerminationCheckStatus">
+                                                      <Description text="The initial termination check status of the manoeuvre has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string">
+                                                                        <Enumeration>
+                                                                              <Item value="ENABLED"/>
+                                                                              <Item value="DISABLED"/>
+                                                                        </Enumeration>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                                    <Feature nameOfFeature="TestPUSConfigurableManoeuvre">
+                                          <Description text="A test PUS manoeuvre with configurable checks and actions and dummy functionality"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Component status="provided" type="Manoeuvre/DC_TestPUSConfigurableManoeuvre"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="OptionalAttributes">
+                                                <Description text="The optional attributes of the manoeuvre"/>
+                                                <GroupCardinality GroupCardMin="0" GroupCardMax="4"/>
+                                                <Feature nameOfFeature="StartCheckStatus">
+                                                      <Description text="The initial start check status of the manoeuvre has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string">
+                                                                        <Enumeration>
+                                                                              <Item value="ENABLED"/>
+                                                                              <Item value="DISABLED"/>
+                                                                        </Enumeration>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="ContinuationCheckStatus">
+                                                      <Description text="The initial continuation check status of the manoeuvre has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string">
+                                                                        <Enumeration>
+                                                                              <Item value="ENABLED"/>
+                                                                              <Item value="DISABLED"/>
+                                                                        </Enumeration>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="ContinuationCheckCode">
+                                                      <Description text="The initial continuation check code of the manoeuvre has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int">
+                                                                        <Range minValue="0" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="TerminationCheckStatus">
+                                                      <Description text="The initial termination check status of the manoeuvre has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string">
+                                                                        <Enumeration>
+                                                                              <Item value="ENABLED"/>
+                                                                              <Item value="DISABLED"/>
+                                                                        </Enumeration>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                                    <Feature nameOfFeature="CustomManoeuvre">
+                                          <Description text="An application-specific manoeuvre"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Component status="missing"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="DefaultAttributes">
+                                                <Description text="The default attributes of the custom manoeuvre"/>
+                                                <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                                <CallMacro nameOfCalledMacro="DefaultAttributes"/>
+                                          </Group>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>

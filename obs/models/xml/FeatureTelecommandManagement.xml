@@ -1,0 +1,134 @@
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:/D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="TelecommandManagement">
+            <Feature nameOfFeature="TelecommandManagement">
+                  <Description text="The application can execute telecommands"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type>
+                        <Composite/>
+                  </Type>
+                  <Group nameOfGroup="TelecommandManager">
+                        <Description text="A telecommand manager is responsible for controlling execution of the telecommand"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="TelecommandManager">
+                              <Description text="A telecommand manager is responsible for controlling execution of the telecommands"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="provided" type="Telecommand/CC_TelecommandManager"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="Attributes">
+                                    <Description text="The attributes of the telecommand manager"/>
+                                    <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                                    <Feature nameOfFeature="PendingTelecommandListSize">
+                                          <Description text="The maximum number of telecommands that can be loaded in the manoeuvre manager"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property status="provided" type="int"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="TelecommandLoader">
+                                          <Description text="The telecommand loader"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Interface status="provided" type="Telecommand/TelecommandLoader"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="TelecommandLoaderOptions">
+                                                <Description text="The telecommand loader options offered by the framework"/>
+                                                <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                                <Feature nameOfFeature="BasicPUSTcLoader">
+                                                      <Description text="A basic PUS telecommand loader"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <BuildingBlock>
+                                                                  <Component status="provided" type="Telecommand/DC_BasicPUSTcLoader"/>
+                                                            </BuildingBlock>
+                                                      </Type>
+                                                      <Group nameOfGroup="Attributes">
+                                                            <GroupCardinality GroupCardMin="3" GroupCardMax="3"/>
+                                                            <Feature nameOfFeature="MaxNumberOfTc">
+                                                                  <Description text="Maximum number of TCs that can be loaded in the TC loader"/>
+                                                                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                                  <Type>
+                                                                        <Attribute>
+                                                                              <Property status="provided" type="int" name="MaxNumberOfTc">
+                                                                                    <Range minValue="1" maxValue="+"/>
+                                                                              </Property>
+                                                                        </Attribute>
+                                                                  </Type>
+                                                            </Feature>
+                                                            <Feature nameOfFeature="MaxTcLength">
+                                                                  <Description text="Maximum length of a TC to be loaded in the TC loader"/>
+                                                                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                                  <Type>
+                                                                        <Attribute>
+                                                                              <Property status="provided" type="int" name="MaxTcLength">
+                                                                                    <Range minValue="1" maxValue="+"/>
+                                                                              </Property>
+                                                                        </Attribute>
+                                                                  </Type>
+                                                            </Feature>
+                                                            <Feature nameOfFeature="TcLoadAreaStart">
+                                                                  <Description text="Start address of the TC load area in the TC loader"/>
+                                                                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                                  <Type>
+                                                                        <Attribute>
+                                                                              <Property status="provided" type="string" name="TcLoadAreaStart"/>
+                                                                        </Attribute>
+                                                                  </Type>
+                                                            </Feature>
+                                                      </Group>
+                                                </Feature>
+                                                <Feature nameOfFeature="DummyTcLoader">
+                                                      <Description text="A dummy telecommand loader that loads three sample telecommands in sequence"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <BuildingBlock>
+                                                                  <Component status="provided" type="Telecommand/DC_DummyTelecommandLoader"/>
+                                                            </BuildingBlock>
+                                                      </Type>
+                                                      <Group nameOfGroup="Attributes">
+                                                            <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                                            <Feature nameOfFeature="SampleTelecommand">
+                                                                  <Description text="The name of a sample telecommand managed by the dummy TC loader"/>
+                                                                  <FeatureCardinality FeatureCardMin="3" FeatureCardMax="3"/>
+                                                                  <Type>
+                                                                        <Attribute>
+                                                                              <IndexedProperty status="provided" type="component" name="SampleTelecommand"/>
+                                                                        </Attribute>
+                                                                  </Type>
+                                                            </Feature>
+                                                      </Group>
+                                                </Feature>
+                                                <Feature nameOfFeature="Custom">
+                                                      <Description text="An application-specific telecommand loader"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <BuildingBlock>
+                                                                  <Component status="missing"/>
+                                                            </BuildingBlock>
+                                                      </Type>
+                                                      <Group nameOfGroup="DefaultAttributes">
+                                                            <Description text="The default attributes of the custom telecommand loader"/>
+                                                            <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                                            <CallMacro nameOfCalledMacro="DefaultAttributes"/>
+                                                      </Group>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                  </Group>
+                  <Group nameOfGroup="Telecommands">
+                        <Description text="The telecommands foreseen by the application"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="2"/>
+                        <CallMacro nameOfCalledMacro="StandardTelecommands"/>
+                        <CallMacro nameOfCalledMacro="PUSTelecommands"></CallMacro>
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:/D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="PunctualActions">
+            <Feature nameOfFeature="PunctualAction">
+                  <Description text="A generic punctual action"/>
+                  <FeatureComment text="More specific types of punctual actions (e.g. control actions) are defined in other parts of the feature model"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                  <Type>
+                        <BuildingBlock>
+                              <Interface status="provided" type="Base/PunctualAction"/>
+                        </BuildingBlock>
+                  </Type>
+                  <Group nameOfGroup="OptionalAttributes">
+                        <Description text="The optional attributes of the punctual action"/>
+                        <GroupCardinality GroupCardMin="0" GroupCardMax="2"/>
+                        <Feature nameOfFeature="PunctualActionInitialEnableStatus">
+                              <Description text="The punctual action has a non-default initial enable status"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="string" name="Enabled">
+                                                <Enumeration>
+                                                      <Item value="ENABLED"/>
+                                                      <Item value="DISABLED"/>
+                                                </Enumeration>
+                                          </Property>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="ConditionalPunctualAction">
+                              <Description text="The punctual action has an execution condition attached to it"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Operation status="missing"/>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                  </Group>
+                  <Group nameOfGroup="Options">
+                        <Description text="The generic punctual actions foreseen by the framework"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="CustomPunctualAction">
+                              <Description text="An application-specific punctual action"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="missing"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="DefaultAttributes">
+                                    <Description text="The default attributes of a custom punctual action"/>
+                                    <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                    <CallMacro nameOfCalledMacro="DefaultAttributes"/>
+                              </Group>
+                        </Feature>
+                        <Feature nameOfFeature="DataPoolMonitor">
+                              <Description text="A punctual action that performs profile monitoring on all data pool items"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="provided" type="Data/DC_DataPoolMonitor"/>
+                                    </BuildingBlock>
+                              </Type>
+                        </Feature>
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>

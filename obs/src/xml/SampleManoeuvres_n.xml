@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ObsApplication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="file:/D:/Projects/ObsFramework/models/xsd/ObsFrameworkAppModel.xsd">
+ <!--================================================================
+This is a descriptor for the manoeuvres in use in an
+application. The manoeuvres listed here are those that are
+required to run the regression test of the OBS Framework.
+
+NB: Elements with the same class name must be adjacent!
+================================================================-->
+<ManoeuvreManagement>
+      <ManoeuvreManager kind="component" type="Manoeuvre/CC_ManoeuvreManager" status="provided" name="manMan">
+            <PendingListSize kind="property" type="int" value="10" status="provided" minValue="1" maxValue="+" name="PendingManoeuvreListSize"></PendingListSize>
+      </ManoeuvreManager>
+      <Manoeuvre kind="interface" type="Manoeuvre/Manoeuvre" status="provided">
+            <DummyManoeuvre kind="component" type="Manoeuvre/DC_DummyManoeuvre" status="provided" name="man_1">
+                  <Description>Sample dummy manoeuvre.</Description>
+            </DummyManoeuvre>
+      </Manoeuvre>
+      <Manoeuvre kind="interface" type="Manoeuvre/Manoeuvre" status="provided">
+            <DummyConfigurableManoeuvre kind="component" type="Manoeuvre/DC_DummyConfigurableManoeuvre" status="provided" name="man_2">
+                  <Description>Sample configurable dummy manoeuvre.</Description>
+            </DummyConfigurableManoeuvre>            
+      </Manoeuvre>
+      <Manoeuvre kind="interface" type="Manoeuvre/Manoeuvre" status="provided">
+            <TestPUSConfigurableManoeuvre kind="component" type="Manoeuvre/DC_TestPUSConfigurableManoeuvre" status="provided" name="man_3">
+                  <Description>Sample configurable dummy manoeuvre.</Description>
+            </TestPUSConfigurableManoeuvre>            
+      </Manoeuvre>
+      
+</ManoeuvreManagement>
+
+</ObsApplication>

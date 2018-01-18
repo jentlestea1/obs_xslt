@@ -1,0 +1,21 @@
+
+      
+       WARNING: this XSL program hardcodes the directory where output files are written in variable $TargetFile
+            
+           
+            Generating code for class DC_SampleControlBlock_1 in files /Projects/ObsFramework/src/cpp/Data/DC_SampleControlBlock_1.h/.cpp
+
+            
+                 
+            Generating code for class DC_SampleControlBlock_2 in files /Projects/ObsFramework/src/cpp/Data/DC_SampleControlBlock_2.h/.cpp
+
+            
+                 
+            Generating code for class DC_SampleControlBlock_3 in files /Projects/ObsFramework/src/cpp/Data/DC_SampleControlBlock_3.h/.cpp
+
+            
+                 
+            Generating code for class DC_SampleControlBlock_4 in files /Projects/ObsFramework/src/cpp/Data/DC_SampleControlBlock_4.h/.cpp
+
+            
+            

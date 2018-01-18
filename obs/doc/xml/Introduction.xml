@@ -1,0 +1,64 @@
+<Chapter>
+    <Title> Introduction </Title>
+    <Author>
+        <Name> A. Pasetti </Name>
+        <Affiliation>
+            <a HREF="http://www.pnp-software.com">P&amp;P Software</a>
+        </Affiliation>
+        <EMail>pasetti@pnp-software.com</EMail>
+    </Author>
+    <LastModified> 2003-12-05 </LastModified>
+    <Introduction>
+        <p>The concept of software framework is best understood in the context of <i>software
+                product families</i>. A software product family is a set of applications that can be
+            constructed from a set of shared software assets. The shared assets can be seen as
+            generic <i>building blocks</i> from which applications in the family can be built. The
+            product family concept is very general and does not imply any assumptions about the
+            nature of the building blocks or about their mutual relationships. A software framework
+            is a particular way of organizing the shared assets of a software product family: it
+            defines the type of building blocks that can be provided by the product family and it
+            defines an architecture within which these building blocks are embedded.</p>
+        <p>The OBS Framework offers building blocks of five different types:</p>
+        <ul>
+            <li>
+                <a HREF="indexDesignPatterns.html" target="_parent">Design Patterns</a> that
+                describe high-level design solutions to recurring design problems in the framework
+                domain. </li>
+            <li>
+                <a HREF="indexAbstractInterfaces.html" target="_parent">Abstract Interfaces</a> that
+                define abstract services that have to be provided by the framework</li>
+            <li>
+                <a HREF="indexConcreteComponents.html" target="_parent">Concrete Components</a> that
+                provide default implementations for some of the services defined by the framework interfaces</li>
+            <li>
+                <a HREF="indexGeneratorMeta-Components.html" target="_parent">Generator
+                Meta-Components</a> that encapsulate programs to generate application-specific
+                implementations for some of the framework interfaces</li>
+            <li>
+                <a HREF="indexTransformerMeta-Components.html" target="_parent">Transformer
+                Meta-Components</a> that encapsulate programs to transform some of the framework
+                components to endow them with application-specific properties</li>
+        </ul>
+        <p>The design patterns are the vehicle through which the architecture pre-defined by the
+            framework is captured. The architecture of a target application to be instantiated from
+            the framework is derived by instantiating one or more framework design patterns. The
+            abstract interfaces and the concrete components support the instantiation of the design
+            pattern and will normally directly appear in the design of a target application. The
+            meta-components do not directly enter the final application but are instead used to
+            generate components that do or to modify existing components so as to make them
+            compatible with the requirements of a particular target application.</p>
+        <p>The design patterns together with their supporting abstract interfaces and components
+            lead to the definition of a set of abstractions and domain-invariant concepts that
+            represent a vocabulary for describing applications in the domain. These domain
+            abstractions and domain-invariant concepts are listed, together with their definition,
+            in a<i>
+                <a HREF="indexDomainDictionary.html" target="_parent">domain dictionary</a>
+            </i>.<p/> The framework is formally described by a <i>
+                <a HREF="indexModellingApproach.html" target="_parent">feature model</a>
+            </i> that captures the commonalities and the variability of applications within the
+            framework domain, by a <i>
+                <a HREF="indexModellingApproach.html#ClassModel">UML class model</a>
+            </i> that describes its architecture, and by a <a
+                href="doxygen/html/index.html">detailed description</a> of the framework class.</p>
+    </Introduction>
+</Chapter>

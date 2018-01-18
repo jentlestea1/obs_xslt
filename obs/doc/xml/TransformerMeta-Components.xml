@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Chapter>
+    <Title> Transformer Meta-Components </Title>
+    <Author>
+        <Name> A. Pasetti </Name>
+        <Affiliation>
+            <a HREF="http://www.pnp-software.com">P&amp;P Software</a>
+        </Affiliation>
+        <EMail> pasetti@pnp-software.com </EMail>
+    </Author>
+    <LastModified> 2003-12-05 </LastModified>
+    <Introduction>
+        <p>Transformer meta-components are one of the building blocks that are provided by the OBS
+            Framework. They are introduced to automate the tailoring process whereby the assets
+            provided by the framework are modified to match the needs of a target application (see
+            the <a href="indexDevelopmentProcess.html" target="_parent">framework development
+            process</a>). More specifically, transformer meta-components can automatically modify
+            the source code of an existing component to endow it with some new application-specific
+            property or behaviour.</p>
+        <p>In the OBS Framework, tranformer meta-components are implemented as <i>aspect
+            programs</i> (see <a href="AspectOrientedProgramming.html">here</a> for an introduction
+            to aspect oriented programming) using the <a
+                href="http://www.pnp-software.com/XWeaver" target="_parent">XWeaver</a> aspect
+            language and aspect weaver. XWeaver is an extensible, customizable and minimally
+            intrusive aspect weaver that is specifically aimed at qualifiable applications. The mode
+            of operation of the generator meta-components is illustrated in the
+            figure:<Figure>TransformerMetaComponents_1</Figure> The code modification process is
+            driven by a set of specifications that are expressed in an XML document. These
+            specifications describe a modification to be performed upon the code of some existing
+            building blocks. The XWeaver aspect weaver takes these specifications and the existing
+            building blocks as inputs and generates the modified building blocks as output.</p>
+        <p>The development of the transformer meta-components for the OBS Framework is currently under
+            way and will be described in a future release of the framework. </p>
+    </Introduction>
+</Chapter>

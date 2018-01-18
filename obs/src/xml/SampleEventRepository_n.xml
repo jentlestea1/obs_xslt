@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ObsApplication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="file:/D:/Projects/ObsFramework/models/xsd/ObsFrameworkAppModel.xsd">
+      <!--
+      Model for the sample event repository to be used for the sample application of the
+      OBS Framework.
+-->
+      <EventRepository kind="interface" status="provided" type="Event/DC_EventRepository">
+            <PUSEventRepository kind="component" type="Event/DC_PUSEventRepository" status="provided" name="evtRep">
+                  <Description>PUS event repository for the sample application.</Description>
+                  <RepositorySize_1 kind="property" name="RepositorySize" type="int" value="10" status="provided"/>
+                  <ObsClock_4 kind="property" name="ObsClock" type="component" value="obsClk" status="provided"/>
+                  <RepositoryTelemetryManager kind="property" name="TelemetryManager" type="component" value="tmMan" status="provided"/>
+                  <RepositoryInitialEnableStatus_1 kind="property" name="Enabled" type="string" value="ENABLED" status="provided"/>
+                  
+            </PUSEventRepository>
+
+      </EventRepository>
+</ObsApplication>

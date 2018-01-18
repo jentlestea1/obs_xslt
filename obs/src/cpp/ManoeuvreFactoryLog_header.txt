@@ -1,0 +1,12 @@
+
+
+            The following manoeuvre types with their configuration parameters are processed:
+            
+                  TC Type: Manoeuvre/DC_DummyConfigurableManoeuvre
+                     Config. Properties: 
+                  TC Type: Manoeuvre/DC_DummyManoeuvre
+                     Config. Properties: 
+                  TC Type: Manoeuvre/DC_TestPUSConfigurableManoeuvre
+                     Config. Properties:      
+            Generating code for class CC_ManoeuvreFactory in file /Projects/ObsFramework/src/cpp/Manoeuvre/CC_ManoeuvreFactory.h
+            

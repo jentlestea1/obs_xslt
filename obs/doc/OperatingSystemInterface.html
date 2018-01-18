@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?><html><head><link rel="stylesheet" type="text/css" href="css/main.css"/><link rel="stylesheet" type="text/css" href="css/3col_leftNav.css"/></head><body><div id="header"><h1 id="siteName">OBS Framework </h1><div id="globalNav"><a href="Home.html">Home</a> | <a href="General.html">General</a> | <a href="Implementation.html">Implementation</a> | <a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a> | <a href="http://www.pnp-software.com/ObsFramework/ObsFramework_0_8_3.zip">Download</a> | <a href="indexDisclaimer.html">Disclaimer</a></div><h2 id="pageName">Implementation - Design Patterns</h2></div><div id="navbar"><div id="sectionLinks"><ul><li><a href="indexDomainDictionary.html">Domain Dictionary</a></li><li><a href="indexDesignPatterns.html">Design Patterns</a></li><li><a href="indexAbstractInterfaces.html">Abstract Interfaces</a></li><li><a href="indexConcreteComponents.html">Concrete Components</a></li><li><a href="indexGeneratorMeta-Components.html">Generator Meta-Components</a></li><li><a href="indexTransformerMeta-Components.html">Transformer Meta-Components</a></li><li><a href="indexRealTimeIssues.html">Real Time Issues</a></li><li><a href="indexImplementationIssues.html">Implementation Issues</a></li><li><a href="indexInstallationIssues.html">Installation Issues</a></li><li><a href="indexSourceCode.html">Source Code</a></li><li><a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a></li></ul></div></div><div id="subnavbar"><li><a href="DesignPatternTable.html">- CATALOGUE -</a></li><li><a href="Connection.html">Connection</a></li><li><a href="ControlBlock.html">Control Block</a></li><li><a href="Event.html">Event</a></li><li><a href="FDIRCheck.html">FDIR Check</a></li><li><a href="FSM.html">FSM</a></li><li><a href="Manager.html">Manager</a></li><li><a href="ManoeuvreManagement.html">Manoeuvre Management</a></li><li><a href="ModeManagement.html">Mode Management</a></li><li><a href="OperatingSystemInterface.html">Operating System Interface</a></li><li><a href="ParameterDatabase.html">Parameter Database</a></li><li><a href="PunctualAction.html">Punctual Action</a></li><li><a href="RecoveryAction.html">Recovery Action</a></li><li><a href="ReconfigurationManagement.html">Reconfiguration Management</a></li><li><a href="SharedData.html">Shared Data</a></li><li><a href="TelecommandManagement.html">Telecommand Management</a></li><li><a href="Telemeterable.html">Telemeterable</a></li><li><a href="TelemetryManagement.html">Telemetry Management</a></li><li><a href="TelemetryStream.html">Telemetry Stream</a></li><li><a href="TelemetryItem.html">Telemetry Item</a></li><li><a href="Trace.html">Trace</a></li><li><a href="VariableMonitoring.html">Variable Monitoring</a></li></div><div id="content"><p><H4>Operating System Interface
+        Design Pattern
+         </H4></p><p><H3><b>Intent</b></H3></p><p>
+Decouple the OBS application from the operating system upon which it is running.
+</p><p><H3><b>Based On</b></H3></p><p>
+This is pattern is based on the proxy pattern of gamma <i>et al</i>.
+</p><p><H3><b>Motivation</b></H3></p><p>
+Most OBS applications run on top of an operating system. The operating system
+may be either a commercial operating system or a basic software layer provided
+by the manufacturer of the OBS computer. Given the potentially idiosyncratic
+character of the interface to the operating system, there is an interest in
+insulating the OBS application from the operating system.
+<p/>
+This design pattern achieves this objective by using the proxy pattern.
+This means that it calls for access to the operating system services to
+be performed by specialized components characterized by application-independent
+abstract interfaces. The OBS application the can see the operating system
+only through these abstract interfaces and is thus protected by changes in
+the underlying operating system.
+</p><H3><b>Dictionary Entries</b></H3><p>The following abstractions or domain-wide concepts are defined to support the
+        implementation of this design pattern:</p><ul><li><i><a HREF="domainDictionaryOperatingSystemInterface.html">Operating System Interface</a></i></li></ul><p><H3><b>Structure</b></H3></p><p>
+The basic idea behind this design pattern is to introduce an abstract
+coupling between the client - the OBS component that needs to access
+an operating system function - and the operating system. This is
+done by introducing an abstract interface that defines in an
+application-independent manner the access to the operating system.
+The interface is then implemented by concrete components that
+encapsulate the access to a particular operating system. A change
+in the operating system should only require a change in the
+concrete component but should have no impact on the rest of
+the OBS application.
+<p/>
+An example of a typical operating system service that is required
+by most OBS applications is access to timing information. In the spirit
+of this design pattern, an <code>ObsClock</code> interface could be introduced
+that defines general timing services. This interface could then be
+implemented by various components that construct the timing information
+by using the services offered by a specific operating system.
+</p><p><center><img src="../figures/gif/OperatingSystemInterfaceDP.gif"/></center></p><H3><b>Participants</b></H3><ul><li><CODE>Client</CODE>:  <Role>The OBS component that needs to access an operating system function.</Role></li><li><CODE>OSInterface</CODE>:  <Role>The abstract interface that declares application-indpendend operations to
+access the operating system service.
+</Role></li><li><CODE>ConcreteOSInterface</CODE>:  <Role>Component implementing (or derived from) <CODE>OSInterface</CODE> that
+implements an interface to a specific operating system.
+</Role></li></ul><p><H3><b>Collaborations</b></H3></p><p>
+The typical operational scenario for this design pattern is:
+<ul>
+<li>A client that needs to access an OS function sends a request to a <code>ConcreteOSInterface</code>
+which it sees only as an instance of the generic interface <CODE>OSInterface</CODE></li>
+<li>The <code>ConcreteOSInterface</code> executes the client's request by
+accessing the underlying operating system.</li>
+</ul>
+</p><H3><b>Consequences</b></H3><ul><li>
+Different applications within the domain can be built upon different
+operating systems with minimal impact upon their implementation.
+</li></ul><p><H3><b>Applicability</b></H3></p><p>
+This design pattern is useful when:
+<ul>
+<li>Components in an application need to access the operating system.</li>
+<li>Several different operating systems are used within the target domain.</li>
+</ul>
+</p><H3><b>Implementation Issues</b></H3><p>
+The interface to the operating system can be very complex encompassing several
+categories of unrelated services. For this reason, it will normally be
+advisable to introduce several <code>OSInterface</code> interfaces to
+cover various subsets of OS services. As an example, consider the access
+to timing information. Timing information is usually provided by a small
+number of OS services. An abstract interface could be defined to characterize
+these components. Applications would create components that implement
+this interface and that act as "on-board clock components". Another
+important example is the access to external units (sensors, actuators,
+etc). This is usually performed through operating system calls that manage
+the low-level interface to the unit. An abstract interface can then be
+defined to characterize a generic unit and individual units are then
+represented within an application by proxy components that implement
+that interface.
+</p><p>
+This design pattern only addresses the case of the OBS component accessing
+the OS services. However, sometimes it is the OBS that must call application
+services. This is typically the case of the scheduler that calls operations
+exposed by the application. The objective of decoupling the application from
+the operating system can then be achieved by "reversing" the approach
+proposed in the <i>structure</i> section of this design pattern. This
+is illustrated in the class diagram below. The <code>ConcreteOSInterface</code>
+is now a concrete component that is adapted to a specific OS and that
+intercepts calls to the OBS, transforms them as required, and
+passes them on to the OBS through the application-independent
+abstract interface <code>OSInterface</code>
+<p/>
+<H1 ALIGN="center"><img src="../figures/gif/OperatingSystemInterfaceDP_2.gif"/></H1>
+
+</p><p>
+The <code>ConcreteOSInterface</code> components can normally be implemented as singletons.
+</p><H3><b>OBS Framework Mapping</b></H3><p>The implementation of this design pattern in the OBS Framework is supported by
+        the following classes:</p><ul><li><i>OsInterface</i>abstract interface --&gt; <CODE><a href="doxygen/html/classObsClock.html">ObsClock</a></CODE></li></ul><a NAME="#SampleCode"><p><H3><b>Sample Code</b></H3></p></a><p>
+As a simple example, consider the case of providing access to timing information.
+Timing information normally originates in the operating system. Access to it
+from the OBS application could be done through an abstract interface of the
+following kind:
+<PRE>	interface ObsClock {
+            unsigned int getTime();
+            void synchronize();
+        }</PRE>
+The <code>ObsClock</code> interface in this example plays the role of the <code>OSInterface</code>.
+The definition of the interface assumes that time is represented as an unsigned integer.
+The implement of method <code>getTime</code> is responsible for translating
+the timing information provided by the underlying OS to the timing format
+required by the application. Operation <code>synhronize</code> is useful if
+several timing sources are present and if the OBS time needs to be periodically
+synchronized to some other timing source.
+</p><p><H3><b>Remarks</b></H3></p><p>
+None
+</p><p><H3><b>Author</b></H3></p><p>
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+</p><p><H3><b>Last Modified</b></H3></p><p>
+2003-05-17
+</p></div><div id="siteInfo"><a href="mailto:pasetti@control.ee.ethz.ch, cechti@control.ee.ethz.ch">Contact Us</a> | The OBS Framework Project</div></body></html>

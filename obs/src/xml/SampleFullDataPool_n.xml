@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ObsApplication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="file:/D:/Projects/ObsFramework/models/xsd/ObsFrameworkAppModel.xsd">
+    <!--
+        This is a descriptor for an indexed data pool class. This descriptor 
+        describes a sample data pool with full functionalities.
+-->
+    <DataPool kind="interface" type="Data/DataPool" status="provided">
+        <IndexedDataPool kind="component" type="Data/DC_SampleFullDataPool" status="generable" name="fullDataPool">
+             <Description>Sample data pool with full functionality.</Description>
+            <DataPoolItem_1>
+                <Name_5 kind="property" type="string" value="RW_SPD_1" status="provided">
+                    <Description>The speed of reaction wheel 1.</Description>
+                </Name_5>
+                <Id_2 kind="property" type="int" value="1" minValue="0" maxValue="+" status="provided"/>
+                <Type_3 kind="property" type="string" value="TD_Integer" status="provided"/>
+                <MonitoringProfile_1 kind="interface" status="provided" type="FDIR/MonitoringProfile">
+                    <StuckData kind="component" status="provided" type="FDIR/DC_StuckDataProfile" name="sdMonProf_1">
+                        <StuckThreshold kind="property" minValue="2" maxValue="+" status="provided"
+                            type="int" name="StuckThreshold" value="3"/>
+                    </StuckData>
+                </MonitoringProfile_1>
+                <MonitoringProfile_1 kind="interface" status="provided" type="FDIR/MonitoringProfile">
+                    <OutOfRange kind="component" status="provided" type="FDIR/DC_OutOfRangeProfile" name="orMonProf_1">
+                        <LowerBound_0 kind="property" status="provided" type="real"
+                            name="LowerBound" value="-2400"/>
+                        <UpperBound_0 kind="property" status="provided" type="real"
+                            name="UpperBound" value="2400"/>
+                    </OutOfRange>
+                </MonitoringProfile_1>
+                <MonitoringProfile_1 kind="interface" type="FDIR/MonitoringProfile" status="provided">
+                      <Custom_4 kind="component" type="FDIR/DC_SampleMonitoringProfile" status="missing" name="sMonProf_1">
+                            <Description>Sample application-specific monitoring profile.</Description>
+                      </Custom_4>
+                </MonitoringProfile_1>
+                <RecoveryAction_1 kind="interface" type="FDIR/RecoveryAction" status="provided">
+                    <Null kind="component" type="FDIR/DC_NullRecoveryAction" status="provided" name="nRecAct_1"/>
+                </RecoveryAction_1>
+            </DataPoolItem_1>
+            <DataPoolItem_1>
+                <Name_5 kind="property" type="string" value="RW_TOR_1" status="provided">
+                    <Description>The torque applied to reaction wheel 1.</Description>
+                </Name_5>
+                <Id_2 kind="property" type="int" value="2" minValue="0" maxValue="+" status="provided"/>
+                <Type_3 kind="property" type="string" value="TD_Float" status="provided"/>
+                <MonitoringProfile_1 kind="interface" status="provided" type="FDIR/MonitoringProfile">
+                    <OutOfRange kind="component" status="provided" type="FDIR/DC_OutOfRangeProfile" name="orMonProf_2">
+                        <LowerBound_0 kind="property" status="provided" type="real"
+                            name="LowerBound" value="-0.2"/>
+                        <UpperBound_0 kind="property" status="provided" type="real"
+                            name="UpperBound" value="0.2"/>
+                    </OutOfRange>
+                </MonitoringProfile_1>
+                <RecoveryAction_1 kind="interface" type="FDIR/RecoveryAction" status="provided">
+                    <Custom_7 kind="component" type="FDIR/DC_SampleRecoveryAction" status="missing" name="sRecAct_2">
+                        <Description>Sample application-specific recovery action.</Description>
+                    </Custom_7>
+                </RecoveryAction_1>
+                <RecoveryAction_1 kind="interface" type="FDIR/RecoveryAction" status="provided">
+                    <Null kind="component" type="FDIR/DC_NullRecoveryAction" status="provided" name="nRecAct_2"/>
+                </RecoveryAction_1>
+            </DataPoolItem_1>
+            <!--
+            
+            -->
+            <DataPoolItem_1>
+                <Name_5 kind="property" type="string" value="RW_SPD_2" status="provided">
+                    <Description>The speed of reaction wheel 2.</Description>
+                </Name_5>
+                <Id_2 kind="property" type="int" value="4" minValue="0" maxValue="+" status="provided"/>
+                <Type_3 kind="property" type="string" value="TD_Integer" status="provided"/>
+                <MonitoringProfile_1 kind="interface" status="provided" type="FDIR/MonitoringProfile">
+                    <StuckData kind="component" status="provided" type="FDIR/DC_StuckDataProfile" name="sdMonProf_4">
+                        <StuckThreshold kind="property" minValue="2" maxValue="+" status="provided"
+                            type="int" name="StuckThreshold" value="3"/>
+                    </StuckData>
+                </MonitoringProfile_1>
+                <MonitoringProfile_1 kind="interface" status="provided" type="FDIR/MonitoringProfile">
+                    <OutOfRange kind="component" status="provided" type="FDIR/DC_OutOfRangeProfile" name="orMonProf_4">
+                        <LowerBound_0 kind="property" status="provided" type="real"
+                            name="LowerBound" value="-2400"/>
+                        <UpperBound_0 kind="property" status="provided" type="real"
+                            name="UpperBound" value="2400"/>
+                    </OutOfRange>
+                </MonitoringProfile_1>
+                <RecoveryAction_1 kind="interface" type="FDIR/RecoveryAction" status="provided">
+                    <Null kind="component" type="FDIR/DC_NullRecoveryAction" status="provided" name="nRecAct_4"/>
+                </RecoveryAction_1>
+            </DataPoolItem_1>
+            <DataPoolItem_1>
+                <Name_5 kind="property" type="string" value="RW_TOR_2" status="provided">
+                    <Description>The torque applied to reaction wheel 2.</Description>
+                </Name_5>
+                <Id_2 kind="property" type="int" value="5" minValue="0" maxValue="+" status="provided"/>
+                <Type_3 kind="property" type="string" value="TD_Float" status="provided"/>
+                <MonitoringProfile_1 kind="interface" status="provided" type="FDIR/MonitoringProfile">
+                    <OutOfRange kind="component" status="provided" type="FDIR/DC_OutOfRangeProfile" name="orMonProf_5">
+                        <LowerBound_0 kind="property" status="provided" type="real"
+                            name="LowerBound" value="-0.2"/>
+                        <UpperBound_0 kind="property" status="provided" type="real"
+                            name="UpperBound" value="0.2"/>
+                    </OutOfRange>
+                </MonitoringProfile_1>
+                <RecoveryAction_1 kind="interface" type="FDIR/RecoveryAction" status="provided">
+                    <Null kind="component" type="FDIR/DC_NullRecoveryAction" status="provided" name="nRecAct_5"/>
+                </RecoveryAction_1>
+            </DataPoolItem_1>
+            <!--
+            
+            -->
+            <DataPoolItem_1>
+                <Name_5 kind="property" type="string" value="RW_SPD_3" status="provided">
+                    <Description>The speed of reaction wheel 3.</Description>
+                </Name_5>
+                <Id_2 kind="property" type="int" value="7" minValue="0" maxValue="+" status="provided"/>
+                <Type_3 kind="property" type="string" value="TD_Integer" status="provided"/>
+                <MonitoringProfile_1 kind="interface" status="provided" type="FDIR/MonitoringProfile">
+                    <StuckData kind="component" status="provided" type="FDIR/DC_StuckDataProfile" name="sdMonProf_7">
+                        <StuckThreshold kind="property" minValue="2" maxValue="+" status="provided"
+                            type="int" name="StuckThreshold" value="3"/>
+                    </StuckData>
+                </MonitoringProfile_1>
+                <MonitoringProfile_1 kind="interface" status="provided" type="FDIR/MonitoringProfile">
+                    <OutOfRange kind="component" status="provided" type="FDIR/DC_OutOfRangeProfile" name="orMonProf_7">
+                        <LowerBound_0 kind="property" status="provided" type="real"
+                            name="LowerBound" value="-2400"/>
+                        <UpperBound_0 kind="property" status="provided" type="real"
+                            name="UpperBound" value="2400"/>
+                    </OutOfRange>
+                </MonitoringProfile_1>
+                <RecoveryAction_1 kind="interface" type="FDIR/RecoveryAction" status="provided">
+                    <Null kind="component" type="FDIR/DC_NullRecoveryAction" status="provided" name="nRecAct_7"/>
+                </RecoveryAction_1>
+            </DataPoolItem_1>
+            <DataPoolItem_1>
+                <Name_5 kind="property" type="string" value="RW_TOR_3" status="provided">
+                    <Description>The torque applied to reaction wheel 3.</Description>
+                </Name_5>
+                <Id_2 kind="property" type="int" value="8" minValue="0" maxValue="+" status="provided"/>
+                <Type_3 kind="property" type="string" value="TD_Float" status="provided"/>
+                <MonitoringProfile_1 kind="interface" status="provided" type="FDIR/MonitoringProfile">
+                    <OutOfRange kind="component" status="provided" type="FDIR/DC_OutOfRangeProfile" name="orMonProf_8">
+                        <LowerBound_0 kind="property" status="provided" type="real"
+                            name="LowerBound" value="-0.2"/>
+                        <UpperBound_0 kind="property" status="provided" type="real"
+                            name="UpperBound" value="0.2"/>
+                    </OutOfRange>
+                </MonitoringProfile_1>
+                <RecoveryAction_1 kind="interface" type="FDIR/RecoveryAction" status="provided">
+                    <Null kind="component" type="FDIR/DC_NullRecoveryAction" status="provided" name="nRecAct_8"/>
+                </RecoveryAction_1>
+            </DataPoolItem_1>
+            <!--
+            
+            -->
+            <DataPoolItem_1>
+                <Name_5 kind="property" type="string" value="RW_SPD_4" status="provided">
+                    <Description>The speed of reaction wheel 4.</Description>
+                </Name_5>
+                <Id_2 kind="property" type="int" value="10" minValue="0" maxValue="+" status="provided"/>
+                <Type_3 kind="property" type="string" value="TD_Integer" status="provided"/>
+                <MonitoringProfile_1 kind="interface" status="provided" type="FDIR/MonitoringProfile">
+                    <StuckData kind="component" status="provided" type="FDIR/DC_StuckDataProfile" name="sdMonProf_10">
+                        <StuckThreshold kind="property" minValue="2" maxValue="+" status="provided"
+                            type="int" name="StuckThreshold" value="3"/>
+                    </StuckData>
+                </MonitoringProfile_1>
+                <MonitoringProfile_1 kind="interface" status="provided" type="FDIR/MonitoringProfile">
+                    <OutOfRange kind="component" status="provided" type="FDIR/DC_OutOfRangeProfile" name="orMonProf_10">
+                        <LowerBound_0 kind="property" status="provided" type="real"
+                            name="LowerBound" value="-2400"/>
+                        <UpperBound_0 kind="property" status="provided" type="real"
+                            name="UpperBound" value="2400"/>
+                    </OutOfRange>
+                </MonitoringProfile_1>
+                <RecoveryAction_1 kind="interface" type="FDIR/RecoveryAction" status="provided">
+                    <Null kind="component" type="FDIR/DC_NullRecoveryAction" status="provided" name="nRecAct_10"/>
+                </RecoveryAction_1>
+            </DataPoolItem_1>
+            <DataPoolItem_1>
+                <Name_5 kind="property" type="string" value="RW_TOR_4" status="provided">
+                    <Description>The torque applied to reaction wheel 4.</Description>
+                </Name_5>
+                <Id_2 kind="property" type="int" value="11" minValue="0" maxValue="+" status="provided"/>
+                <Type_3 kind="property" type="string" value="TD_Float" status="provided"/>
+                <MonitoringProfile_1 kind="interface" status="provided" type="FDIR/MonitoringProfile">
+                    <OutOfRange kind="component" status="provided" type="FDIR/DC_OutOfRangeProfile" name="orMonProf_11">
+                        <LowerBound_0 kind="property" status="provided" type="real"
+                            name="LowerBound" value="-0.2"/>
+                        <UpperBound_0 kind="property" status="provided" type="real"
+                            name="UpperBound" value="0.2"/>
+                    </OutOfRange>
+                </MonitoringProfile_1>
+                <RecoveryAction_1 kind="interface" type="FDIR/RecoveryAction" status="provided">
+                    <Null kind="component" type="FDIR/DC_NullRecoveryAction" status="provided" name="nRecAct_11"/>
+                </RecoveryAction_1>
+            </DataPoolItem_1>
+            <!--
+            
+            -->
+            <TimeStamp kind="functionality" status="generable">
+                  <Description>The OBS Clock to be used to time-stamp the data pool values.</Description>
+                  <IndexedDataPoolObsClock kind="property" name="ObsClock" type="component" value="obsClk" status="provided"/>   
+            </TimeStamp>
+            <ValidityStatus kind="functionality" status="generable"/>
+            <RobustnessLevel_1>
+                <High kind="functionality" status="generable"/>
+            </RobustnessLevel_1>
+            <BackUpValue kind="functionality" status="generable"/>
+            <DataItem_0 kind="functionality" status="generable"/>
+            <MonitoringProfile_0 kind="functionality" status="generable"/>
+            <RecoveryAction_0 kind="functionality" status="generable"/>
+            <TypeChecking kind="functionality" status="generable"/>
+        </IndexedDataPool>
+    </DataPool>
+</ObsApplication>

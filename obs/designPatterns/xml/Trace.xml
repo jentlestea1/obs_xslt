@@ -1,0 +1,243 @@
+<DesignPattern>
+
+
+
+<Name>Trace</Name>
+
+
+
+<BasedOn>
+
+This is pattern is based on the principle of <i>abstract coupling</i>.
+
+</BasedOn>
+
+
+
+<Intent>
+
+Decouple the signaling of trace events from the implementation of the interface to the trace test set.
+
+</Intent>
+
+
+
+<Motivation>
+
+<p>
+
+Some OBS applications are instrumented to generate so-called trace signals that are sent to an external test set-up where an operator can use them to monitor the execution of a test.
+
+The interface to the test set-up varies from application to application but the type of traces that can be generated is constant in a certain domain.
+
+</p><p>
+
+This design pattern introduces an application-independent interface for the signaling of trace events that decouples the signaling of trace events on the part of the instrumented code from the component that is responsible for forwarding the trace signal to the test set up. </p>
+
+</Motivation>
+
+
+
+<DictionaryEntry>Tracer</DictionaryEntry>
+
+
+
+
+
+<Structure>
+
+<p>
+
+This design pattern represents the tracer abstraction as a component that implements the abstract interface <CODE>Tracer</CODE>. This interface defines two types of operations. It firstly defines operations to send the trace signals and it secondly defines housekeeping operations to reset the tracer component, to enable and disable tracing, etc.
+
+</p><p>
+
+The trace design pattern introduces an abstract coupling between the client - the entity sending the trace signal - and the tracer component and this allows it to achieve its objective of making the code that sends the trace signals from the code that implements the interface to the external set up.
+
+</p>
+
+</Structure>
+
+
+
+<StructureFigure>TraceDP</StructureFigure>
+
+
+
+<Participant>
+
+<Name>Client</Name>
+
+<Role>The component that sends the trace signals.</Role>
+
+</Participant>
+
+
+
+<Participant>
+
+<Name>Tracer</Name>
+
+<Role>The abstract interface or base abstract class that defines the basic operations that can be performed on a generic tracer.
+
+</Role>
+
+</Participant>
+
+
+
+<Participant>
+
+<Name>ConcreteTracer</Name>
+
+<Role>Component implementing (or derived from) <CODE>Tracer</CODE> that represents a specific and concrete interface to a tracing set-up.
+
+</Role>
+
+</Participant>
+
+
+
+<Collaborations>
+
+The typical operational scenario for this design pattern is:
+
+<ul>
+
+<li>A component that wishes to send a trace signal calls the appropriate trace method on the tracer component which it sees as an instance of interface <CODE>Tracer</CODE></li>
+
+<li>An initialization component resets or initializes the tracer component by using its housekeeping operations</li>
+
+<li>An operator disables or enables tracing either by calling the disable and enable method (perhaps from a test harness built into the OBS) or by overwriting the memory locations that represent the enable/disable status inside the concrete tracer component.</li>
+
+</ul>
+
+</Collaborations>
+
+
+
+<Consequence>
+
+Clients that wish to send trace signals are decoupled from the implementation of the interface to the trace test set-up. They only see the tracer as a plug-in component of abstract type tracer.
+
+</Consequence>
+
+
+
+
+
+<Applicability>
+
+This design pattern is useful when:
+
+<ul>
+
+<li>components in an application need to send trace signals and the interface to the trace test set-up can vary across applications.
+
+</li>
+
+</ul>
+
+</Applicability>
+
+
+
+<ImplementationIssue>
+
+The main implementation issues arises in connection with the requirement that there should be the possibility of enabling and disabling specific traces. By itself, this requirement would dictate that each trace be encapsulated in a dedicated object with its own disable/disable method. This approach however is inappropriate because the toggling of the disabled and enabled status is normally done not by code but by an operator that directly patches the OBS. Having a large set of small objects each with its own enable/disable flag would make this kind of manual management difficult. The proposed solution has a single tracer component that should be implemented in a manner to facilitate individual toggling of enable/disable status. In practice, this might mean that the enable/disable flags are stored as an array of boolean or even that they are stored in the individual bits of a single long integer variable.
+
+</ImplementationIssue>
+
+
+
+<ImplementationIssue>
+
+Conceptually, <CODE>Tracer</CODE> is an abstract interface but instantiation of the pattern will often implement it as a base abstract class that provides concrete implementations for its housekeeping operations and in particular for the management of the enable/disable status. This allows some invariant code to be reused across applications.
+
+</ImplementationIssue>
+
+
+
+
+
+<ImplementationIssue>
+
+
+
+In a typical implementation, trace signals should be generated whenever event reports (see the <a href="Event.html">event design pattern</a>). In such a case, the tracer component is best implemented as a 
+
+plug-in component of the event repository component. The firing of tracing signals can then be done by the event repository itself.
+
+</ImplementationIssue>
+
+
+
+<ImplementationIssue>
+
+The tracer component can often be implemented as a singleton.
+
+</ImplementationIssue>
+
+
+
+
+
+<FrameworkMapping>
+
+  <Name>Tracer</Name>
+
+  <Type>abstract interface</Type>
+
+  <FrameworkClass>Tracer</FrameworkClass>
+
+</FrameworkMapping>
+
+
+
+
+
+
+
+<SampleCode>
+
+<p>
+
+As a simple example, consider the case of a module that wishes to send a trace signal. This could be done as follows:
+<PRE>	
+    Tracer* tracer;
+	. . .
+    if (conditions to send trace signal are satisfied)
+        tracer.sendTRaceSignal(TRACE_ID);</PRE>
+
+</p>
+
+</SampleCode>
+
+
+
+<Remarks>
+
+None
+
+</Remarks>
+
+
+
+<LastModified>
+
+2003-04-17
+
+</LastModified>
+
+
+
+<Author>
+
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+
+</Author>
+
+
+
+</DesignPattern>
+

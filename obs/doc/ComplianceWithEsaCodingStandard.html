@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="utf-8"?><html><head><link rel="stylesheet" type="text/css" href="css/main.css"/><link rel="stylesheet" type="text/css" href="css/2col_leftNav.css"/></head><body><div id="header"><h1 id="siteName">OBS Framework</h1><div id="globalNav"><a href="Home.html">Home</a> | <a href="General.html">General</a> | <a href="Implementation.html">Implementation</a> | <a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a> | <a href="http://www.pnp-software.com/ObsFramework/ObsFramework_0_8_3.zip">Download</a> | <a href="indexDisclaimer.html">Disclaimer</a></div><h2 id="pageName">Implementation - Compliance with ESA C/C++ Coding Standard</h2></div><div id="navbar"><div id="sectionLinks"><ul><li><a href="indexDomainDictionary.html">Domain Dictionary</a></li><li><a href="indexDesignPatterns.html">Design Patterns</a></li><li><a href="indexAbstractInterfaces.html">Abstract Interfaces</a></li><li><a href="indexConcreteComponents.html">Concrete Components</a></li><li><a href="indexGeneratorMeta-Components.html">Generator Meta-Components</a></li><li><a href="indexTransformerMeta-Components.html">Transformer Meta-Components</a></li><li><a href="indexRealTimeIssues.html">Real Time Issues</a></li><li><a href="indexImplementationIssues.html">Implementation Issues</a></li><li><a href="indexInstallationIssues.html">Installation Issues</a></li><li><a href="indexSourceCode.html">Source Code</a></li><li><a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a></li></ul></div></div><div id="content">
+    
+    
+    
+    <Introduction>
+        <p class="links">The table below documents the compliance or otherwise with the rules defined in issue 1
+            of the "C and C++ Coding Standard" prepared by the ESA Board for Software
+            Standardisation and Control (BSSC). The first column reports the number of the rule as
+            it is given in the ESA document. The second column states whether the rule is adopted in
+            the OBS frameworks. In case of rejection or partial acceptance, an explanation is provided.</p>
+    </Introduction>
+    <h3><a name=""/></h3>
+        <table WIDTH="90%" BORDER="1" ALIGN="center" CELLPADDING="5%">
+            <tr>
+                <th>
+                    <b>N.</b>
+                </th>
+                <th>
+                    <b>
+                        <code>Adoption in the OBS Frameworks</code>
+                    </b>
+                </th>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>Adopted in Full. Deviation from rules are documented in this table or directly
+                    in the source code. </td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Not applied to the current version of the framework. This rule should be applied
+                    by end-users who intend to use the framework in their projects.</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Adopted in Full. Software is developed in development environments that provide
+                    automatic makefile facilities</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Not applied to the current version of the framework. See also rule 11. </td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>Not Applicable. No debugging code is present in OBS Framework code.</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>Not Applicable. No debugging code is present in OBS Framework code.</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>Not applied to the present version of the framework: no special tools were used
+                    to check compliance with coding rules.</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>Not Applicable. Only C++ code is used. </td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td>Adopted with a line length of TBC characters. </td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td>Rejected. Including one-line blocks in braces makes code less readable. </td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td>Adopted in full. Bracing style is automatically applied by MS Visual Studio
+                    editor. This rule is however regarded as not very important because this and
+                    other advanced development environment automatically highlight matching braces.</td>
+            </tr>
+            <tr>
+                <td>21</td>
+                <td>Adopted in full. Indentation style is automatically applied by MS Visual Studio
+                    editor. </td>
+            </tr>
+            <tr>
+                <td>22</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>23</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>24</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>25</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>26</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>27</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>28</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>29</td>
+                <td>Adopted in Full. Additionally, PR5.1 is introduced to particularize this rule. </td>
+            </tr>
+            <tr>
+                <td>30</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>31</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>32</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>33</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>35</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>36</td>
+                <td>Rejected. Rule would make changes to the code or to the library/module structure
+                    very difficult.</td>
+            </tr>
+            <tr>
+                <td>37</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>38</td>
+                <td>Adopted in Full. Project-specific naming conventions are defined <a href="ProjectSpecificNamingConventions.html">here</a>. </td>
+            </tr>
+            <tr>
+                <td>39</td>
+                <td>Rejected. Rule would make name excessively long. </td>
+            </tr>
+            <tr>
+                <td>40</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>41</td>
+                <td>Rejected. Function names are treated like variable names. This is in accordance
+                    with standard contemporary practice.</td>
+            </tr>
+            <tr>
+                <td>42</td>
+                <td>Adopted in Part. Prefix or suffixes are not always used. See the <a href="ProjectSpecificNamingConventions.html">project specific naming
+                    conventions</a>. </td>
+            </tr>
+            <tr>
+                <td>43</td>
+                <td>Adopted in Full. More specific naming patterns are used in this project than are
+                    specified by these rules. See the <a href="ProjectSpecificNamingConventions.html">project specific naming
+                    conventions</a> for details. </td>
+            </tr>
+            <tr>
+                <td>44</td>
+                <td>Adopted in Part. See the <a href="ProjectSpecificNamingConventions.html">project
+                        specific naming conventions</a> for details on how class names are to be
+                    constructed. </td>
+            </tr>
+            <tr>
+                <td>45</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>46</td>
+                <td>Adopted in Part. Explanatory comments are not always provided as this can be
+                    confusing and is unnecessary for simple variables. </td>
+            </tr>
+            <tr>
+                <td>47</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>48</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>49</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>50</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>51</td>
+                <td>Rejected. This rule is regarded as unnecessary because only small number of
+                    closely related declarations ever appear close to each other. </td>
+            </tr>
+            <tr>
+                <td>52</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>53</td>
+                <td>Not Applicable. All code is in C++.</td>
+            </tr>
+            <tr>
+                <td>54</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>55</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>56</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>57</td>
+                <td>This Rule is not Understood. </td>
+            </tr>
+            <tr>
+                <td>58</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>59</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>60</td>
+                <td>Adopted in Full. This rule is also applied to class methods.</td>
+            </tr>
+            <tr>
+                <td>61</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>62</td>
+                <td>Not Applicable. All code is in C++.</td>
+            </tr>
+            <tr>
+                <td>63</td>
+                <td>Adopted in Full.</td>
+            </tr>
+            <tr>
+                <td>64</td>
+                <td>Adopted in Full.</td>
+            </tr>
+            <tr>
+                <td>65</td>
+                <td>Rejected. JavaDoc-style of function and method definition is used.</td>
+            </tr>
+            <tr>
+                <td>66</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>67</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>68</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>69</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>70</td>
+                <td>Rejected. This rule is unnecessary in view of project-specific rule PR2.2 and PR2.3.</td>
+            </tr>
+            <tr>
+                <td>71</td>
+                <td>Not Applicable. See rule 70. </td>
+            </tr>
+            <tr>
+                <td>72</td>
+                <td>Rejected. This rule is unnecessary in view of project-specific rule PR2.7 and
+                    PR2.8. </td>
+            </tr>
+            <tr>
+                <td>73</td>
+                <td>Adopted in Full. See also Rule 65.</td>
+            </tr>
+            <tr>
+                <td>74</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>75</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>76</td>
+                <td>Rejected. This rule is unnecessary in view of project-specific rule PR2.5. </td>
+            </tr>
+            <tr>
+                <td>77</td>
+                <td>Not Applicable. See rule 76. </td>
+            </tr>
+            <tr>
+                <td>78</td>
+                <td>Not Applicable. See rule 70. </td>
+            </tr>
+            <tr>
+                <td>79</td>
+                <td>Not Applicable. See rule 70. </td>
+            </tr>
+            <tr>
+                <td>80</td>
+                <td>Not Applicable. Operator overloading is not used in OBS Framework. </td>
+            </tr>
+            <tr>
+                <td>81</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>82</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>83</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>84</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>85</td>
+                <td>Adopted as amended by project-specific rule PR6.1. </td>
+            </tr>
+            <tr>
+                <td>86</td>
+                <td>Not Applicable. Templates are not used in the OBS Framework. </td>
+            </tr>
+            <tr>
+                <td>87</td>
+                <td>Not Applicable. Templates are not used in the OBS Framework. </td>
+            </tr>
+            <tr>
+                <td>88</td>
+                <td>Not Applicable. Exceptions are not used in the OBS Framework. </td>
+            </tr>
+            <tr>
+                <td>89</td>
+                <td>Not Applicable. Exceptions are not used in the OBS Framework. </td>
+            </tr>
+            <tr>
+                <td>90</td>
+                <td>Not Applicable. Exceptions are not used in the OBS Framework. </td>
+            </tr>
+            <tr>
+                <td>91</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>92</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>93</td>
+                <td>This Rule is not Understood.</td>
+            </tr>
+            <tr>
+                <td>94</td>
+                <td>Not Applicable. Operator overloading is not used in OBS Framework. </td>
+            </tr>
+            <tr>
+                <td>95</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>96</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>97</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>98</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>99</td>
+                <td>Rejected. This rule is superceded by project-specific rule PR7.4.</td>
+            </tr>
+            <tr>
+                <td>100</td>
+                <td>Not Applicable. The <code>malloc</code> operator is not used in OBS Framework. </td>
+            </tr>
+            <tr>
+                <td>101</td>
+                <td>Not Applicable. The <code>realloc</code> operator is not used in OBS Framework. </td>
+            </tr>
+            <tr>
+                <td>102</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>103</td>
+                <td>Not Applicable. Dynamically allocated memory is never released in the OBS
+                    Framework. </td>
+            </tr>
+            <tr>
+                <td>104</td>
+                <td>Rejected. This rule is unnecessary in view of project-specific rule PR2.2. See
+                    also project-specific rule PR7.4.</td>
+            </tr>
+            <tr>
+                <td>105</td>
+                <td>Adopted in Full. Project specific rule PR7.3 specifies how the rule is interpreted.</td>
+            </tr>
+            <tr>
+                <td>106</td>
+                <td>Rejected. This rule is superceded by project specific rule PR7.1. </td>
+            </tr>
+            <tr>
+                <td>107</td>
+                <td>Rejected. The OBS Framework does not contain any code that is not intended to be
+                    reached. </td>
+            </tr>
+            <tr>
+                <td>108</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>109</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>110</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>111</td>
+                <td>Not Applicable. Pre-processor macros are not used in the OBS Framework (see also
+                    project specific rule PR9.2). </td>
+            </tr>
+            <tr>
+                <td>112</td>
+                <td>Not Applicable. Pre-processor macros are not used in the OBS Framework (see also
+                    project specific rule PR9.2). </td>
+            </tr>
+            <tr>
+                <td>113</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>114</td>
+                <td>Adopted in Part. This rule is assumed to refer to the use of
+                    <code>typedef</code> to rename primitive types. This rule is adopted in most
+                    cases. In a few cases, raw primitive types are used where the memory and code
+                    impact of switching to a different type would be limited. </td>
+            </tr>
+            <tr>
+                <td>115</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>116</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>117</td>
+                <td>Adopted in Part. Assumptions about data representations are necessary when
+                    writing to or reading from hardware registers and I/O ports. </td>
+            </tr>
+            <tr>
+                <td>118</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>119</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>120</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>121</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>122</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>123</td>
+                <td>Adopted in Full. </td>
+            </tr>
+            <tr>
+                <td>124</td>
+                <td>Adopted in Full. </td>
+            </tr>
+        </table>
+    
+</div><div id="siteInfo"><a href="mailto:pasetti@control.ee.ethz.ch, cechti@control.ee.ethz.ch">Contact Us</a> | The OBS Framework Project</div></body></html>

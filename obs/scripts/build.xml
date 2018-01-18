@@ -1,0 +1,199 @@
+<project name="ObsFramework" default="All" basedir="..">
+
+      <description> Ant Build file for the OBS Framework </description>
+
+      <!-- import the build files to construct the application model, to run the meta-components and to build the sample application -->
+      <import file="buildModel.xml" />
+      <import file="buildSampleApplication.xml" />
+      <import file="runGeneratorMetaComponent.xml" />
+
+      <!-- set global properties for this build -->
+      <property name="WebSiteHome" location="doc"/>
+
+      <target name="init">
+            <tstamp></tstamp>
+      </target>
+
+      <target name="All" depends="init" description="Create all the files of the ObsFramework that are not stored in the repository">
+            <antcall target="BuildAll"/>    <!-- imported from buildModel.xml -->
+            <antcall target="GenerateAll"/>      <!-- imported from runGeneratorMetaComponent.xml -->
+            <antcall target="BuildSampleApplication"/>      <!-- imported from buildSampleApplication.xml -->
+            <antcall target="WebDoc"/>
+            <antcall target="doxygen"/>
+      </target>
+
+      <property name="xml" location="doc/xml"/>
+      <property name="xsl" location="doc/xsl"/>
+      <property name="html" location="doc"/>
+    
+  	  <target name="WebDoc" depends="init" description="Create the ObsFramework web site">
+ 			<xslt force="true" style="${xsl}/xml2html_Home.xsl" in="${xml}/Home.xml" out="${html}/Home.html" scanincludeddirectories="false"/>  
+            <xslt force="true" style="${xsl}/xml2html_General.xsl" in="${xml}/Introduction.xml" out="${html}/General.html" scanincludeddirectories="false"/>  
+            <xslt force="true" style="${xsl}/xml2html_Implementation.xsl" in="${xml}/Introduction.xml" out="${html}/Implementation.html" scanincludeddirectories="false"/>        
+            <xslt force="true" style="${xsl}/xml2html_DevelopmentProcess.xsl" in="${xml}/DevelopmentProcess.xml" out="${html}/indexDevelopmentProcess.html" scanincludeddirectories="false"/>             
+            <xslt force="true" style="${xsl}/xml2html_ModellingApproach.xsl" in="${xml}/ModellingApproach.xml" out="${html}/indexModellingApproach.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_DomainDictionary.xsl" in="${xml}/DomainDictionary.xml" out="${html}/indexDomainDictionary.html" scanincludeddirectories="false"/>                      
+<!--            <xslt classpath="D:\Software\Saxon\saxon.jar" force="true" style="${xsl}/xml2html_DomainDictionaryItems.xsl" in="${xml}/../../domainDictionary/xml/DomainDictionary.xml" out="${html}/deleteMe.html" scanincludeddirectories="false"/> -->    
+            <xslt force="true" style="${xsl}/xml2html_DomainDictionaryItems.xsl" in="${xml}/../../domainDictionary/xml/DomainDictionary.xml" out="${html}/deleteMe.html" scanincludeddirectories="false"/>                      
+            <xslt force="true" style="${xsl}/xml2html_DomainDictionaryEntries.xsl" in="${xml}/../../domainDictionary/xml/DomainDictionary.xml" out="${html}/DomainDictionaryEntries.html" scanincludeddirectories="false"/>                      
+            <xslt force="true" style="${xsl}/xml2html_AbstractInterfaces.xsl" in="${xml}/AbstractInterfaces.xml" out="${html}/indexAbstractInterfaces.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_ConcreteComponents.xsl" in="${xml}/ConcreteComponents.xml" out="${html}/indexConcreteComponents.html" scanincludeddirectories="false"/>                  
+            <xslt force="true" style="${xsl}/xml2html_GeneratorMetaComponents.xsl" in="${xml}/GeneratorMeta-Components.xml" out="${html}/indexGeneratorMeta-Components.html" scanincludeddirectories="false"/>                            
+            <xslt force="true" style="${xsl}/xml2html_ConfigurerGeneratorMetaComponents.xsl" in="${xml}/ConfigurerGeneratorMeta-Components.xml" out="${html}/ConfigurerGeneratorMeta-Components.html" scanincludeddirectories="false"/>           
+            <xslt force="true" style="${xsl}/xml2html_InstantiatorGeneratorMetaComponents.xsl" in="${xml}/InstantiatorGeneratorMeta-Components.xml" out="${html}/InstantiatorGeneratorMeta-Components.html" scanincludeddirectories="false"/>                              
+            <xslt force="true" style="${xsl}/xml2html_TransformerMetaComponents.xsl" in="${xml}/TransformerMeta-Components.xml" out="${html}/indexTransformerMeta-Components.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_TransformerMetaComponents.xsl" in="${xml}/AspectOrientedProgramming.xml" out="${html}/AspectOrientedProgramming.html" scanincludeddirectories="false"/>                  
+            <xslt force="true" style="${xsl}/xml2html_RealTimeIssues.xsl" in="${xml}/RealTimeIssues.xml" out="${html}/indexRealTimeIssues.html" scanincludeddirectories="false"/>                  
+            <xslt force="true" style="${xsl}/xml2html_ImplementationIssues.xsl" in="${xml}/ImplementationIssues.xml" out="${html}/indexImplementationIssues.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_PUSCompatibility.xsl" in="${xml}/PUSCompatibility.xml" out="${html}/indexPUSCompatibility.html" scanincludeddirectories="false"/>                  
+            <xslt force="true" style="${xsl}/xml2html_PUSServicesImplementation.xsl" in="${xml}/PUSServicesImplementation.xml" out="${html}/PUSServicesImplementation.html" scanincludeddirectories="false"/>                        
+            <xslt force="true" style="${xsl}/xml2html_QualificationApproach.xsl" in="${xml}/QualificationApproach.xml" out="${html}/indexQualificationApproach.html" scanincludeddirectories="false"/>                  
+            <xslt force="true" style="${xsl}/xml2html_InstallationIssues.xsl" in="${xml}/InstallationIssues.xml" out="${html}/indexInstallationIssues.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_SourceCode.xsl" in="${xml}/SourceCode.xml" out="${html}/indexSourceCode.html" scanincludeddirectories="false"/> 
+<!--       <xslt force="true" style="${xsl}/xml2html_Copyright.xsl" in="${xml}/Copyright.xml" out="${html}/indexCopyright.html" scanincludeddirectories="false"/> -->
+            <xslt force="true" style="${xsl}/xml2html_Disclaimer.xsl" in="${xml}/Disclaimer.xml" out="${html}/indexDisclaimer.html" scanincludeddirectories="false"/>               	      
+            <xslt force="true" style="${xsl}/xml2html_DesignPatterns.xsl" in="${xml}/DesignPatterns.xml" out="${html}/indexDesignPatterns.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/Connection.xml" out="${html}/Connection.html" scanincludeddirectories="false"/>    
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/ControlBlock.xml" out="${html}/ControlBlock.html" scanincludeddirectories="false"/>    
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/Event.xml" out="${html}/Event.html" scanincludeddirectories="false"/>    
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/FDIRCheck.xml" out="${html}/FDIRCheck.html" scanincludeddirectories="false"/>    
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/FSM.xml" out="${html}/FSM.html" scanincludeddirectories="false"/>    
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/Manager.xml" out="${html}/Manager.html" scanincludeddirectories="false"/>     
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/ManoeuvreManagement.xml" out="${html}/ManoeuvreManagement.html" scanincludeddirectories="false"/>    
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/ModeManagement.xml" out="${html}/ModeManagement.html" scanincludeddirectories="false"/>    
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/OperatingSystemInterface.xml" out="${html}/OperatingSystemInterface.html" scanincludeddirectories="false"/>    
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/ParameterDatabase.xml" out="${html}/ParameterDatabase.html" scanincludeddirectories="false"/> 
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/PunctualAction.xml" out="${html}/PunctualAction.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/ReconfigurationManagement.xml" out="${html}/ReconfigurationManagement.html" scanincludeddirectories="false"/>  
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/RecoveryAction.xml" out="${html}/RecoveryAction.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/SharedData.xml" out="${html}/SharedData.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/TelecommandManagement.xml" out="${html}/TelecommandManagement.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/Telemeterable.xml" out="${html}/Telemeterable.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/TelemetryItem.xml" out="${html}/TelemetryItem.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/TelemetryManagement.xml" out="${html}/TelemetryManagement.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/TelemetryStream.xml" out="${html}/TelemetryStream.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/Trace.xml" out="${html}/Trace.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsItems.xsl" in="${xml}/../../designPatterns/xml/VariableMonitoring.xml" out="${html}/VariableMonitoring.html" scanincludeddirectories="false"/>
+            <xslt force="true" style="${xsl}/xml2html_DesignPatternsCatalogue.xsl" in="${xml}/../../designPatterns/xml/DesignPatternTable.xml" out="${html}/DesignPatternTable.html" scanincludeddirectories="false"/>      
+            <xslt force="true" style="${xsl}/xml2html_ProjectSpecificCodingRules.xsl" in="${xml}/ProjectSpecificCodingRules.xml" out="${html}/ProjectSpecificCodingRules.html" scanincludeddirectories="false"/>      
+            <xslt force="true" style="${xsl}/xml2html_ComplianceWithEsaCodingStandard.xsl" in="${xml}/ComplianceWithEsaCodingStandard.xml" out="${html}/ComplianceWithEsaCodingStandard.html" scanincludeddirectories="false"/>            
+            <xslt force="true" style="${xsl}/xml2html_ProjectSpecificNamingConventions.xsl" in="${xml}/ProjectSpecificNamingConventions.xml" out="${html}/ProjectSpecificNamingConventions.html" scanincludeddirectories="false"/>      
+            <xslt force="true" style="${xsl}/xml2html_LanguageSubset.xsl" in="${xml}/LanguageSubset.xml" out="${html}/LanguageSubset.html" scanincludeddirectories="false"/>            
+          
+           <move todir="${html}">
+            <fileset dir="scripts">
+              <include name="**/*.html"/>
+            </fileset>
+           </move>          
+            <delete file="${html}/deleteMe.html"/>  
+            <delete file="${html}/domainDictionary.html"/>         
+      </target>
+
+      <target name="doxygen" depends="deleteDoxygen" description="create doxygen documentation for cpp files">
+            <available file="C:\Programme\doxygen\bin\doxygen.exe" property="Doxygen" value="C:\Programme\doxygen\bin\doxygen.exe"/>
+            <available file="C:\Utilities\doxygen\bin\doxygen.exe" property="Doxygen" value="C:\Utilities\doxygen\bin\doxygen.exe"/>
+            <available file="C:\Program Files\doxygen\bin\doxygen.exe" property="Doxygen" value="C:\Program Files\doxygen\bin\doxygen.exe"/>
+            <exec dir="." executable="${Doxygen}" output="doc/doxygen/doxygenOutput.txt">
+                  <arg value="doc/doxygen/doxygenConfig.txt"/>
+            </exec>
+      </target>
+
+      <target name="smallZip" depends="init">
+            <property name="destfile" value="ObsFrameworkSmall_${DSTAMP}.zip"/>
+            <zip destfile="${destfile}">
+                  <fileset dir=".">
+                        <include name="designPatterns/xml/*.xml"/>
+                        <include name="doc/ComplianceWithEsaCodingStandard.html"/>
+                        <include name="doc/index.html"/>
+                        <include name="doc/indexBottomLeftBar.html"/>
+                        <include name="doc/indexSideBar.html"/>
+                        <include name="doc/LanguageSubset.html"/>
+                        <include name="doc/ProjectSpecificNamingConventions.html"/>
+                        <include name="doc/xml/*.xml"/>
+                        <include name="doc/xsl/*.xsl"/>
+                        <include name="domainDictionary/xml/*.xml"/>
+                        <include name="domainDictionary/xsl/*.xsl"/>
+                        <include name="figures/fh/*.*"/>
+                        <include name="scripts/*.xml"/>
+                        <include name="src/**"/>
+                 </fileset>
+            </zip>
+      </target>
+
+      <target name="evaluationZip" depends="init">
+            <property name="destfile" value="ObsFrameworkEvaluation_${DSTAMP}.zip"/>
+            <zip destfile="${destfile}">
+                  <fileset dir=".">
+                        <include name="doc/*.css"/>
+                        <include name="doc/*.html"/>
+                        <include name="doc/doxygen/*.txt"/>
+                        <include name="doc/doxygen/html/*.html"/>
+                        <include name="doc/doxygen/html/*.css"/>
+                        <include name="doc/doxygen/html/*.png"/>
+                        <exclude name="doc/doxygen/html/*source.html"/>
+                        <include name="figures/gif/*.gif"/>
+                        <exclude name="*.zip"/>
+                        <exclude name="projects/**"/>
+                        <exclude name="src/**"/>
+                        <exclude name="scripts/**"/>
+                        <exclude name="domainDictionary/**"/>
+                        <exclude name="designPatterns/**"/>
+                  </fileset>
+            </zip>
+      </target>
+
+      <target name="fullZip" depends="init">
+            <property name="destfile" value="ObsFrameworkFull_${DSTAMP}.zip"/>
+            <zip destfile="${destfile}">
+                  <fileset dir=".">
+                        <include name="**"/>
+                        <exclude name="*.zip"/>
+                        <exclude name="**/CVS/**"/>
+                        <exclude name="projects/RegressionTest/Debug/**"/>
+                        <exclude name="projects/RegressionTest*/Debug/**"/>
+                  		<exclude name="projects/RegressionTest/RegressionTest.ncb"/>
+                  </fileset>
+            </zip>
+      </target>
+
+      <target name="fullVersionZip" depends="init">
+            <property name="destfile" value="ObsFramework_0_8_3.zip"/>
+            <zip destfile="${destfile}">
+                  <fileset dir=".">
+                        <include name="**"/>
+                        <include name="HPDemonstrationCode.zip"/>
+                        <exclude name="*.zip"/>
+                        <exclude name="**/CVS/**"/>
+                        <exclude name="projects/RegressionTest/Debug/**"/>
+                        <exclude name="projects/RegressionTest*/Debug/**"/>
+                  </fileset>
+            </zip>
+      </target>
+      
+      <target name="deleteDoxygen" description="delete doxygen-generated files">
+            <delete>
+                  <fileset dir="doc/doxygen/html">
+                        <include name="*.html"/>
+                        <include name="*.png"/>
+                        <exclude name="RegressionTestReport.html"/>
+                        <exclude name="Trailer.html"/>
+                  </fileset>
+            </delete>
+      </target>
+
+      <target name="deleteWebSite" description="delete generated web site files">
+            <delete>
+                  <fileset dir="doc">
+                        <include name="*.html"/>
+                        <exclude name="ComplianceWithEsaCodingStandard.html"/>
+                        <exclude name="index.html"/>
+                        <exclude name="indexBottomLeftBar.html"/>
+                        <exclude name="indexSideBar.html"/>
+                        <exclude name="LanguageSubset.html"/>
+                        <exclude name="ProjectSpecificNamingConventions.html"/>
+                  </fileset>
+           </delete>
+      </target>
+
+</project>
+

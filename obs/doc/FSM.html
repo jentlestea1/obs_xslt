@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?><html><head><link rel="stylesheet" type="text/css" href="css/main.css"/><link rel="stylesheet" type="text/css" href="css/3col_leftNav.css"/></head><body><div id="header"><h1 id="siteName">OBS Framework </h1><div id="globalNav"><a href="Home.html">Home</a> | <a href="General.html">General</a> | <a href="Implementation.html">Implementation</a> | <a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a> | <a href="http://www.pnp-software.com/ObsFramework/ObsFramework_0_8_3.zip">Download</a> | <a href="indexDisclaimer.html">Disclaimer</a></div><h2 id="pageName">Implementation - Design Patterns</h2></div><div id="navbar"><div id="sectionLinks"><ul><li><a href="indexDomainDictionary.html">Domain Dictionary</a></li><li><a href="indexDesignPatterns.html">Design Patterns</a></li><li><a href="indexAbstractInterfaces.html">Abstract Interfaces</a></li><li><a href="indexConcreteComponents.html">Concrete Components</a></li><li><a href="indexGeneratorMeta-Components.html">Generator Meta-Components</a></li><li><a href="indexTransformerMeta-Components.html">Transformer Meta-Components</a></li><li><a href="indexRealTimeIssues.html">Real Time Issues</a></li><li><a href="indexImplementationIssues.html">Implementation Issues</a></li><li><a href="indexInstallationIssues.html">Installation Issues</a></li><li><a href="indexSourceCode.html">Source Code</a></li><li><a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a></li></ul></div></div><div id="subnavbar"><li><a href="DesignPatternTable.html">- CATALOGUE -</a></li><li><a href="Connection.html">Connection</a></li><li><a href="ControlBlock.html">Control Block</a></li><li><a href="Event.html">Event</a></li><li><a href="FDIRCheck.html">FDIR Check</a></li><li><a href="FSM.html">FSM</a></li><li><a href="Manager.html">Manager</a></li><li><a href="ManoeuvreManagement.html">Manoeuvre Management</a></li><li><a href="ModeManagement.html">Mode Management</a></li><li><a href="OperatingSystemInterface.html">Operating System Interface</a></li><li><a href="ParameterDatabase.html">Parameter Database</a></li><li><a href="PunctualAction.html">Punctual Action</a></li><li><a href="RecoveryAction.html">Recovery Action</a></li><li><a href="ReconfigurationManagement.html">Reconfiguration Management</a></li><li><a href="SharedData.html">Shared Data</a></li><li><a href="TelecommandManagement.html">Telecommand Management</a></li><li><a href="Telemeterable.html">Telemeterable</a></li><li><a href="TelemetryManagement.html">Telemetry Management</a></li><li><a href="TelemetryStream.html">Telemetry Stream</a></li><li><a href="TelemetryItem.html">Telemetry Item</a></li><li><a href="Trace.html">Trace</a></li><li><a href="VariableMonitoring.html">Variable Monitoring</a></li></div><div id="content"><p><H4>Finite State Machine
+        Design Pattern
+         </H4></p><p><H3><b>Intent</b></H3></p><p>
+Decouple the implementation of the state-dependent behaviour in a FSM from the management of the states and the state transitions and decouple the clients responsible for triggering state transitions from the FSM implementation.
+</p><p><H3><b>Based On</b></H3></p><p>
+This pattern is based on the principle of <i>abstract coupling</i>.
+</p><p><H3><b>Motivation</b></H3></p><p>
+<p>
+Some of the requirements of an OBS are expressed in terms of <i>finite state machines</i> (FSM) which are used to model mode-dependent behaviour. This is typically the case of the management of the operational modes of the OBS as a whole but can also be the case for other functionalities where reference to an FSM is not explicit but where there is a clear need for modelling mode-dependent behaviour.
+</p><p>
+The most straightforward implementation of these requirements is to construct a module that represents the FSM and that hard-codes the logic for the state transitions and has hard links to the modules that implement the behaviours associated to each state foreseen by the FSM. This approach however leads to <i>ad hoc</i> code that cannot be reused because different FSMs have different mode transition logics and different state behaviours.
+</p><p>
+This design patterns introduces abstractions that model both the states associated to the FSM and the events that trigger the state transitions in a manner that is application-independent. This allows the construction of a component that represents a generic FSM and that can be customized - without changes to its source code - to represent specific FSMs within a particular application.
+</p>
+</p><H3><b>Dictionary Entries</b></H3><p>The following abstractions or domain-wide concepts are defined to support the
+        implementation of this design pattern:</p><ul><li><i><a HREF="domainDictionaryFSM.html">FSM</a></i></li><li><i><a HREF="domainDictionaryFsmState.html">FsmState</a></i></li><li><i><a HREF="domainDictionaryFsmEvent.html">FsmEvent</a></i></li></ul><p><H3><b>Structure</b></H3></p><p>
+<p>
+The finite state machine design pattern proposes:
+<ul>
+<li>an abstract interface to represent the FsmState abstraction</li>
+<li>a concrete component to represent the FsmEvent abstraction</li>
+<li>a concrete component to represent the FSM abstraction</li>
+</ul>
+The <CODE>FsmState</CODE> abstract interface is constructed on the assumption that the behaviour of an FsmState abstraction consists of:
+<ul>
+<li>actions that are associated to the FSM state.</li>
+<li>an <i>entry check</i> that verifies whether the state can be entered.</li>
+<li>an <i>exit check</i> that verifies whether the state can be exited.</li>
+<li>a <i>termination check</i> that verifies if all actions associated to the current state have been executed.</li>
+<li>a <i>next state</i> that must be entered when the actions associated to the current state have been completed.</li>
+</ul>
+It is furthermore assumed that the actions that are associated to a state are of three types:
+<ul>
+<li>An <i>initialization action</i>: a punctual action performed immediately after the state is entered</li>
+<li>A <i>continued action</i>: an action performed continuously while the state is active</li>
+<li>An <i>exit action</i>: a punctual action that is performed immediately before the state is exited</li>
+</ul>
+Finally, to each state, a <i>next state</i> may be associated. If B is the next state associated to state A, then the FSM will perform an autonomous transition to state B after execution of all the actions associated to state A has been completed.
+</p><p>
+Given these assumptions, an initial definition for the FsmState abstract interface can be as follows:
+
+<p><center><img src="../figures/gif/FsmStateAI.gif"/></center></p>
+
+The semantics of the methods of this abstract interface can be inferred from their names.
+</p><p>
+The FSM abstraction is represented by a component instantiated from class <CODE>FSM</CODE>. This component acts as a manager for the states associated to the finite state machine. It sees these states as instances of abstract type <CODE>FsmState</CODE> and is therefore decoupled from their implementation. The FSM component should be periodically activated by an external agent. The activation will cause the actions associated to the currently active state to be executed.
+</p><p>
+The FsmEvent abstraction is represented by an abstract interface or abstract class <CODE>FsmEvent</CODE>. An <CODE>FsmEvent</CODE> is always associated to a finite state machine component. An <CODE>FsmEvent</CODE> simply knows that, when its fire method is called, it must lodge with its associated finite state machine a request to perform a transition from the current state to a target state. The target state is encapsulated in the <CODE>FsmEvent</CODE> component (it might, for instance, be supplied to it as a constructor parameter). It is up to the FSM to decide when and whether to actually perform the state transition (based, for instance, on whether the current state can be exited and the target state can be entered).
+</p><p>
+The <CODE>FsmEvent</CODE> abstract interface or class could also be characterize by additional operations such as, for instance, an operation to inhibit the event firing.
+</p><p>
+The logic to perform the state transition can vary. For instance, in some cases, it may be desired to check that the transition has occurred and take a recovery action if this is not the case. In other cases, the transition is not simply to a target state but rather from an initial and pre-defined state to a target state. It is owing to this variability in state transition logic, that the FsmEvent abstraction is represented by an abstract class or abstract interface. Applications are free to create concrete subclasses that implement specific transition logic.
+Clients that wish to control the state machine hold references to FsmEvents associated to the state machine and, when they wish the state transition to be performed, they call their fire methods. One FsmEvent has to be created for each transition event. Several clients may hold references to the same FsmEvent.
+
+</p>
+</p><H3><b>Participants</b></H3><ul><li><CODE>Client</CODE>:  <Role>The components that triggers the state transitions.</Role></li><li><CODE>FsmEvent</CODE>:  <Role>The abstract class or abstract interface that represents the FsmEvent abstraction. State transitions, unless they are autonomous, should only be commanded through instances of this interface.
+</Role></li><li><CODE>ConcreteFsmEvent</CODE>:  <Role>A component implementing <CODE>FsmEvent</CODE> that represents a specific and concrete state transition policy.</Role></li><li><CODE>FsmState</CODE>:  <Role>The abstract class or abstract interface that represents the FsmState abstraction. State-dependent behaviour should be encapsulated in components that implement this interface.
+</Role></li><li><CODE>ConcreteFsmState</CODE>:  <Role>A component implementing <CODE>FsmState</CODE> that represents a specific and concrete state-dependent behaviour.</Role></li><li><CODE>FSM</CODE>:  <Role>A component that implements a generic finite state machine. The component is customized to fit the needs to a specific finite state machine by loading into it the concrete <CODE>FsmState</CODE> components and by linking it to the concrete <CODE>FsmEvent</CODE> components.</Role></li></ul><p><H3><b>Collaborations</b></H3></p><p>
+The typical operational scenario for this design pattern is:
+<ul>
+<li>A client requests a state transition by calling the <CODE>fire</CODE> method in an FsmEvent component. The client sees the event component only through the abstract interface <CODE>FsmEvent</CODE> and is therefore insulated from the specific state transition policy that the latter implements.</li>
+<li>Some high-level component (perhaps a scheduler) calls the <CODE>activate</CODE> methods on the FSM component and causes the state machine to perform the actions associated to the current state.</li>
+</ul>
+</p><H3><b>Consequences</b></H3><ul><li>
+Clients are decoupled from the implementation of the state transition policy and from the implementation of the state-dependent behaviour. Changing the state transition policy or the behaviour associated to a particular state can be done with no impact on the client.
+</li><li>
+The FSM component can be reused "as is" because it is customizable both with respect to the state-dependent behaviours and with respect to the state triggering policies.
+</li><li>
+It is possible to build a library of commonly recurring event transition policies and to use them within applications as ready-made components.
+</li><li>
+It is necessary to have a dedicated class for each concrete transition event and for each state that is required by a concrete finite state machine.
+</li></ul><p><H3><b>Applicability</b></H3></p><p>
+This design pattern is useful when:
+<ul>
+<li> an application must implement state-dependent behaviours</li>
+<li>it is necessary to be able to vary the policies regulating the transitions between states and the behaviour associated to each state</li>
+</ul>
+</p><H3><b>Implementation Issues</b></H3><p>
+Conceptually, there are two different types of operations that can be performed on the FSM components. FsmEvents will want to use its state transition operations to control the FSM state. Other entities will need to have access to its activate operation to direct the FSM component to execute the currently valid state-dependent behaviour. In order to have a better decoupling between these two sets of operations, the structure of the design pattern could be changed as shown in the figure. Now, clients of the FSM components only see the parts of its interface that are relevant to them and safety of operation is correspondingly enhanced.
+    <p/>
+<H1 ALIGN="center"><img src="../figures/gif/FiniteStateMachineDP_2.gif"/></H1>
+</p><p>
+Which state transition operations should be provided by the FSM component? Probably, a minimal set would include operations to: force a transition from some state A to some state B; inhibit transition from some state A to some state B; and inhibit transitions to some target state. Other operations might be required to allow linking the FSM component to facilities allowing state
+transitions to be recorded as <a HREF="domainDictionaryEvent.html">events</a>.
+</p><p>
+An FsmEvent makes a request for a state transition to take place in its associated FSM. When is the state transition actually be performed? The simplest policy is for the state transition to be performed immediately: a call to method <CODE>fire</CODE> results in the <CODE>FsmEvent</CODE> component actually forcing the FSM to change state. This policy however means that the state of the FSM can change in between successive activation. In fact, it can change more than once since different FsmEvents may be fired at different times in the interval between two successive activations. A better policy is for the state transition requests to be processed by the FSM every time it is activated.
+</p><p>
+<CODE>FsmEvent</CODE> and <CODE>FsmState</CODE> are conceptually abstract interfaces but in both cases it is possible to identify some basic housekeeping operations that could be implemented at the level of base class. Hence, both <CODE>FsmEvent</CODE> and <CODE>FsmState</CODE> could be implemented as base abstract classes.
+</p><H3><b>OBS Framework Mapping</b></H3><p>The implementation of this design pattern in the OBS Framework is supported by
+        the following classes:</p><ul><li><i>FSM</i>component --&gt; <CODE><a href="doxygen/html/classCC__FSM.html">CC_FSM</a></CODE></li><li><i>FsmState</i>abstract interface --&gt; <CODE><a href="doxygen/html/classFsmState.html">FsmState</a></CODE></li><li><i>FsmEvent</i>component --&gt; <CODE><a href="doxygen/html/classDC__FsmEvent.html">DC_FsmEvent</a></CODE></li></ul><a NAME="#SampleCode"><p><H3><b>Sample Code</b></H3></p></a><p>
+<p>
+Consider an application that includes a FSM with four modes MOD1 to MOD4 and where two mode transitions are commanded by the ground while the others are autonomous. Implementation of this state machine requires implementation of four <CODE>FsmState</CODE> classes corresponding to the four modes and instantiation of two <CODE>FsmEvent</CODE> components to represent the commanded transitions. The autonomous mode transitions are modelled inside the <CODE>FsmState</CODE> classes.
+</p><p>
+The kind of <CODE>FsmEvent</CODE> components that are required for this state machine is very simple. Their class definition could be as follows:
+<PRE>	class ApcFsmEvent : FsmEvent {
+
+	  int targetState;
+	  FSM* fsm;
+
+	  ApcFsmEvent(int ts, FSM* apcFsm) {
+		targetState = ts;
+		fsm = apcFsm;
+	  }
+
+	  void fire() {
+		fsm-&gt;setState(targetState);
+	  }
+	} </PRE>
+
+This class encapsulates a reference to the FSM that it must control and to the target state (represented here as an integer). Its <CODE>fire</CODE> method simply calls a <CODE>setState</CODE> method on the FSM that causes the transition to be performed.
+A more sophisticated state transition policy might implement method <CODE>fire</CODE> as follows:
+<PRE>
+    void fire() {
+        fsm-&gt;setState(targetState);
+        if (FSM-getState()!=targetState)
+            . . . // state transition did not take place, raise error!
+    }
+</PRE>
+
+Still other variants of the state transition policy are possible that include operations to inhibit certain state transitions or to check that the starting state is correct.
+</p><p>
+The example application would need two instances of the <CODE>FsmEvent</CODE>. The corresponding instantiation code would look like this:
+<PRE>	FSM* apcFsm;	// reference to operational mode FSM
+	. . .
+	FsmEvent* t1 = new ApcFsmEvent(MOD1, apcFsm);
+	FsmEvent* t2 = new ApcFsmEvent(MOD2, apcFsm);</PRE>
+
+The <CODE>t1</CODE> objects covers the commanded transition into mode MOD1. The <CODE>t2</CODE> object covers the commanded transition into mode MOD2.
+</p><p>
+Note how the FsmEvent objects are given the generic type <CODE>FsmEvent</CODE>. This makes the code using it independent of the particular transition policy that they encapsulate.
+</p><p>
+For each state, a dedicated class implementing interface <CODE>FsmState</CODE> must be constructed. Consider for instance the class associated to the a simple initialization state:
+<PRE>	class IniState : FsmState {
+
+	  int nextState;
+
+	  IniState(int ns) {
+		nextState = ns;
+	  }
+
+	  void doInit() {
+		return;
+             }
+
+	  void doContinued() {
+                . . .   // do actions associated to the state
+	  }
+
+	  void doExit () {
+		return;
+	  }
+
+	  bool canExit () {
+		return true;
+	  }
+
+	  bool isFinished () {
+		return true;
+	  }
+
+	  int getNextState() {
+		return nextState;
+	  }
+
+	}</PRE>
+
+This is a very simple state object where all the actions associated to the state are performed in one single activation cycle and where there are no state initialization or state exit actions. The state "knows" about its successor state which is loaded as a constructor parameter.
+</p><p>
+The state activation code in the FSM component could be as follows:
+<PRE>	class FSM {
+	  FsmState* states[N];
+	  FsmState* currentState;
+	  . . .
+	  void activate() {
+		currentState-&gt;doContinued();
+		if (currentState-&gt;isFinished())
+		  if (currentState-&gt;getNextState()!=NULL)
+			setState(currentState-&gt;getNextState());
+		  else
+		. . .	// no successor state is defined, error!
+	  }
+
+	  void setState(int newState) {
+		if (currentState-&gt;canExit())
+		{	currentState-&gt;doExit();
+			currentState = states[newState];
+			currentState-&gt;doInit();
+		}
+		else
+		. . .	// transition cannot be performed, error!
+          }
+	  . . .
+	}</PRE>
+
+Method <CODE>activate</CODE> would be called periodically to step forward the finite step machine. In the FSM implementation, the continued actions associated to the current state are performed and then a check is done to verify whether the current state wishes to perform an autonomous transition to another state. State transitions are controlled by method <CODE>setState</CODE> that verifies whether the current state can be exited and, if so, it performs the associated exit action and then loads the new state and performs its initialization actions.
+Clearly, the code shown above is independent of either the state transition logic or the implementation of the state-dependent behaviour. This makes the component fully reusable.
+</p><p>
+The pseudo-code for the FSM class does not show the methods required to configure the FSM component by loading the FsmState components during the initialization phase.
+</p>
+</p><p><H3><b>Remarks</b></H3></p><p>
+There is no equivalent to the finite state machine design pattern in the <a HREF="http://www.pnp-software.com/AocsFramework/index.html">AOCS Framework</a> because the AOCS framework is using a different concept to model mode-dependent behaviour.
+</p><p><H3><b>Author</b></H3></p><p>
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+</p><p><H3><b>Last Modified</b></H3></p><p>
+2002-06-22
+</p></div><div id="siteInfo"><a href="mailto:pasetti@control.ee.ethz.ch, cechti@control.ee.ethz.ch">Contact Us</a> | The OBS Framework Project</div></body></html>

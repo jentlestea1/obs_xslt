@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?><html><head><link rel="stylesheet" type="text/css" href="css/main.css"/><link rel="stylesheet" type="text/css" href="css/3col_leftNav.css"/></head><body><div id="header"><h1 id="siteName">OBS Framework </h1><div id="globalNav"><a href="Home.html">Home</a> | <a href="General.html">General</a> | <a href="Implementation.html">Implementation</a> | <a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a> | <a href="http://www.pnp-software.com/ObsFramework/ObsFramework_0_8_3.zip">Download</a> | <a href="indexDisclaimer.html">Disclaimer</a></div><h2 id="pageName">Implementation - Design Patterns</h2></div><div id="navbar"><div id="sectionLinks"><ul><li><a href="indexDomainDictionary.html">Domain Dictionary</a></li><li><a href="indexDesignPatterns.html">Design Patterns</a></li><li><a href="indexAbstractInterfaces.html">Abstract Interfaces</a></li><li><a href="indexConcreteComponents.html">Concrete Components</a></li><li><a href="indexGeneratorMeta-Components.html">Generator Meta-Components</a></li><li><a href="indexTransformerMeta-Components.html">Transformer Meta-Components</a></li><li><a href="indexRealTimeIssues.html">Real Time Issues</a></li><li><a href="indexImplementationIssues.html">Implementation Issues</a></li><li><a href="indexInstallationIssues.html">Installation Issues</a></li><li><a href="indexSourceCode.html">Source Code</a></li><li><a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a></li></ul></div></div><div id="subnavbar"><li><a href="DesignPatternTable.html">- CATALOGUE -</a></li><li><a href="Connection.html">Connection</a></li><li><a href="ControlBlock.html">Control Block</a></li><li><a href="Event.html">Event</a></li><li><a href="FDIRCheck.html">FDIR Check</a></li><li><a href="FSM.html">FSM</a></li><li><a href="Manager.html">Manager</a></li><li><a href="ManoeuvreManagement.html">Manoeuvre Management</a></li><li><a href="ModeManagement.html">Mode Management</a></li><li><a href="OperatingSystemInterface.html">Operating System Interface</a></li><li><a href="ParameterDatabase.html">Parameter Database</a></li><li><a href="PunctualAction.html">Punctual Action</a></li><li><a href="RecoveryAction.html">Recovery Action</a></li><li><a href="ReconfigurationManagement.html">Reconfiguration Management</a></li><li><a href="SharedData.html">Shared Data</a></li><li><a href="TelecommandManagement.html">Telecommand Management</a></li><li><a href="Telemeterable.html">Telemeterable</a></li><li><a href="TelemetryManagement.html">Telemetry Management</a></li><li><a href="TelemetryStream.html">Telemetry Stream</a></li><li><a href="TelemetryItem.html">Telemetry Item</a></li><li><a href="Trace.html">Trace</a></li><li><a href="VariableMonitoring.html">Variable Monitoring</a></li></div><div id="content"><p><H4>
+
+Parameter Database
+
+
+        Design Pattern
+         </H4></p><p><H3><b>Intent</b></H3></p><p>
+
+Decouple the use of database parameters from the physical representation of the on-board database and allow access to the database parameters using symbolic identifiers.
+
+</p><p><H3><b>Based On</b></H3></p><p>
+
+This pattern is based on the principle of abstract coupling.
+
+</p><p><H3><b>Motivation</b></H3></p><p>
+
+<p>The on-board database contains all the configuration parameters for an on-board system. On-board systems usually have a requirement that all configuration parameters should be easily over-writable by the ground via telecommands. Dedicated telecommands are often defined for this purpose. The telecommands usually refer to the database parameters via identifiers. This allows the telecommand to be independent of the physical location of the parameter in the on-board memory. In the absence of such independence, the telecommand content would have to be updated every time the on-board software is re-linked which would create significant configuration management problems.
+
+</p><p>
+
+In a typical situation, a "parameter change" telecommand is foreseen that can be used for updating an on-board parameter. The main argument of the telecommand is the pair: <CODE>[identifier, newValue]</CODE>. The first field in this pair symbolically identifies the parameter to be updated. The translation from the identifier to the specific physical location where the parameter value is stored on board is done by the OBS invisibly to the ground station and to the telecommand.
+
+</p><p>
+
+In practice, implementation of the on-board database is often as a table of sequential locations in on-board memory. The parameter identifier is simply the offset of the parameter in the table.
+
+Note that this type of table structure for storing parameters is incompatible with an object-oriented (OO) approach. In an OO approach, parameters are localized in objects and each object defines only the parameters that are specific to itself. Thus, it becomes very difficult to access parameters symbolically without making reference to the objects which encapsulate them.
+
+</p><p>
+
+Parameter databases normally exist in duplicate in a running application. The master copy of the parameter database is stored in ROM. During application initialization, 
+
+a RAM version of the database is created that is initialized with the parameter values read from the ROM master copy. The application code uses the RAM version of the 
+
+database and the ground station can affect its behaviour by patching its values. Obviously, every time the application is reset, the RAM database is re-loaded with the ROM 
+
+values.
+
+</p><p>
+
+The parameter database pattern proposes a reusable solution that decouples the users of the on-board parameters from the data structure that holds these parameters. This makes it possible to have a physical structure that is compatible with easy manipulation on the part of the ground segment while at the same time giving on-board components the illusion of having private copies of the database parameters.
+
+</p>
+
+</p><H3><b>Dictionary Entries</b></H3><p>The following abstractions or domain-wide concepts are defined to support the
+        implementation of this design pattern:</p><ul><li><i><a HREF="domainDictionaryParameterDatabase.html">Parameter Database</a></i></li></ul><p><H3><b>Structure</b></H3></p><p>
+
+<p>
+
+The on-board database pattern represents the parameter database abstraction as an abstract interface <CODE>ParameterDatabase</CODE> that defines the way the parameter database can be accessed by users. Concrete database classes implement this interface and are free to choose any convenient physical representation for the data structure holding the parameters.
+
+</p><p>
+
+Components that need to access parameter values do so through getter and setter methods that take as arguments a symbolic identifier of the parameter. The translation from the identifier to the physical variable holding the parameter value is done internally to the concrete parameter database component.
+
+</p><p>
+
+The parameter database offers a <code>reset</code> method that causes all the parameter values to be re-initialized with some default value.
+
+</p><p>
+
+The parameter database component is a plug-in component for its clients that see it exclusively through the abstract <CODE>ParameterDatabase</CODE> interface.
+
+</p>
+
+</p><p><center><img src="../figures/gif/ParameterDatabaseDP.gif"/></center></p><H3><b>Participants</b></H3><ul><li><CODE>Client</CODE>:  <Role>The component that needs to access a database parameter.</Role></li><li><CODE>ParameterDatabase</CODE>:  <Role>Abstract interface that declares the basic operations that can be performed on a generic parameter database, namely operations to get and set the value of a parameter identified through its identifier.</Role></li><li><CODE>ConcreteDatabase</CODE>:  <Role>A concrete parameter database implementing a specific layout for the database and a specific translation mechanism from the parameter identifiers to the physical variables holding the parameter values. </Role></li></ul><p><H3><b>Collaborations</b></H3></p><p>
+
+Typical operational scenarios for this design pattern are:<ul>
+
+<li>A component internally uses a parameter variable but, instead of storing its own private version of the variable, it  stores the parameter identifier and, whenever it needs access to the variable, it obtains it through the database getter and setter methods.</li>
+
+<li>A client component is loaded with a new parameter database component. The parameter database component is seen exclusively through the abstract ParameterDatabase interface. This ensures the decoupling of the clients from the internal structure of the database.</li>
+
+<li>The database is reset which causes the values of the parameters to be re-initialized to some kind of default of initial value. In an on-board application, a reset operation will often consist of copying the ROM version of the database onto the RAM version.</li>
+
+</ul>
+
+</p><H3><b>Consequences</b></H3><ul><li>
+
+It becomes easy to create a centralized parameter database that is optimized for easy modifiability by the ground segment.
+
+</li><li>
+
+Clients are decoupled from the structure of the parameter database.
+
+</li><li>
+
+Depending on the implementation, there may be a level of indirection in the access to the database parameters. This makes access to database parameters slightly less efficient.
+
+</li><li>
+
+The parameter database component can be a plug-in component for the clients. Two or more databases can be maintained in the same application and components can be made to easily switch from one to the other by changing the database plug-in.
+
+</li><li>
+
+Much attention has to be devoted to correctly coupling identifiers and parameters: clients that wish to access a certain parameter must be sure to use the correct identifier. In a sense, database variables become global variables and this introduces the possibility of errors in their manipulation. When parameters are instead stored as internal object variables, there is much less scope for this type of errors.
+
+</li></ul><p><H3><b>Applicability</b></H3></p><p>
+
+It is necessary to have one (or a small number of) centralized parameter databases and it is desired to decouple their internal structure from their users
+
+</p><H3><b>Implementation Issues</b></H3><p>
+
+The most straightforward implementation of the design parameter consists in having a database organized (at the conceptual level) as two arrays 
+
+<code>dbDefault</code> and <code>dbOperational</code> representing the default and operational versions the database. The default version might 
+
+correspond to a ROM version that holds the fixed initial values of the database parameters. The operational version might correspond to a RAM version 
+
+that holds the (possibly updated) values of the database parameters. The parameter identifier is the array indey and each element of the array contains 
+
+one single datum that is the value of the parameter. This implementation is easy but it forces client components to access the database every time they 
+
+need to use a database parameter. It also constrains the values of the identifiers to be sequential integers.
+
+</p><p>
+
+The latter problem can be solved by making the elements of the arrays <code>dbDefault</code> and <code>dbOperational</code> hold two values: the 
+
+parameter identifier and the parameter value. This gives complete freedom to specifying the parameter identifiers but it makes getting and setting a 
+
+parameter value more onerous because it becomes necessary to search the arrays to find the desired parameters.
+
+</p><p>
+
+The frequency of the accesses to the database can be reduced by organizing the operational version of the database to hold pointers to the parameters rather than their values. Note that the default version of the database cannot be made to hold pointers because this would make it dependent on the physical location of the application components thus violating the basic requirement for the database. To exemplify, consider the case of a component <code>Comp</code> that internally uses a variable <code>par</code> (assumed to be of type integer):
+
+<PRE>	class Comp {
+		int par;
+		. . .
+	}  </PRE>
+
+Let us assume that it is desired to link <code>par</code> to the database parameter with identifier PAR_ID. For the sake of simplicity, let us also assume that the parameter identifiers are the indeces of the <code>dbDefault</code> and <code>dbOperational</code> arrays. Then, the following holds:
+
+<PRE>	dbDefault[PAR_ID] = . . .  // default value of the parameter
+	dbOperational[PAR_ID] = &amp;comp.par;	</PRE>
+
+where <code>comp</code> is one instance of class <code>Comp</code>. With this implementation, the getter methods of the <code>ParameterDatabase</code> interface no longer make sense: the users of the parameter database do not need to <i>get</i> the parameter values from the database. It is the (operational version of the) database that is directly linked to the variables that must be mapped to the database. The setter method is instead implemented as follows:
+
+<PRE>	void setParameter(int parId, int newValue) {
+		dbOperational[parId] = newValue;
+	}	</PRE>
+
+The reset operation could be implemented as follows:
+
+<PRE>	void reset() {
+		for (all parameters in database)
+			*dbOperational[parId] = dbDefault[parId];
+	}	</PRE>
+
+Perhaps the most difficult problem with this type of implementation is how to load the operational version of the database with the pointers of the database variables. If one wants to preserve the encapsulation of these variables within their owner components, then the only solution is to make the owner components do the loading. With reference to the above example, one possibility would be to modify the interface of the <code>Comp</code> component as follows:
+
+<PRE>	
+    class Comp {
+
+        int par;
+        . . .
+        void linkParameter(int PAR_ID, DbOperational* dbOperational);
+
+    }  </PRE>
+
+The new method should be called during the application initialization phase and is responsible for loading the entry in the operational database holding the address of the parameter <code>par</code>. One possible implementation would be:
+
+<PRE>	void linkParameter(int PAR_ID, DbOperational* dbOperational) {
+		dbOperational[PAR_ID] = &amp;par;
+	}	</PRE>
+
+Thus, this implementation has the advantage of avoiding direct and frequent accesses to database but it requires an extension of the external interface of the components that need to map some of their internal variables to the database.
+
+</p><p>
+
+In a variant to the previous approach, the component holds the pointer to the parameter and the parameter itself is stored in the database. The component accesses the parameter value by linking to it during configuration phase. With reference to the previous example, the component <code>Comp</code> is now defined as follows:
+
+<PRE>	class Comp {
+
+		int* par;
+		. . .
+
+	}  </PRE>
+
+The default value of the parameter is held as before in <code>dbDefault[PAR_ID]</code>. The operational value is now held in <code>dbOperational[PAR_ID]</code>. During the configuration phase, the following link must somehow be set up:
+
+<PRE>	Comp.par = &amp;dbOperational[PAR_ID]; </PRE>
+
+One way to achieve this purpose is to extend the interface of the <code>Comp</code> class as before:
+
+<PRE>
+    class Comp {
+
+        int par;
+        . . .
+        void linkParameter(int PAR_ID, DbOperational* dbOperational);
+
+    }  </PRE>
+
+The implementation of the link method however is now different:
+
+<PRE>	void linkParameter(int PAR_ID, DbOperational* dbOperational) {
+		par = &amp;dbOperational[PAR_ID];
+	}	</PRE>
+
+The advantage of this approach is that now the operational database holds all the values of the application parameters (rather than just their pointers). It is therefore easier to perform a blanket update of the application parameters by simply overwriting its operational database.
+
+</p><p>
+
+How can the parameter identifiers be implemented? In a C/C++ context, one simple solution is to have one <CODE>include</CODE> file that defines a set of <CODE>#define</CODE> constants that associates integers to symbolic names. The application can then use the symbolic names as the identifiers for the database parameters.
+
+</p><p>
+
+The pattern class diagram shows only one setter and one getter method. In practice, multiple setter and getter methods will be required, one for each possible type of the parameters. Thus, for instance, there might be a getter/setter pair for <CODE>integer</CODE> parameters, one for <CODE>float</CODE> parameters, one for <CODE>short</CODE> parameters, etc.
+
+</p><p>
+
+<p>The use of a centralized database introduces the possibility of errors that are similar to those arising when global variables are used. One way to remove this source of errors is to have an access control in the getter and setter methods: when the database component receives a request to return a parameter value or to update its value, it checks whether the component making the request is authorized to have access to that parameter. This could for instance be done by changing the signature of the getter method as follows:</p>
+
+
+
+<PRE>   void getParameter(void* requester, int paramterId)</PRE>
+
+
+
+and by stipulating that client components call the getter method by passing themselves as the first argument to the getParameter method as follows:
+
+
+
+<PRE>   value = database.getParameter(this, paramterId);</PRE>
+
+
+
+<p>The database component can then be implemented to use the identity of the requester to verify that the request is legitimate. Note that this type of access control relies on programmer discipline to call the getter method as shown above and results in <i>run-time</i> errors in case of illegal accesses. Access control to internal object variables is instead enforced by the compiler and results in <i>compile-time</i> errors.
+
+</p>
+
+</p><p>
+
+Should the concrete database component be implemented as a singleton? Many on-board applications have one single parameter database. There is however no reason why this should be so. In principle, one could have several databases gathering together related configuration data. Thus, the database component will not always be implemented as a singleton.
+
+</p><H3><b>OBS Framework Mapping</b></H3><p>The implementation of this design pattern in the OBS Framework is supported by
+        the following classes:</p><ul><li><i>ParameterDatabase</i>abstract interface --&gt; <CODE><a href="doxygen/html/classParameterDatabase.html">ParameterDatabase</a></CODE></li></ul><a NAME="#SampleCode"><p><H3><b>Sample Code</b></H3></p></a><p>
+
+As a first example, consider a component implementing a PID controller. This component needs three parameter values representing the three gains of the controller (the proportional, the integral, and the derivative gains usually represented by symbols kp, ki and kd). Such parameters would typically be stored in a centralized database. The method implementing the PID control law would then be implemented as follows:<PRE>
+
+    ParameterDatabase* database;
+    int KP, KI, KD;        // parameter identifiers
+    float kp, ki, kd;
+
+    . . .
+
+
+
+    void loadParameterDatabase(ParameterDatabase* pd) {
+        database = pd;
+    }
+
+
+
+    void computeControl() {
+
+        kp = database-&gt;getParameter(KP);
+        ki = database-&gt;getParameter(KI);
+        kd = database-&gt;getParameter(KD);
+
+        . . . // use kp, ki and kd to implement PID control law
+
+    }  </PRE>
+
+
+
+<p>The <CODE>loadParameterDatabase</CODE> is a method to load the parameter database. This method would typically be used in the application initialization phase to configure the controller component with the database plug-in component.
+
+When it is necessary to compute the PID controller output, the component reads the current values of the controller gains from the database by using the getParameter methods.
+
+</p><p>
+
+Note that the sample code above is using integer variables to store the parameter identifiers. In a C implementation, the parameter identifiers could be compiler constants (<CODE>#define</CODE> variables). In a C++ implementations, they could be marked as <CODE>const</CODE> to clearly indicate the fact that they must not be modified.
+
+</p><p>
+
+As a second example, consider the example of a component that encapsulates a generic recovery action (see one of the examples in the <a HREF="RecoveryAction.html#SampleCode">recovery action</a> design pattern description) that is capable of distinguishing between sporadic and permanent faults. The distinction is made on the basis of the number of consecutive times that the fault is detected. If this number exceeds a certain threshold, then the fault is declared to be permanent. Otherwise it is treated as sporadic. The threshold would typically be a database parameter. This would result in a modification of the implementation of the RecoveryAction class of the following kind:
+
+<PRE>
+    class RecoveryAction {
+
+              int LIMIT;
+              int counter=0;
+              bool isSporadic=false;
+              ParameterDatabase* database;
+              . . .
+
+              void loadParameterDatabase(ParameterDatabase* pd) {
+                   database = pd;
+              }
+
+              . . .
+
+              bool isSporadic() {
+                   return isSporadic;
+              }
+
+              void doRecovery() {
+                   counter++;
+                   if ( limitCounter &gt; datbase-&gt;getParameter(LIMIT) )
+                   {   
+                       isSporadic=true;
+                       limitCounter=0;
+                   }
+              }
+
+              . . .
+
+   }</PRE>
+
+
+
+In the version of section 9.13, the class had an internal variable limit that stored the threshold for discriminating between sporadic and permanent faults. In the new version, instead, the component only holds an identifier that is used as argument to the getter method in the database to retrieve the value of the limit.
+
+</p>
+
+
+
+</p><p><H3><b>Remarks</b></H3></p><p>
+
+None
+
+</p><p><H3><b>Author</b></H3></p><p>
+
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+
+</p><p><H3><b>Last Modified</b></H3></p><p>
+
+2002-05-22
+
+</p></div><div id="siteInfo"><a href="mailto:pasetti@control.ee.ethz.ch, cechti@control.ee.ethz.ch">Contact Us</a> | The OBS Framework Project</div></body></html>

@@ -1,0 +1,70 @@
+<project name="ObsFrameworkModels" default="BuildAll" basedir="..">
+      <description> Ant Build file to process the models of the OBS Framework and to construct the sample application model.</description>
+      <property name="fbfmXsl" location="doc/xsl"/>
+      <target name="init">
+            <tstamp/>
+      </target>
+      <target name="DocumentMerging" description="Merge all framework feature model files into a single document">
+            <xslt force="true" in="models/xml/Dummy.xml" out="models/xml/ObsFrameworkModel.xml" style="models/xsl/ObsFrameworkFeatureMerger.xsl"/>
+      </target>
+      <target name="MacroProcessing" description="extracts macros">
+            <xslt force="true" in="models/xml/ObsFrameworkModel.xml" out="models/xml/ObsFrameworkModelExpanded.xml" style="${fbfmXsl}/MacroProcessing.xsl"/>
+      </target>
+      <target name="MakeNamesUnique" description="make feature and group names unique">
+            <xslt force="true" in="models/xml/ObsFrameworkModelExpanded.xml" out="models/xml/ObsFrameworkModelExpUnique.xml" style="${fbfmXsl}/AddUniqueNames.xsl"/>
+      </target>
+      <target name="GenerateApplicationModel" description="Generate the XSD to validate the application models">
+            <xslt force="true" in="models/xml/ObsFrameworkModelExpUnique.xml" out="models/xsd/ObsFrameworkAppModel.xsd" style="${fbfmXsl}/TransformationToAppXsd.xsl"/>
+      </target>
+      <target name="BuildSampleApplicationModel" description="Merge all sample application feature models into a single document (the sample application model)">
+            <xslt force="true" in="models/xml/Dummy.xml" out="src/xml/SampleApplicationModel.xml" style="src/xsl/SampleApplicationFeatureMerger.xsl"/>
+      </target>
+      <target name="BuildAll" description="Implement full chain from feature models to application XSD">
+            <antcall target="DocumentMerging"/>
+            <antcall target="MacroProcessing"/>
+            <antcall target="MakeNamesUnique"/>
+            <antcall target="GenerateApplicationModel"/>
+            <antcall target="DelNames"/>
+            <antcall target="CleanNames"/>
+            <antcall target="BuildSampleApplicationModel"/>
+      </target>
+      <target name="CleanNames" description="Undo the effects of AddUniqueNames">
+            <xslt in="src/xml/SampleControlActions_n.xml" out="src/xml/SampleControlActions.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/SampleEventRepository_n.xml" out="src/xml/SampleEventRepository.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/SampleFSM_n.xml" out="src/xml/SampleFSM.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/SampleFullDataPool_n.xml" out="src/xml/SampleFullDataPool.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/SampleMonitoredDataPool_n.xml" out="src/xml/SampleMonitoredDataPool.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/SampleObsClock_n.xml" out="src/xml/SampleObsClock.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/MatlabCopyPID_n.xml" out="src/xml/MatlabCopyPID.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/MatlabDataItemPID_n.xml" out="src/xml/MatlabDataItemPID.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/MatlabDataPoolPID_n.xml" out="src/xml/MatlabDataPoolPID.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/MatlabPointerPID_n.xml" out="src/xml/MatlabPointerPID.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/SampleR1Database_n.xml" out="src/xml/SampleR1Database.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/SampleR2Database_n.xml" out="src/xml/SampleR2Database.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/SampleR3Database_n.xml" out="src/xml/SampleR3Database.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/SampleManoeuvres_n.xml" out="src/xml/SampleManoeuvres.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/SampleTelecommands_n.xml" out="src/xml/SampleTelecommands.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/SampleTelemetryPackets_n.xml" out="src/xml/SampleTelemetryPackets.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+            <xslt in="src/xml/SampleTracer_n.xml" out="src/xml/SampleTracer.xml" style="${fbfmXsl}/removeUniqueNames.xsl"/>
+      </target>
+      <target name="DelNames" description="Delete files created by target CleanNames">
+            <delete>
+                  <fileset dir="src/xml/">
+                        <include name="SampleFSM.xml"/>
+                        <include name="SampleFullDataPool.xml"/>
+                        <include name="SampleMonitoredDataPool.xml"/>
+                        <include name="MatlabCopyPID.xml"/>
+                        <include name="MatlabDataPoolPID.xml"/>
+                        <include name="MatlabPointerPID.xml"/>
+                        <include name="MatlabDataItemPID.xml"/>
+                        <include name="SampleR1Database.xml"/>
+                        <include name="SampleR2Database.xml"/>
+                        <include name="SampleR3Database.xml"/>
+                        <include name="SampleManoeuvres.xml"/>
+                        <include name="SampleTelecommands.xml"/>
+                        <include name="SampleTelemetryPackets.xml"/>
+                        <include name="SampleTracer.xml"/>
+                  </fileset>
+            </delete>
+      </target>
+</project>

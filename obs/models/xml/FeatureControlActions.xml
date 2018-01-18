@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:/D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+<!-- 
+      This model assumes that the inputs and outputs of the control block always come from the data pool. This is also the case
+      when the copy, pointer or data item link mechanism is used. Similarly, it is assumed that the control block parameters are
+      linked to the parameter database
+-->
+      
+      <Macro nameOfMacro="ControlActions">
+            <Feature nameOfFeature="ControlAction">
+                  <Description text="A control action encapsulating a control block"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                  <Type>
+                        <BuildingBlock>
+                              <Component status="provided" type="Data/DC_ControlAction"/>
+                        </BuildingBlock>
+                  </Type>
+                  <Group nameOfGroup="OptionalAttributes">
+                        <Description text="Optional attributes of a control action"/>
+                        <GroupCardinality GroupCardMin="0" GroupCardMax="3"/>
+                        <Feature nameOfFeature="InitialEnableStatus">
+                              <Description text="The control action has a non-default initial enable status"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="string">
+                                                <Enumeration>
+                                                      <Item value="ENABLED"/>
+                                                      <Item value="DISABLED"/>
+                                                </Enumeration>
+                                          </Property>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="Mode">
+                              <Description text="The name of an operational mode where the control action is activated"/>
+                              <FeatureComment text="It is also possible to direct enter the control action name in the FSM model as one of the punctual actions 
+                              associated to a state of an FSM"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="*"/>
+                              <Type>
+                                    <Attribute>
+                                          <Property status="provided" type="string"/>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="ActivationCondition">
+                              <Description text="The control action has an activation condition"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <Attribute>
+                                          <Operation status="missing"/>
+                                    </Attribute>
+                              </Type>
+                        </Feature>
+                  </Group>
+                  <Group nameOfGroup="MandatoryAttributes">
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="ControlBlock">
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Interface status="provided" type="Data/ControlBlock"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="LinkMechanism">
+                                    <Description text="The link mechanism used by the control block"/>
+                                    <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                    <Feature nameOfFeature="CopyLink">
+                                          <Description text="The copy link mechanism is used"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Functionality status="provided"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="DataItemLink">
+                                          <Description text="The data item link mechanism is used"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Functionality status="provided"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="PointerLink">
+                                          <Description text="The copy link mechanism is used"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Functionality status="provided"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="DataPoolLink">
+                                          <Description text="The data pool link mechanism is used"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Functionality status="provided"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                              </Group>
+                              <Group nameOfGroup="Inputs">
+                                    <Description text="The inputs of the control block"/>
+                                    <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                    <Feature nameOfFeature="Input">
+                                          <Description text="A control block input linked to a data pool location"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                                          <Type>
+                                                <Composite/>
+                                          </Type>
+                                          <Group nameOfGroup="Attributes">
+                                                <Description text="The attributes of a control block input linked to a data pool location"/>
+                                                <GroupCardinality GroupCardMin="3" GroupCardMax="3"/>
+                                                <Feature nameOfFeature="Name">
+                                                      <Description text="The name of the data pool item"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string"/>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="Number">
+                                                      <Description text="The index of the input in the control block"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int">
+                                                                        <Range minValue="0" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="DatapoolName">
+                                                      <Description text="The name of the data pool location to which the control block input is linked"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string"/>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                              </Group>
+                              <Group nameOfGroup="Outputs">
+                                    <Description text="The outputs of the control block"/>
+                                    <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                    <Feature nameOfFeature="Output">
+                                          <Description text="A control block output linked to a data pool location"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                                          <Type>
+                                                <Composite/>
+                                          </Type>
+                                          <Group nameOfGroup="Attributes">
+                                                <Description text="The attributes of a control block output linked to a data pool location"/>
+                                                <GroupCardinality GroupCardMin="3" GroupCardMax="3"/>
+                                                <Feature nameOfFeature="Name">
+                                                      <Description text="The name of the data pool item"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string"/>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="Number">
+                                                      <Description text="The index of the input in the control block"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int">
+                                                                        <Range minValue="0" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="DatapoolName">
+                                                      <Description text="The name of the data pool location to which the control block output is linked"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string"/>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                              </Group>
+                              <Group nameOfGroup="Parameters">
+                                    <Description text="The parameters of the control block"/>
+                                    <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                    <Feature nameOfFeature="Parameter">
+                                          <Description text="A control block parameter linked to a parameter database location"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                                          <Type>
+                                                <Composite/>
+                                          </Type>
+                                          <Group nameOfGroup="Attributes">
+                                                <Description text="The attributes of a control block parameter linked to a parameter database location"/>
+                                                <GroupCardinality GroupCardMin="3" GroupCardMax="3"/>
+                                                <Feature nameOfFeature="ParameterName">
+                                                      <Description text="The name of the parameter in the control block (this could be the Matlab name)"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string"/>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="Number">
+                                                      <Description text="The number of the parameter in the control block"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int">
+                                                                        <Range minValue="0" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="DatabaseName">
+                                                      <Description text="The name of the database location to which the control block parameter is linked"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string"/>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                              </Group>
+                              <Group nameOfGroup="Options">
+                                    <Description text="The control block options envisaged by the framework"/>
+                                    <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                    <Feature nameOfFeature="Custom">
+                                          <Description text="An application-specific control block not provided by the framework"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Component status="missing"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="DefaultAttributes">
+                                                <Description text="The default attributes of the application-specific control block"/>
+                                                <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                                <CallMacro nameOfCalledMacro="DefaultAttributes"/>
+                                          </Group>
+                                    </Feature>
+                                    <Feature nameOfFeature="MatlabWrapper">
+                                          <Description text="The control block is constructed as a wrapper for Matlab-generated code"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Component status="generable"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="MatlabRoutines">
+                                                <Description text=""/>
+                                                <GroupCardinality GroupCardMin="3" GroupCardMax="3"/>
+                                                <Feature nameOfFeature="StepFunction">
+                                                      <Description text="The name of the Matlab step function"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string"/>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="InitFunction">
+                                                      <Description text="The name of the Matlab init function"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string"/>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="MatlabCodeHeaderFile">
+                                                      <Description text="The header file exported from Matlab"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string"/>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>

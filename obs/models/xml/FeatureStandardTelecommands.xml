@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:/D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="StandardTelecommands">
+            <Feature nameOfFeature="StandardTelecommand">
+                  <Description text="The standard (non-PUS) telecommands provided by the application"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                  <Type><Composite/>
+                  </Type>
+                  <Group nameOfGroup="CriticalityFlag">
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="Telecommand">
+                              <Description text="Standard non-critical telecommand"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Interface status="provided" type="Telecommand/Telecommand"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="StandardTcOptions">
+                                    <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                    <Feature nameOfFeature="DummyTelecommand">
+                                          <Description text="A dummy telecommand with configurable checks and actions"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Component status="provided" type="Telecommand/DC_DummyTelecommand"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="OptionalAttributes">
+                                                <Description text="The optional attributes of the telecommand"/>
+                                                <GroupCardinality GroupCardMin="0" GroupCardMax="4"/>
+                                                <Feature nameOfFeature="ExecutionCheckValue">
+                                                      <Description text="The initial execution check status of the telecommand has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string">
+                                                                        <Enumeration>
+                                                                              <Item value="ENABLED"/>
+                                                                              <Item value="DISABLED"/>
+                                                                        </Enumeration>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="ValidityCheckValue">
+                                                      <Description text="The initial validity check status of the telecommand has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string">
+                                                                        <Enumeration>
+                                                                              <Item value="ENABLED"/>
+                                                                              <Item value="DISABLED"/>
+                                                                        </Enumeration>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="ExecutionCheckCode">
+                                                      <Description text="The initial execution check code of the telecommand has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int">
+                                                                        <Range minValue="0" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="ValidityCheckCode">
+                                                      <Description text="The initial validity check code of the telecommand has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int">
+                                                                        <Range minValue="0" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                                    <Feature nameOfFeature="CustomStandardTelecommand">
+                                          <Description text="An application-specific standard telecommand"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Component status="missing"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="DefaultAttributes">
+                                                <Description text="The default attributes of the custom telecommand"/>
+                                                <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                                <CallMacro nameOfCalledMacro="DefaultAttributes"/>
+                                          </Group>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                        <Feature nameOfFeature="CriticalTelecommand">
+                              <Description text="Critical telecommand"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Interface status="provided" type="Telecommand/CriticalTelecommand"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="MandatoryAttributes">
+                                    <GroupCardinality GroupCardMin="2" GroupCardMax="2"/>
+                                    <Feature nameOfFeature="ObsClock">
+                                          <Description text="The name of the OBS clock of the critical telecommand"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property status="provided" type="string"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                              </Group>
+                              <Group nameOfGroup="OptionalAttributes">
+                                    <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                    <Feature nameOfFeature="MaxArmedDuration">
+                                          <Description text="The maximum armed duration of the critical telecommand"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property status="provided" type="int">
+                                                            <Range minValue="1" maxValue="+"/>
+                                                      </Property>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                              </Group>
+                              <Group nameOfGroup="CriticalTelecommandOptions">
+                                    <Description text="The critical telecommand options offered by the framework"/>
+                                    <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                                    <Feature nameOfFeature="DummyCriticalTelecommand">
+                                          <Description text="A critical telecommand with dummy functionalities"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Component status="provided" type="Telecommand/DC_DummyCriticalTelecommand"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="OptionalAttributes">
+                                                <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                                <Feature nameOfFeature="ImageValidity">
+                                                      <Description text="The initial image validity has a non-default value"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string">
+                                                                        <Enumeration>
+                                                                              <Item value="ENABLED"/>
+                                                                              <Item value="DISABLED"/>
+                                                                        </Enumeration>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                                    <Feature nameOfFeature="CustomCriticalTelecommand">
+                                          <Description text="An application-specific critical telecommand"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <BuildingBlock>
+                                                      <Component status="missing"/>
+                                                </BuildingBlock>
+                                          </Type>
+                                          <Group nameOfGroup="DefaultAttributes">
+                                                <Description text="The default attributes of the custom critical telecommand"/>
+                                                <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                                                <CallMacro nameOfCalledMacro="DefaultAttributes"/>
+                                          </Group>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                        
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?><html><head><link rel="stylesheet" type="text/css" href="css/main.css"/><link rel="stylesheet" type="text/css" href="css/3col_leftNav.css"/></head><body><div id="header"><h1 id="siteName">OBS Framework </h1><div id="globalNav"><a href="Home.html">Home</a> | <a href="General.html">General</a> | <a href="Implementation.html">Implementation</a> | <a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a> | <a href="http://www.pnp-software.com/ObsFramework/ObsFramework_0_8_3.zip">Download</a> | <a href="indexDisclaimer.html">Disclaimer</a></div><h2 id="pageName">Implementation - Transformer Meta-Components</h2></div><div id="navbar"><div id="sectionLinks"><ul><li><a href="indexDomainDictionary.html">Domain Dictionary</a></li><li><a href="indexDesignPatterns.html">Design Patterns</a></li><li><a href="indexAbstractInterfaces.html">Abstract Interfaces</a></li><li><a href="indexConcreteComponents.html">Concrete Components</a></li><li><a href="indexGeneratorMeta-Components.html">Generator Meta-Components</a></li><li><a href="indexTransformerMeta-Components.html">Transformer Meta-Components</a></li><li><a href="indexRealTimeIssues.html">Real Time Issues</a></li><li><a href="indexImplementationIssues.html">Implementation Issues</a></li><li><a href="indexInstallationIssues.html">Installation Issues</a></li><li><a href="indexSourceCode.html">Source Code</a></li><li><a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a></li></ul></div></div><div id="subnavbar"><li><a href="AspectOrientedProgramming.html">Aspect Oriented Programming</a></li></div><div id="content">
+    
+    
+    
+    <Introduction>
+        <p class="links">Transformer meta-components are one of the building blocks that are provided by the OBS
+            Framework. They are introduced to automate the tailoring process whereby the assets
+            provided by the framework are modified to match the needs of a target application (see
+            the <a href="indexDevelopmentProcess.html" target="_parent">framework development
+            process</a>). More specifically, transformer meta-components can automatically modify
+            the source code of an existing component to endow it with some new application-specific
+            property or behaviour.</p>
+        <p class="links">In the OBS Framework, tranformer meta-components are implemented as <i>aspect
+            programs</i> (see <a href="AspectOrientedProgramming.html">here</a> for an introduction
+            to aspect oriented programming) using the <a href="http://www.pnp-software.com/XWeaver" target="_parent">XWeaver</a> aspect
+            language and aspect weaver. XWeaver is an extensible, customizable and minimally
+            intrusive aspect weaver that is specifically aimed at qualifiable applications. The mode
+            of operation of the generator meta-components is illustrated in the
+            figure:<p><center><img src="../figures/gif/TransformerMetaComponents_1.gif"/></center></p> The code modification process is
+            driven by a set of specifications that are expressed in an XML document. These
+            specifications describe a modification to be performed upon the code of some existing
+            building blocks. The XWeaver aspect weaver takes these specifications and the existing
+            building blocks as inputs and generates the modified building blocks as output.</p>
+        <p class="links">The development of the transformer meta-components for the OBS Framework is currently under
+            way and will be described in a future release of the framework. </p>
+    </Introduction>
+</div><div id="siteInfo"><a href="mailto:pasetti@control.ee.ethz.ch, cechti@control.ee.ethz.ch">Contact Us</a> | The OBS Framework Project</div></body></html>

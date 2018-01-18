@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="ParameterDatabase">
+            <Feature nameOfFeature="ParameterDatabase">
+                  <Description text="The parameter database "/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type>
+                        <BuildingBlock>
+                              <Interface status="provided" type="Data/ParameterDatabase"/>
+                        </BuildingBlock>
+                  </Type>
+                  <Group nameOfGroup="ParameterDatabaseOptions">
+                        <Description text="The implementation options for the parameter database offered by the framework"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <Feature nameOfFeature="Custom">
+                              <Description text="An application-specific parameter database not provided by the framework"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="missing"/>
+                                    </BuildingBlock>
+                              </Type>
+                        </Feature>
+                        <Feature nameOfFeature="BasicDatabase">
+                              <Description text="A parameter database with basic functionalities and minimal overheads"/>
+                              <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                              <Type>
+                                    <BuildingBlock>
+                                          <Component status="provided" type="Data/DC_BasicDatabase"/>
+                                    </BuildingBlock>
+                              </Type>
+                              <Group nameOfGroup="BasicDatabaseAttributes">
+                                    <Description text="The attributes of the basic database"/>
+                                    <GroupCardinality GroupCardMin="4" GroupCardMax="4"/>
+                                    <Feature nameOfFeature="DatabaseSize">
+                                          <Description text="The size in bytes of the database"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property status="provided" type="int" name="TableLength">
+                                                            <Range minValue="1" maxValue="+"/>
+                                                      </Property>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="OperationalTable">
+                                          <Description text="The starting address of the operational table"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property status="provided" type="string" name="OperationalTable"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="DefaultTable">
+                                          <Description text="The starting address of the default table"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                          <Type>
+                                                <Attribute>
+                                                      <Property status="provided" type="string" name="DefaultTable"/>
+                                                </Attribute>
+                                          </Type>
+                                    </Feature>
+                                    <Feature nameOfFeature="DatabaseItem">
+                                          <Description text="An item in the database"/>
+                                          <FeatureCardinality FeatureCardMin="1" FeatureCardMax="+"/>
+                                          <Type>
+                                                <Composite/>
+                                          </Type>
+                                          <Group nameOfGroup="DatabaseItemAttributes">
+                                                <Description text="The attributes of the database item"/>
+                                                <GroupCardinality GroupCardMin="3" GroupCardMax="3"/>
+                                                <Feature nameOfFeature="Id">
+                                                      <Description text="The numerical identifier of the database parameter"/>
+                                                      <FeatureComment text="Constraint: the id must be less than the database size"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="int">
+                                                                        <Range minValue="0" maxValue="+"/>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="Name">
+                                                      <Description text="The name of the database parameter"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string"/>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                                <Feature nameOfFeature="Type">
+                                                      <Description text="The syntactical type of the database parameter"/>
+                                                      <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                                                      <Type>
+                                                            <Attribute>
+                                                                  <Property status="provided" type="string">
+                                                                        <Enumeration>
+                                                                              <Item value="float"/>
+                                                                              <Item value="double"/>
+                                                                              <Item value="int"/>
+                                                                              <Item value="unsigned int"/>
+                                                                              <Item value="short"/>
+                                                                              <Item value="unsigned short"/>
+                                                                              <Item value="char"/>
+                                                                              <Item value="unsigned char"/>
+                                                                              <Item value="bool"/>
+                                                                        </Enumeration>
+                                                                  </Property>
+                                                            </Attribute>
+                                                      </Type>
+                                                </Feature>
+                                          </Group>
+                                    </Feature>
+                              </Group>
+                        </Feature>
+                        <CallMacro nameOfCalledMacro="IndexedDatabase"/>
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>

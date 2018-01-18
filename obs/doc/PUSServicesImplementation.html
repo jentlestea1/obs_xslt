@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?><html><head><link rel="stylesheet" type="text/css" href="css/main.css"/><link rel="stylesheet" type="text/css" href="css/3col_leftNav.css"/></head><body><div id="header"><h1 id="siteName">OBS Framework</h1><div id="globalNav"><a href="Home.html">Home</a> | <a href="General.html">General</a> | <a href="Implementation.html">Implementation</a> | <a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a> | <a href="http://www.pnp-software.com/ObsFramework/ObsFramework_0_8_3.zip">Download</a> | <a href="indexDisclaimer.html">Disclaimer</a></div><h2 id="pageName">General - PUS Services Implementation</h2></div><div id="navbar"><div id="sectionLinks"><ul><li><a href="indexDevelopmentProcess.html" class="current">Development Process</a></li><li><a href="indexModellingApproach.html">Modelling Approach</a></li><li><a href="indexPUSCompatibility.html">PUS Compatibility</a></li><li><a href="indexQualificationApproach.html">Qualification Approach</a></li></ul></div></div><div id="subnavbar"><li><a href="#TelecommandVerificationService">Telecommand Verification Service</a></li><li><a href="#HousekeepingAndDiagnosticDataReportingService">Housekeeping And Diagnostic Data Reporting Service</a></li><li><a href="#MemoryManagementService">Memory Management Service</a></li><li><a href="#FunctionManagementService">Function Management Service</a></li></div><div id="content">
+    
+    
+    
+    <Introduction>
+        <p class="links">This page describes the level of implementation of the PUS services in the OBS Framework.
+            For each implemented service, a subsection in this page is provided that points to the
+            OBS classes that implement the service. Detailed information about the degree of
+            implementaion can be found in the class documentation. Finally, it should be noted that
+            implementation of the PUS Services is currently on-going and more service
+            implementations will be added in the near future.</p>
+    </Introduction>
+    <h3><a name="TelecommandVerificationService">Telecommand Verification Service</a></h3>
+        <p class="links">This service is implemented in full. The telemetry packets that carry the telemetry
+            verification information are implemented by class <cls>DC_PUSTcVerificationPacket</cls>.
+            The mechanism for dispatchig telemetry verification packets is implemented on top of the
+            standard <a href="DomainDictionaryEntries.html#EventRepository">event reporting
+            mechanism</a> provided by the OBS Framework. The framework provides a class
+            <cls>DC_PUSEventRepository</cls> that intercepts all telecommand-related event reports.
+            This class analyses the event report and decides whether a telemetry verification packet
+            should be configured and dispatched.</p>
+    
+    <h3><a name="HousekeepingAndDiagnosticDataReportingService">Housekeeping And Diagnostic Data Reporting Service</a></h3>
+        <p class="links">This service is implemened in part as follows:</p>
+        <p class="links"><ul>
+            <li>Class <cls>DC_PUSDefineDataReporting</cls> implements the service to define new
+                housekeeping or diagnostic data reports (subtype 1 and 2)</li>
+            <li>Class <cls>DC_PUSClearDataReporting</cls> implements the service to clear
+                housekeeping or diagnostic data report definitions (subtype 3 and 4)</li>
+            <li>Class <cls>DC_PUSControlDataReporting</cls> implements the service to enable and
+                disable housekeeping or diagnostic data report definitions (subtypes 5 to 8)</li>
+            <li>Class <cls>DC_PUSDataReportingPacket</cls> implements the telemetry packets
+                reporting the housekeeping or diagnostic data (subtype 25 and 26)</li>
+        </ul></p>
+    
+    <h3><a name="MemoryManagementService">Memory Management Service</a></h3>
+        <p class="links">This service is implemened in part as follows:</p>
+        <p class="links"><ul>
+            <li>Class <cls>DC_PUSMemoryLoadOffset</cls> implements the service to load data in
+                memory using base plus offset (subtype 1)</li>
+            <li>Class <cls>DC_PUSMemoryLoadAbsolute</cls> implements the service to load data in
+                memory using absolute addresses (subtype 2)</li>
+            <li>Class <cls>DC_PUSDumpMemoryOffset</cls> implements the service to command a memory
+                dump using base plus offset (subtype 3)</li>
+            <li>Class <cls>DC_PUSMemoryDumpOffset</cls> implements the service to perform a memory
+                dump using base plus offset (subtype 4)</li>
+            <li>Class <cls>DC_PUSDumpMemoryAbsolute</cls> implements the service to command a memory
+                dump using absolute addresses (subtype 5)</li>
+            <li>Class <cls>DC_PUSMemoryDumpAbsolute</cls> implements the service to perform a memory
+                dump using absolute addresses (subtype 6)</li>
+        </ul></p>
+    
+    <h3><a name="FunctionManagementService">Function Management Service</a></h3>
+        <p class="links">This service is implemened in full. The telecommand concept implemented by the OBS
+            Framework makes support for this service easy and natural since telecommand packets are
+            translated into telecommand components (instances of class <cls>Telecommand</cls>) that
+            can be executed by some external agent. Class <cls>PUSFunctionManagement</cls> is
+            provided to define the type and subtype for this PUS service.</p>
+    
+</div><div id="siteInfo"><a href="mailto:pasetti@control.ee.ethz.ch, cechti@control.ee.ethz.ch">Contact Us</a> | The OBS Framework Project</div></body></html>

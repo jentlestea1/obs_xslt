@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?><html><head><link rel="stylesheet" type="text/css" href="css/main.css"/><link rel="stylesheet" type="text/css" href="css/3col_leftNav.css"/></head><body><div id="header"><h1 id="siteName">OBS Framework </h1><div id="globalNav"><a href="Home.html">Home</a> | <a href="General.html">General</a> | <a href="Implementation.html">Implementation</a> | <a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a> | <a href="http://www.pnp-software.com/ObsFramework/ObsFramework_0_8_3.zip">Download</a> | <a href="indexDisclaimer.html">Disclaimer</a></div><h2 id="pageName">Implementation - Domain Dictionary</h2></div><div id="navbar"><div id="sectionLinks"><ul><li><a href="indexDomainDictionary.html">Domain Dictionary</a></li><li><a href="indexDesignPatterns.html">Design Patterns</a></li><li><a href="indexAbstractInterfaces.html">Abstract Interfaces</a></li><li><a href="indexConcreteComponents.html">Concrete Components</a></li><li><a href="indexGeneratorMeta-Components.html">Generator Meta-Components</a></li><li><a href="indexTransformerMeta-Components.html">Transformer Meta-Components</a></li><li><a href="indexRealTimeIssues.html">Real Time Issues</a></li><li><a href="indexImplementationIssues.html">Implementation Issues</a></li><li><a href="indexInstallationIssues.html">Installation Issues</a></li><li><a href="indexSourceCode.html">Source Code</a></li><li><a href="doxygen/html/index.html" target="_blank">C++ Code Documentation</a></li></ul></div></div><div id="subnavbar"><li><a href="DomainDictionaryEntries.html">- ALL ENTRIES -</a></li><li><a href="domainDictionaryAbstractUnit.html">Abstract Unit</a></li><li><a href="domainDictionaryConditionalPunctualAction.html">Conditional Punctual Action</a></li><li><a href="domainDictionaryControlAction.html">Control Action</a></li><li><a href="domainDictionaryControlBlock.html">Control Block</a></li><li><a href="domainDictionaryControllerManager.html">Controller Manager</a></li><li><a href="domainDictionaryCriticalTelecommand.html">Critical Telecommand</a></li><li><a href="domainDictionaryDataItem.html">Data Item</a></li><li><a href="domainDictionaryDataPool.html">Data Pool</a></li><li><a href="domainDictionaryEvent.html">Event</a></li><li><a href="domainDictionaryEventRepository.html">Event Repository</a></li><li><a href="domainDictionaryFDIRCheck.html">FDIR Check</a></li><li><a href="domainDictionaryFSM.html">FSM</a></li><li><a href="domainDictionaryFsmEvent.html">FsmEvent</a></li><li><a href="domainDictionaryFsmState.html">FsmState</a></li><li><a href="domainDictionaryFunctionalityImplementer.html">Functionality Implementer</a></li><li><a href="domainDictionaryFunctionalityManager.html">Functionality Manager</a></li><li><a href="domainDictionaryManoeuvre.html">Manoeuvre</a></li><li><a href="domainDictionaryManoeuvreManager.html">Manoeuvre Manager</a></li><li><a href="domainDictionaryModeManager.html">Mode Manager</a></li><li><a href="domainDictionaryMonitoringProfile.html">Monitoring Profile</a></li><li><a href="domainDictionaryOperatingSystemInterface.html">Operating System Interface</a></li><li><a href="domainDictionaryParameterDatabase.html">Parameter Database</a></li><li><a href="domainDictionaryPunctualAction.html">Punctual Action</a></li><li><a href="domainDictionaryReconfigurationManager.html">Reconfiguration Manager</a></li><li><a href="domainDictionaryRecoveryAction.html">Recovery Action</a></li><li><a href="domainDictionaryTelecommand.html">Telecommand</a></li><li><a href="domainDictionaryTelecommandLoader.html">Telecommand Loader</a></li><li><a href="domainDictionaryTelecommandManager.html">Telecommand Manager</a></li><li><a href="domainDictionaryTelemeterable.html">Telemeterable</a></li><li><a href="domainDictionaryTelemetryItem.html">Telemetry Item</a></li><li><a href="domainDictionaryTelemetryManager.html">Telemetry Manager</a></li><li><a href="domainDictionaryTelemetryStream.html">Telemetry Stream</a></li><li><a href="domainDictionaryTracer.html">Tracer</a></li></div><div id="content">
+    
+    
+    
+    <Introduction>
+        <p class="links">The domain dictionary defines a number of terms which emerge, directly or indirectly,
+            from the description of the <a href="indexDesignPatterns.html" target="_parent">OBS
+                design patterns</a>. Domain dictionry entries are useful because they provide a
+            vocabulary for describing applications in the OBS domain.</p>
+        <p class="links">Domain dictionary terms can designate either <i>abstractions</i> that exist in many
+            applications in the domain but take a different form in each or they can designate
+                <i>domain-invariant functionalities</i> that share the same implemention in all
+            applications in the domain. At architectural level, the domain dictionary abstractions
+            are often mapped to <a HREF="indexAbstractInterfaces.html" target="_parent">abstract
+            interfaces</a> and the domain-invariant functionalities are often mapped to <a HREF="indexConcreteComponents.html" target="_parent">concrete components</a>.</p>
+        <p class="links">The domain dictionary entries are well-suited to describing an application in a
+            non-formal manner. Formal description of an application is best done using the <a HREF="indexModellingApproach.html" target="_parent">modelling techniques</a> offered
+            by the OBS Framework. In a typical scenario, the domain dictionary entries can be used
+            to formulate the requirements baseline whereas more formal modelling techniques are used
+            to define the application software requirements.</p>
+        <p class="links">For each entry, the domain dictionary provides the following information:</p>
+        <p class="links"><ul>
+            <li>The name of the dictionary entry</li>
+            <li>The definition of the dictionary entry</li>
+            <li>The design pattern where the dictionary entry is introduced (only for entries that
+                are directly associated to a design pattern)</li>
+        </ul></p>
+        <p class="links">In most cases, the OBS Framework offers syntactical constructs that directly support the
+            implementation of a domain dictionary entry. These can be found by navigating from the
+            domain dictionary entry to the design pattern that gives rise to it and then checking
+            the "Framework Mapping" section of the design pattern description.</p>
+        <p class="links">This <a HREF="DomainDictionaryEntries.html">pointer</a> gives access to the OBS domain dictionary.</p>
+    </Introduction>
+</div><div id="siteInfo"><a href="mailto:pasetti@control.ee.ethz.ch, cechti@control.ee.ethz.ch">Contact Us</a> | The OBS Framework Project</div></body></html>

@@ -1,0 +1,627 @@
+<DesignPattern>
+
+
+
+<Name>
+
+Telecommand Management
+
+</Name>
+
+
+
+<BasedOn>
+
+This pattern is essentially identical to the telecommand management pattern of the
+
+<a HREF="http://www.pnp-software.com/AocsFramework">AOCS Framework</a> (see also:
+
+A. Pasetti, <i>Embedded Control Systems and Software Frameworks</i>, Springer-Verlag, 2002)
+
+which is in turn based on the command pattern of Gamma <i>et al</i>.
+
+It can also be seen as an instance of the <a href="Manager.html">manager design pattern</a>.
+
+</BasedOn>
+
+
+
+<Intent>
+
+Decouple the management of telecommands from their implementation and from the data source from which they are loaded.
+
+</Intent>
+
+
+
+<Motivation>
+
+<p>Telecommands are traditionally represented by strings of bytes of which the first one is an identifier that defines the type of telecommand and that is 
+
+      followed by one or more bytes representing the data associated to the telecommand. Telecommand management is usually delegated to a dedicated 
+
+      module that, essentially, implements a <code>case</code> construct where, depending on the telecommand identifier, certain actions are taken.
+
+</p>
+
+<p>
+
+This solution is obviously not acceptable from the perspective of a framework which must explicitly recognize telecommands as variation points and, for reasons of extensibility and reusability, should separate their management from their implementation. Separation is essential to achieving reusability since the implementation of the telecommands is necessarily application-dependent.
+
+</p>
+
+<p>
+
+A second reason hindering the reusability of telecommand management code is the variability in the mechanisms used by on-board applications to load the telecommand in the OBS. This is sometimes done through an I/O port with an interrupt signaling the arrival of a new telecommand (or perhaps even of a new telecommand word). Alternatively, the OBS autonomously polls a DMA area where external hardware deposits the telecommands. Still other solutions are possible.
+
+<p/>
+
+This design pattern proposes a solution that addresses both these variability problems.
+
+</p>
+
+</Motivation>
+
+
+
+<DictionaryEntry>CriticalTelecommand</DictionaryEntry>
+
+<DictionaryEntry>Telecommand</DictionaryEntry>
+
+<DictionaryEntry>Telecommand Loader</DictionaryEntry>
+
+<DictionaryEntry>Telecommand Manager</DictionaryEntry>
+
+
+
+<Structure>
+
+<p>This design pattern postulates the encapsulation of telecommands in components and proposes an abstract interface to characterize them 
+
+      and represent the telecommand abstraction at syntactical level. A component encapsulating a telecommand must implement the abstract interface <CODE>Telecommand</CODE>. This interface defines the operations that a telecommand manager component may need to perform in order to control the execution of telecommands. The most basic operation is an <CODE>execute</CODE> operation which, when it is called by the telecommand manager, causes the actions associated to the telecommand to be executed. Other operations could be defined to perform the following checks:
+
+<ul>
+
+<li>a <i>validity check</i> that verifies that the attributes associated to the telecommand are valid;</li>
+
+<li>an <i>execution check</i> that should be performed just before the telecommand is executed to verify that operational conditions for the telecommand execution are satisfied</li>
+
+</ul>
+
+</p>
+
+<p>
+
+The <i>telecommand manager</i> is the component responsible for executing the telecommands. Since it sees the telecommands only through the abstract interface <CODE>Telecommand</CODE>, it can be developed as an application-independent component and could in principle become one of the core components offered by the framework.
+
+</p>
+
+<p>
+
+Telecommand components must be created dynamically upon reception of the telecommand from the ground and must be destroyed after execution. This process can be complex and the way in which it is done can vary across applications. Hence, in order to preserve the application-independent character of the design solution proposed for telecommands, a second component, the <i>telecommand loader</i> is introduced. The telecommand loader is responsible for:
+
+<ul>
+
+<li>processing the raw telecommand as described by the string of bytes that are uplinked by the ground station and use them to instantiate a telecommand component;</li>
+
+<li>loading the telecommand component into the telecommand manager who will be responsible for executing it;</li>
+
+<li>destroying the telecommand component after it has been executed by the telecommand manager thus releasing any resources that had been allocated to it</li>
+
+</ul>
+
+</p>
+
+<p>
+
+Since the implementation of these actions must be application-specific, the framework cannot provide a generic telecommand loader component. The solution 
+
+proposed by this design pattern is to associate an abstract interface to it: the <CODE>TelecommandLoader</CODE> interface. This interface represents at syntactical level the telecommand loader abstraction.
+
+The telecommand loader interacts, on the one side, with the low-level mechanism for receiving the raw telecommands and, on the other side, with the telecommand manager. The interaction with the former is conceptually modeled as a response to an interrupt and requires the presence of an <CODE>activate</CODE> method in the <CODE>TelecommandLoader</CODE> interface to act as an entry point for the interrupt.
+
+</p>
+
+<p>
+
+The interaction between telecommand loader and telecommand manager is two-sided: either can perform an operation on the other. The interaction of the telecommand loader upon the telecommand manager arises when the former loads a newly assembled telecommand into it. The interaction in the opposite sense arises when, after a telecommand has been executed, the telecommand manager will have to unload it. Since telecommand objects are created dynamically and the creation process is managed by the telecommand loader, the latter must be informed when a telecommand is unloaded because it needs to release the resources (mainly memory) allocated to the telecommand object. The telecommand loader will therefore have to expose a method like <CODE>release</CODE> that is called by the telecommand manager when a telecommand is unloaded.
+
+Telecommand loader and telecommand manager see each other as plug-in components. The presence of the telecommand loader interface insulates the telecommand manager from the telecommand reception mechanism. The presence of the telecommand interface insulates the telecommand manager from the telecommand implementation details. Thus, both objectives of this design pattern are achieved.
+
+</p>
+
+</Structure>
+
+
+
+<StructureFigure>TelecommandDP</StructureFigure>
+
+
+
+<Participant>
+
+<Name>TelecommandManager</Name>
+
+<Role>The component that is responsible for executing telecommands.</Role>
+
+</Participant>
+
+
+
+<Participant>
+
+<Name>Telecommand</Name>
+
+<Role>The abstract interface that characterizes all components that encapsulate telecommands. It defines a basic operation to execute a telecommand. It may also define additional operations to perform housekeeping operations on it (getting its time tag, checking its enable status, checking its validity).</Role>
+
+</Participant>
+
+
+
+<Participant>
+
+<Name>ConcreteTelecommand</Name>
+
+<Role>Component implementing interface Telecommand that represents a specific and concrete telecommand.</Role>
+
+</Participant>
+
+
+
+<Participant>
+
+<Name>TelecommandLoader</Name>
+
+<Role>The abstract interface that characterizes all components that encapsulate telecommand loaders.</Role>
+
+</Participant>
+
+
+
+<Participant>
+
+<Name>ConcreteTelecommandLoader</Name>
+
+<Role>Component implementing interface TelecommandLoader that represents a specific and concrete telecommand loader.</Role>
+
+</Participant>
+
+
+
+<Collaborations>
+
+A complete telecommand processing cycle might proceed as follows:
+
+<ol>
+
+<li>
+
+an interrupt signals the arrival of a new telecommand (depending on the implementation, there may be a single interrupt for the whole telecommand or an interrupt for each telecommand word)
+
+</li>
+
+<li>
+
+the telecommand loader reacts to the interrupt by constructing an object of the appropriate telecommand class
+
+</li>
+
+<li>
+
+the telecommand loader loads the newly assembled telecommand into the telecommand manager
+
+</li>
+
+<li>
+
+eventually, the telecommand manager executes the telecommand or perhaps discards it if it was not enabled or if operational conditions did not allow its execution
+
+</li>
+
+<li>
+
+the telecommand manager informs the telecommand loader that the telecommand has been discarded (by calling its <CODE>release</CODE> method)
+
+</li>
+
+<li>
+
+the telecommand loader releases any resources that had been allocated to the telecommand object
+
+</li>
+
+</ol>
+
+</Collaborations>
+
+
+
+<Consequence>
+
+The management of telecommands is decoupled from their implementation and from the source from which telecommands are acquired. New telecommands can be added and existing telecommands can be modified without impact on the code that performs the telecommand management. This code can therefore be written to be application-independent and reusable.
+
+</Consequence>
+
+<Consequence>
+
+For each telecommand, a dedicated class implementing interface Telecommand must be created. This may lead to a proliferation of small classes.
+
+</Consequence>
+
+
+
+<Applicability>
+
+There is a need to handle telecommands and the source from which telecommands arrive and the type and function of the telecommand can vary from application to application.
+
+</Applicability>
+
+
+
+<ImplementationIssue>
+
+<p>
+
+What operations should be defined by the <CODE>Telecommand</CODE> interface? This interface should declare all the operations that might conceivably have to be performed upon a generic telecommand. A tentative definition could be:
+
+<PRE>
+    interface Telecommand {
+
+        void execute();
+        
+        int getTimeTag();
+        
+        void enable();
+        
+        void disable();
+        
+        bool isEnabled();
+        
+        bool isValid();
+        
+        bool canExecute();
+
+    }</PRE>
+
+Method <CODE>execute</CODE> is the basic method that, when called, will cause the actions associated to the telecommand to be executed. This is the basic operation that can be performed upon a telecommand but the way telecommands are typically used in on-board applications requires that they be endowed with the capability to perform other operations.
+
+Telecommands for instance may have a time tag specifying when they are to be executed. The telecommand interface should therefore declare a method like <CODE>getTimeTag</CODE> to let the telecommand manager retrieve the time tag (which is part of the data associated to the telecommand).
+
+</p><p>
+
+Telecommands are usually subjected to a validity check and this is implemented by method <CODE>isValid</CODE>.
+
+Often, there is also a requirement to enable and disable individual telecommands and then methods like <CODE>enable/disable</CODE> and <CODE>isEnabled</CODE> should also be declared by the telecommand interface.
+
+</p><p>
+
+Finally, telecommands are critical operations that should be executed only if the operational condition of the spacecraft warrants it. In order to ensure that this is the case, it is necessary that telecommands offer a <CODE>canExecute</CODE> method that performs an execution check and verifies that the telecommand can indeed be executed at a certain point in time.</p>
+
+</ImplementationIssue>
+
+
+
+<ImplementationIssue>
+
+<p>This design pattern is based on the idea that telecommands are treated as full-fledged objects, i.e. as instances of concrete classes. When a new telecommand is received from the ground, it is therefore necessary to create its associated object. This is done inside the telecommand loader component. There are several ways in which this can be done. The simplest way is to preserve the traditional concept where the grounds sends a string of bytes of which the first one is an identifier of the telecommand type and the others are the data associated to the telecommand. The telecommand loader would then implement code like:
+
+<PRE>	
+    // raw TC data as they received from the ground
+    byte rawTc[N];
+
+    // TC object tobe loaded to TC manager
+    Telecommand* tc;
+    TelecommandManager* tcMng;
+
+	. . .
+
+    switch rawTc[0] {
+    
+        case 'ID_1':
+        
+            tc = new ConcreteTc_1(rawTc[1], rawTc[2], . . .);            
+            break;
+        
+        case 'ID_2':
+        
+            tc = new ConcreteTc_2(rawTc[1], rawTc[2], . . .);            
+            break;
+        
+        case 'ID_3':
+        
+            tc = new ConcreteTc_3(rawTc[1], rawTc[2], . . .);            
+            break;
+        
+        . . .
+    
+    }
+
+
+    // load TC in TC manager 
+    tcMng->loadTelecommand(tc);
+</PRE>
+
+Note that the above code uses the <CODE>new</CODE> operator for reasons of clarity but, because of restrictions due to the real-time character of on-board applications, a realistic implementation should use some other creation mechanism with predictable timing properties.
+
+</p><p>
+
+The code assumes that the telecommand identifier is the first byte in the raw telecommand array. The switch clause uses it to determine which concrete telecommand should be instantiated. The telecommand data are passed as parameters to the telecommand constructor. Note that the telecommand is instantiated from a concrete telecommand class but is handled exclusively as an instance of abstract type Telecommand.
+
+</p><p>
+
+The solution proposed above is simple and in line with current practice but introduces in the telecommand loading code a dependency on the concrete type of the telecommand that, in the spirit of the telecommand design pattern, would be best avoided. A more elegant solution calls for the ground to uplink an image of the telecommand object. There is therefore no longer any need to explicitly construct the telecommand object and the telecommand loading code looks like this:
+
+<PRE><![CDATA[
+    // raw TC data as they received from the ground
+    byte rawTc[N];
+
+    // TC object to be loaded to TC manager
+    Telecommand* tc;	
+
+    TelecommandManager* tcMng;
+
+    . . .
+
+    tc = (Telecommand*)&rawTc[0];
+
+
+    // load TC in TC manager
+    tcMng->loadTelecommand(tc);]]></PRE>
+
+The array <CODE>rawTc</CODE> contains the raw telecommand bytes as they were received from the ground and the above code assumes that their format is such that the cast operation results in tc pointing to a meaningful and correctly laid out object. Essentially, the telecommand identifier is now replaced by a pointer to the virtual function table.
+
+</p><p>
+
+This solution removes any dependency on concrete telecommand classes but places a heavier burden on the ground segment and introduces some overhead in the telecommand. The source of the overhead is obvious: the way telecommand data are laid out in the instances of concrete telecommand classes is not necessarily optimal from the point of view of memory utilization. Consider for instance the pointer to the virtual function table. This occupies four bytes but its function is essentially that of the telecommand identifier in the traditional concept (the VFT pointer defines the concrete class from which the telecommand object is instantiated) which normally takes only one byte. Similarly, whenever a telecommand object must perform operations on other objects, it needs a reference to them and these will take four bytes.
+
+</p><p>
+
+The use of object references in the telecommand body poses a second problem. The telecommand database maintained by the ground station comes to depend on the position of objects in the on-board memory. This means that, during development, the telecommand data base may have to be updated whenever the on-board software is re-linked. Practical application of this approach in a project context would require that this update process be performed automatically. There are however no technical reasons why this should not be possible.</p>
+
+</ImplementationIssue>
+
+
+
+<ImplementationIssue>
+
+In the concept proposed here, a telecommand is a punctual action that is executed in one shot and that must complete within one cycle. In some cases, however, the actions that must be performed in response to the execution of a telecommand must extend over more than one cycle. In such cases, the sequence of actions should be encapsulated in a manoeuvre component and the execution of the telecommand will consist in loading the manoeuvre into the manoeuvre manager (see <a HREF="ManoeuvreManagement.html">manouvre design pattern</a>).
+
+</ImplementationIssue>
+
+
+
+<ImplementationIssue>
+
+Conceptually, <code>Telecommand</code> is an abstract interface. However, definitions like that proposed in the first bullet above might be advantageously implemented as base abstract classes. The management of the enable status and of the time tag could for instance be performed in this base class and reused in the derived classes. Operation execute obviously remain abstract.
+
+</ImplementationIssue>
+
+
+
+<ImplementationIssue>
+
+Sometimes there is need to implement <i>critical telecommands</i> that must be executed according
+
+to an "arm-fire" protocol. Details vary across applications but the basic idea is that the
+
+telecommand must be sent twice and that, only when it is received the second time, are its associated
+
+actions actually executed. This mechanism offers some protection against operator errors that might
+
+result in a telecommand being sent to the spacecraft by mistake. The telecommand concept proposed here
+
+could accommodate this type of critical telecommands in two ways:<ul>
+
+<li>The telecommand manager is modified to handle critical telecommands: it sends an execute to
+
+a telecommand component only after the telecommand component is submitted for execution a second
+
+time</li>
+
+<li>The telecommand components are modified to implement an <i>execution check</i> that
+
+allows the execution of the telecommand only when it is loaded for the second time. In practice,
+
+this could be done by specializing the <code>Telecommand</code> interface with a new interface
+
+<code>CriticalTelecommand</code> that implements this type of execution check.</li>
+
+</ul>
+
+</ImplementationIssue>
+
+
+
+
+
+<FrameworkMapping>
+
+  <Name>Telecommand</Name>
+
+  <Type>abstract interface</Type>
+
+  <FrameworkClass>Telecommand</FrameworkClass>
+
+  <FrameworkClass>CriticalTelecommand</FrameworkClass>
+
+  <FrameworkClass>PUSTelecommand</FrameworkClass>
+
+</FrameworkMapping>
+
+
+
+<FrameworkMapping>
+
+  <Name>TelecommandLoader</Name>
+
+  <Type>abstract interface</Type>
+
+  <FrameworkClass>TelecommandLoader</FrameworkClass>
+
+</FrameworkMapping>
+
+
+
+<FrameworkMapping>
+
+  <Name>TelecommandManager</Name>
+
+  <Type>component</Type>
+
+  <FrameworkClass>CC_TelecommandManager</FrameworkClass>
+
+</FrameworkMapping>
+
+
+
+
+
+<SampleCode>
+
+As an example of a concrete telecommand, consider a history commanding TC (HSTC) that can be used to
+
+reset the history area and to start and stop the recording of history data. Assuming that the history
+
+area is implemented as an event repository in accordance with the <a HREF="Event.html">event design
+
+pattern</a> (see in particular the <a HREF="Event.html#SampleCode">sample code</a> examples), then
+
+the concrete telecommand class for this telecommand could be defined as follows:
+
+<PRE>	
+    class Hstc : Telecommand {
+
+        EventRepository* historyArea;
+        int selector;
+
+        Hstc(EventRepository* rep, int s) {
+
+            HistoryArea = rep;
+	Selector = s;
+
+        }
+
+
+
+        void execute() {
+
+	switch (selector) {
+
+            	case 'RESET':
+            
+            		historyArea->reset();       
+            		historyArea->create(HSTC_RESET);            
+            		break;
+            
+            	case 'START':
+            
+            		historyArea->create(HSTC_ENABLE);            
+            		historyArea->enable();            
+            		break;
+            
+            	case 'STOP':
+            
+            		historyArea->create(HSTC_STOP);            
+            		historyArea->disable();            
+            		break;
+
+            }
+
+        }
+
+    }</PRE>
+
+In this example, the <CODE>Hstc</CODE> class has been endowed with a constructor which assumes that the construction of the telecommand object is done in accordance with the first of the two approaches discussed earlier. In this case, the data uplinked by the ground might consist of two bytes as follows:
+
+<PRE>	Byte 1:	TC identifier
+    
+	Byte 2:	value of selector</PRE>
+
+The first constructor parameter, the pointer to the event repository representing the history area clearly does not have to be uplinked because this is known on board and can be supplied internally by the telecommand loader.
+
+Consider instead construction of the telecommand object using the second approach outlined earlier. In this case, the telecommand data must be an image of the telecommand object. The telecommand object has two fields of four bytes each (the pointer to the event repository and the integer selector). Additionally, it also has a pointer to the virtual function table associated to class Hstc. Hence, the telecommand data now are:
+    <PRE>
+    Bytes 1-4:  VFT pointer
+        
+    Bytes 5-8:  pointer to event repository
+        
+    Bytes 9-12: value of variable 'selector'  </PRE>
+
+Some saving is possible by defining variable selector in Hstc to be of type char rather int but there is clearly an overhead with respect to the first approach where 2 bytes sufficed to encode the telecommand.
+
+As a second example of sample code, consider the telecommand manager. If the <CODE>Telecommand</CODE> interface is as hypothesized above, then its core could be implemented as follows:
+
+<PRE><![CDATA[
+
+    class TelecommandManager {
+    
+        Telecommand* tcList[N];    // list of pending telecommands
+        TelecommandLoader* tcLoader;
+
+        . . .
+
+        void activate() {
+    
+            for (int j:=0; j++; j<N) {    
+    
+                timeTag := tcList[j]->getTimeTag();
+    
+                if (timeTag < currentTime) {  
+    
+                    if ((tcList[j]->isEnabled())&&(tcList[j]->canExecute())){
+                        tcList[j]->execute();
+                        tcLoader->release(tcList[j]);
+                        tcList[j]:=NULL;
+                    }
+                }
+            }
+
+            void loadTelecommand(Telecommand* newTc) {
+                if (newTc->isValid())
+                . . .    // add newTc to listTc[]
+            }
+
+    }  ]]></PRE>
+
+<p>
+
+In this implementation, the telecommand manager maintains a list of pending telecommands. This list is filled by the telecommand loader through calls to method loadTelecommands. The telecommand manager is intended to be periodically activated by some external agency (perhaps a scheduler). When it is activated it goes through the list of pending telecommands and checks which are due for execution. For these, further checks are performed to verify that they are enabled and that they can be executed. If both checks are positive, the telecommand is executed. Telecommands are then unloaded. A call is made to the release method in the telecommand loader to signal to it that any resources that had been allocated to the telecommand should be released.
+
+</p>
+
+<p>
+
+In a more realistic implementation, the telecommand manager would also perform other housekeeping operations such as recording execution of telecommands in a history area. The important point however is that the all the operations performed by the telecommand manager are independent of the telecommand implementation and that therefore the telecommand manager is a potentially reusable component.
+
+</p>
+
+</SampleCode>
+
+
+
+<Remarks>
+
+None
+
+</Remarks>
+
+
+
+<LastModified>
+
+2003-06-11
+
+</LastModified>
+
+
+
+<Author>
+
+A. Pasetti (<a HREF="http://www.pnp-software.com">P&amp;P Software</a>)
+
+</Author>
+
+
+
+</DesignPattern>
+

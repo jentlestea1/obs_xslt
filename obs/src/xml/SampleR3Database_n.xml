@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ObsApplication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="file:/D:/Projects/ObsFramework/models/xsd/ObsFrameworkAppModel.xsd">
+<!--
+      This is a descriptor for an indexed database class. This descriptor 
+      describes a sample data base with robustness level equal to 3.
+-->
+<ParameterDatabase kind="interface" type="Data/ParameterDatabase" status="provided">
+      <IndexedDatabase kind="component" type="Data/DC_SampleR3Database" status="generable" name="parDB">
+      <Description>A sample database with the high level of robustness against illegal accesses to database 
+            parameters. This database contains nine parameters covering the eight possible syntactical types for database parameters.</Description>
+            <Parameter_0>
+                  <Description>The short parameter.</Description>
+                  <Name_4 kind="property" type="string" value="P1" status="provided"></Name_4>
+                  <Id_1 kind="property" type="int" value="1" minValue="0" maxValue="+" status="provided"></Id_1>
+                  <Offset kind="property" minValue="0" maxValue="+" status="provided" type="int" value="0"></Offset>
+                  <Type_2 kind="property" type="string" value="short" status="provided"></Type_2>
+            </Parameter_0>
+            <Parameter_0>
+                  <Description>The unsigned short parameter.</Description>
+                  <Name_4 kind="property" type="string" value="P2" status="provided"></Name_4>
+                  <Id_1 kind="property" type="int" value="2" minValue="0" maxValue="+" status="provided"></Id_1>
+                  <Offset kind="property" minValue="0" maxValue="+" status="provided" type="int" value="8"></Offset>
+                  <Type_2 kind="property" type="string" value="unsigned short" status="provided"></Type_2>
+            </Parameter_0>
+            <Parameter_0>
+                  <Description>The int parameter.</Description>
+                  <Name_4 kind="property" type="string" value="P3" status="provided"></Name_4>
+                  <Id_1 kind="property" type="int" value="3" minValue="0" maxValue="+" status="provided"></Id_1>
+                  <Offset kind="property" minValue="0" maxValue="+" status="provided" type="int" value="16"></Offset>
+                  <Type_2 kind="property" type="string" value="int" status="provided"></Type_2>
+            </Parameter_0>
+            <Parameter_0>
+                  <Description>The unsigned int parameter.</Description>
+                  <Name_4 kind="property" type="string" value="P4" status="provided"></Name_4>
+                  <Id_1 kind="property" type="int" value="4" minValue="0" maxValue="+" status="provided"></Id_1>
+                  <Offset kind="property" minValue="0" maxValue="+" status="provided" type="int" value="24"></Offset>
+                  <Type_2 kind="property" type="string" value="unsigned int" status="provided"></Type_2>
+            </Parameter_0>
+            <Parameter_0>
+                  <Description>The char parameter.</Description>
+                  <Name_4 kind="property" type="string" value="P5" status="provided"></Name_4>
+                  <Id_1 kind="property" type="int" value="5" minValue="0" maxValue="+" status="provided"></Id_1>
+                  <Offset kind="property" minValue="0" maxValue="+" status="provided" type="int" value="32"></Offset>
+                  <Type_2 kind="property" type="string" value="char" status="provided"></Type_2>
+            </Parameter_0>
+            <Parameter_0>
+                  <Description>The unsigned char parameter.</Description>
+                  <Name_4 kind="property" type="string" value="P6" status="provided"></Name_4>
+                  <Id_1 kind="property" type="int" value="6" minValue="0" maxValue="+" status="provided"></Id_1>
+                  <Offset kind="property" minValue="0" maxValue="+" status="provided" type="int" value="40"></Offset>
+                  <Type_2 kind="property" type="string" value="unsigned char" status="provided"></Type_2>
+            </Parameter_0>
+            <Parameter_0>
+                  <Description>The float parameter.</Description>
+                  <Name_4 kind="property" type="string" value="P7" status="provided"></Name_4>
+                  <Id_1 kind="property" type="int" value="7" minValue="0" maxValue="+" status="provided"></Id_1>
+                  <Offset kind="property" minValue="0" maxValue="+" status="provided" type="int" value="48"></Offset>
+                  <Type_2 kind="property" type="string" value="float" status="provided"></Type_2>
+            </Parameter_0>
+            <Parameter_0>
+                  <Description>The double parameter.</Description>
+                  <Name_4 kind="property" type="string" value="P8" status="provided"></Name_4>
+                  <Id_1 kind="property" type="int" value="8" minValue="0" maxValue="+" status="provided"></Id_1>
+                  <Offset kind="property" minValue="0" maxValue="+" status="provided" type="int" value="56"></Offset>
+                  <Type_2 kind="property" type="string" value="double" status="provided"></Type_2>
+            </Parameter_0>
+            <Parameter_0>
+                  <Description>The bool parameter.</Description>
+                  <Name_4 kind="property" type="string" value="P9" status="provided"></Name_4>
+                  <Id_1 kind="property" type="int" value="9" minValue="0" maxValue="+" status="provided"></Id_1>
+                  <Offset kind="property" minValue="0" maxValue="+" status="provided" type="int" value="64"></Offset>
+                  <Type_2 kind="property" type="string" value="bool" status="provided"></Type_2>
+            </Parameter_0>
+            <RobustnessLevel_0 kind="property" type="int" value="3" status="provided"></RobustnessLevel_0>
+            <Size kind="property" type="int" value="80" minValue="1" maxValue="+" status="provided"></Size>
+            <OperationalTable_0 kind="property" name="OperationalTable" type="string" value="PARDATABASE_OP_TABLE_START" status="provided"></OperationalTable_0>
+            <DefaultTable_0 kind="property" name="DefaultTable" type="string" value="PARDATABASE_DEF_TABLE_START" status="provided"></DefaultTable_0>
+      </IndexedDatabase>
+      
+</ParameterDatabase>
+</ObsApplication>

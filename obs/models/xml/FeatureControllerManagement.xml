@@ -1,0 +1,23 @@
+<FrameworkFeatureModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="D:/Projects/fbfm/fwmetamodel/xsd/metamodel.xsd">
+      <Macro nameOfMacro="ControllerManagement">
+            <Feature nameOfFeature="ControllerManagement">
+                  <Description text="The application manages one or more control actions"/>
+                  <FeatureComment text="Mode dependency for control action can be realized either using the ModeManager feature, or by attaching the individual 
+                  control actions (which are punctual actions) to the states of an FSM"/>
+                  <FeatureCardinality FeatureCardMin="1" FeatureCardMax="1"/>
+                  <Type><Composite/>
+                  </Type>
+                  <Group nameOfGroup="ModeBasedController">
+                        <Description text="Control management is mode-based"/>
+                        <GroupCardinality GroupCardMin="0" GroupCardMax="1"/>
+                        <CallMacro nameOfCalledMacro="ModeManager"/>
+                  </Group>
+                  <Group nameOfGroup="ControlActions">
+                        <Description text="The control actions managed by the application"/>
+                        <GroupCardinality GroupCardMin="1" GroupCardMax="1"/>
+                        <CallMacro nameOfCalledMacro="ControlActions"/>
+                  </Group>
+            </Feature>
+      </Macro>
+</FrameworkFeatureModel>
